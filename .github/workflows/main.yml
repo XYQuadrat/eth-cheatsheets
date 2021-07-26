@@ -40,10 +40,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=$(date +'%Y-%m-%d')
-          hub release create -m "$(git tag -l --format='%(contents)' "$TAG")" "$TAG" || true
+          hub release create -m "v$TAG" || true
           while IFS= read -r file; do
             pdf="${file%.*}.pdf"
             echo "Delivering file $pdf"
-            hub release edit -m '' -a "$pdf" "$TAG"
+            hub release edit -m '' -a "$pdf" "v$TAG"
           done < "success-list"
 
