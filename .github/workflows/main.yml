@@ -39,11 +39,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG=$(date +'%Y-%m-%d')
-          hub release create -m "This is a continuous release of all cheatsheets as PDFs. It is recommended to use the newest versions, as older ones might contain factual errors." "v$TAG" || true
+          TAG="nightly"
+          git tag -f "$TAG"
+          hub release create -m "Nightly PDF build
+          
+          This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG" || true
           while IFS= read -r file; do
             pdf="${file%.*}.pdf"
             echo "Delivering file $pdf"
-            hub release edit -m '' -a "$pdf" "v$TAG"
+            hub release edit -m '' -a "$pdf" "$TAG"
           done < "success-list"
 
