@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=$(date +'%Y-%m-%d')
-          hub release create -m "v$TAG" || true
+          hub release create -m "This is a continuous release of all cheatsheets as PDFs. It is recommended to use the newest versions, as older ones might contain factual errors." "v$TAG" || true
           while IFS= read -r file; do
             pdf="${file%.*}.pdf"
             echo "Delivering file $pdf"
