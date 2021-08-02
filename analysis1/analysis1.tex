@@ -510,6 +510,63 @@ $$
  \end{enumerate}
 \end{mainbox}
 
+\subsection{Euler-McLaurin Formel}
+Die Formel hilft Summen wie $1^l + 2^l + 3^l + ... + n^l$ abzuschatzen.
+Fur die Formel brauchen wir die Bernoulli Polynome $B_n(x)$,
+sowie die Bernoulli Zahlen $B_n(0)$.
+Wir brauchen dafur Polynome welche durch die folgenden
+Eigenschaften bestimmt sind:
+
+\begin{enumerate}
+  \item $P'_k = P_{k-1}, k > 1$
+  \item $\int_0^1 P_k(x)\dx = 0, \forall k \geq 1$
+\end{enumerate}
+
+Für das $k$-te Bernoulli Polynom gilt: $B_k(x) = k!P_k(x)$. Wir definieren weiter $B_0=1$ und alle anderen Bernoulli Zahlen rekursiv: $B_{k-1} = \sum_{i=0}^{k-1}{k \choose i}B_i = 0$.
+
+Somit erhalten wir für das Bernoulli Polynom folgenden Definition: $$B_k(x) = \sum_{i=0}^{k}{k \choose i}B_ix^{k-i}$$
+
+Hier ein paar Bernoulli Polynome: $B_0(x) = 1$, $B_1(x) = x - \frac{1}{2}$, $B_2(x) = x^2 - x + \frac{1}{6}$. Nun definieren wir noch: $$\tilde{B}_k(x) = \begin{cases}
+  B_k(x) & \forall x: 0 \leq x < 1 \\
+  B_k(x-n) & \forall x: n \leq x < n + 1
+\end{cases}$$
+
+Somit kommen wir aud die Euler-McLaurin Summationsformel:
+\begin{mainbox}{Euler-McLaurin Summationsformel}
+  Sei $f: [0, n] \to \R$ $k$-mal stetig differenzierbar. Dann gilt: \\
+  Für $k = 1$:
+  $$\sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0)) + \int_0^n \tilde{B}_1(x)f'(x)\dx$$
+  Für $k>1$:
+  $$\sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0))+$$
+  $$\sum_{j = 2}^k \frac{(-1)^j B_j}{j!}(f^{(j-1)}(n) + f^{(j-1)}(0)) + \tilde{R}_k$$
+  wobei
+  $$ \tilde{R}_k = \frac{(-1)^{k-1}}{k!} \int_0^n \tilde{B}_k(x)f^{(k)}(x)\dx$$
+\end{mainbox}
+
+\begin{subbox}{Example}
+  $$1^l + 2^l + 3^l + ... + n^l \text{ wobei } l \geq 1, l \in \N$$
+  Angewandt auf $f(x) = x^l$ und $k = l + 1$ folgt für alle $l \geq 1$:
+  $$1^l + 2^l + 3^l + ... + n^l = \frac{1}{l + 1} \sum_{j = 0}^l (-1)^j B_j {l + 1 \choose j} n^{l+1-j}$$
+\end{subbox}
+\subsection{Stirling'sche Formel}
+Die Stirling'sche Formel macht eine Aussage über das Verhalten der Fakultät:
+$$n! \approx \frac{\sqrt{2 \pi n}\cdot n^n}{e^n} \ \ \text{bzw.} \ \ \limn \frac{n!}{\frac{\sqrt{2 \pi n}\cdot n^n}{e^n}} = 1$$
+
+Wir benützen jetzt die Euler-McLaurin FOrmel um eine präzise Aussage zuerhalten:
+\begin{subbox}{}
+  $$n! = \frac{\sqrt{2 \pi n}\cdot n^n}{e^n} \cdot \exp\left(\frac{1}{12n} + R_3(n)\right)$$ wobei $$|R_3(n)| \leq \frac{\sqrt{3}}{216} \cdot \frac{1}{n^2} \ \ \forall n \geq 1$$
+\end{subbox}
+
+\subsection{Gamma Funktion}
+DIe Gamma Funktion wir dafür gebraucht um die Funktion $n \mapsto (n-1)!$ zu interpolieren. Für $s > 0$ definieren wir: $$\Gamma(s) := \int_0^\infty e^{-x}x^{s-1}\dx = (s-1)!$$
+Die Gamma Funktion konvergiert für alle $s > 0$ und hat folgende weiter Eingeschaften:
+\begin{enumerate}
+  \item $\Gamma(1) = 1$
+  \item $\Gamma(s + 1) = s \Gamma(s)$
+  \item $\Gamma$ ist logaritmisch konvex, d.h.: $$\Gamma(\lambda x + (2 - \lambda)y) \leq \Gamma(x)^\lambda \Gamma(y)^{1 - \lambda}$$ für alle $x, y > 0$ und $0 \leq \lambda \leq 1$
+\end{enumerate}
+Die Gamma Funktion ist die einzige Funktion $]0, \infty[ \to ]0, \infty[$ die $(1), (2)$ und $(3)$ erfüllt. Zudem gilt: $$\Gamma(x) = \limn \frac{n!n^x}{x(x+1)...(x+n)} \ \ \ \forall x > 0$$
+
 \subsection{Stirling'sche Formel}
 Die Stirling'sche Formel ist eine Abschätzung der Fakultät. Mit der Euler-McLaurin-Formel kombiniert erhalten wir
 $$n! = \frac{\sqrt{2\pi n} \cdot n^n}{e^n} \cdot \exp(\frac{1}{12n}+R_3(n))$$
