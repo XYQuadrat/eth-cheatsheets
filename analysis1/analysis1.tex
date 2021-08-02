@@ -45,6 +45,7 @@
 % Mathematical typesetting & symbols
 \usepackage{amsthm, mathtools, amssymb} 
 \usepackage{marvosym, wasysym}
+\allowdisplaybreaks
 
 % Tables
 \usepackage{tabularx, multirow}
@@ -66,6 +67,9 @@
 
 % Math helper stuff
 \def\limn{\lim_{n\to \infty}}
+\def\limxo{\lim_{x\to 0}}
+\def\limxi{\lim_{x\to\infty}}
+\def\limxn{\lim_{x\to\infty}}
 \def\sumk{\sum_{k=1}^\infty}
 \def\sumn{\sum_{n=0}^\infty}
 \def\R{\mathbb{R}}
@@ -138,6 +142,25 @@ Jede beschränkte Folge besitzt eine konvergente Teilfolge.
  \item Alternierende Folgen: Zeige, dass Teilfolgen nicht gleich werden, also $\limn a_{p_1(n)} \ne \limn a_{p_2(n)}$ (mit z.B. gerade/ungerade als Teilfolgen).
 \end{enumerate}
 
+\subsection{Tricks für Grenzwerte}
+\subsubsection{Binome}
+$$\lim_{x\to\infty} (\sqrt{x + 4} - \sqrt{x - 2}) = \lim_{x\to\infty} \frac{(x+4)-(x-2)}{\sqrt{x+4}+\sqrt{x-2}}$$
+
+\subsubsection{Substitution}
+$$\lim_{x\to\infty} x^2 (1-\cos(\frac{1}{x}))$$
+Substituiere nun $u = \frac{1}{x}$:
+$$\lim_{u \to 0} \frac{1 - \cos(u)}{u^2} = \lim_{u \to 0} \frac{\sin(u)}{2u} = \lim_{u\to 0} \frac{\cos(u)}{2} = \frac{1}{2}$$
+
+\subsubsection{Induktive Folgen (Induktionstrick)}
+\begin{enumerate}
+  \item Zeige monoton wachsend / fallend
+  \item Zeige beschränkt
+  \item Nutze Satz von Weierstrass, d.h. Folge muss gegen Grenzwert konvergieren
+  \item Verwende Induktionstrick:
+\end{enumerate}
+Wenn die Folge konvergiert, hat jede Teilfolge den gleichen Grenzwert. Betrachte die Teilfolge $l(n) = n + 1$ für $d_{n+1} = \sqrt{3d_n - 2}$:
+$$d = \lim_{n\to\infty} d_n = \lim_{n\to\infty} d_{n+1} = \sqrt{\lim_{n \to \infty} 3d_n -2} = \sqrt{3d -2}$$
+Forme um zu $ d^2 = 3d -2 \to d \in {1,2}$. Nun können wir $d = 2$ nehmen und die Beschränktheit mit $d=2$ per Induktion zeigen.
 
 \section{Reihen}
 
@@ -173,8 +196,12 @@ $\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s}$ divergiert für $s \le 1$ und konve
 \subsection{Absolute Konvergenz}
 $\sumk a_k$ heisst \textbf{absolut konvergent}, wenn $\sumk |a_k|$ konvergiert. Eine absolut konvergente Reihe ist immer auch konvergent, es gilt $|\sumk a_k| \le \sumk |a_k|$.
 
+Falls eine Reihe absolut konvergiert, dann konvergiert jede Umordnung der Reihe mit dem selben Grenzwert.
+
+Falls die Reihe hingegen nur konvergiert, so gibt es immer eine Anordnung, so dass $\sum_{k=1}^\infty a_{\phi(k)} = x, \ \forall x\in \R$.
+
 \begin{subbox}{Leibnizkriterium}
-Wenn $a_n \ge 0, \forall n \ge 1$ monoton fallend und $\limn a_n = 0$ ist, dann konvergiert $S = \sumk (-1)^{k+1} a_k$ und $a_1 - a_2 \le S \le a_1$.
+Wenn $a_n \ge 0, \ \forall n \ge 1$ monoton fallend ist und $\limn a_n = 0$ gilt, dann konvergiert $S = \sumk (-1)^{k+1} a_k$ und $a_1 - a_2 \le S \le a_1$.
 \end{subbox}
 
 \begin{mainbox}{Quotientenkriterium}
@@ -190,7 +217,7 @@ Sei $(a_n)$ eine Folge mit $a_n \ne 0, \forall n \ge 1$. Sei $q = \limn \sup \sq
 \end{itemize}
 \end{mainbox}
 
-\subsubsection{Wichtige Reihen}
+\subsection{Wichtige Reihen}
 \begin{align*}
  \sum_{i=1}^n i &= \frac{n(n+1)}{2} \\
  \sum_{i=1}^n i^2 &= \frac{1}{6}n(n+1)(2n+1) \\
@@ -199,13 +226,20 @@ Sei $(a_n)$ eine Folge mit $a_n \ne 0, \forall n \ge 1$. Sei $q = \limn \sup \sq
  \sum_{n=1}^\infty \frac{1}{n(n+1)} &= 1
 \end{align*}
 
-\subsubsection{Strategie - Konvergenz von Reihen}
+\subsection{Cauchy-Produkt}
+\begin{subbox}{Definition Cauchy-Produkt}
+  Das Cauchy-Produkt von zwei Reihen $\sum_{i = 0}^\infty a_i$ und $\sum_{j = 0}^\infty b_j$ ist definiert als
+  $$\sum_{n=0}^\infty \sum_{j=0}^\infty (a_{n-j} \cdot b_j) = a_0b_0 + (a_0b_1 + a_1b_0) + \ldots$$ Es konvergiert, falls beide Reihen konvergieren.
+\end{subbox}
+
+\subsection{Strategie - Konvergenz von Reihen}
 \begin{enumerate}
  \item Ist Reihe ein bekannter Typ? (Teleskopieren, Geometrische/Harmonische Reihe, Zetafunktion, ...)
  \item Ist $\limn a_n = 0$? Wenn nein, divergent.
  \item Quotientenkriterium \& Wurzelkriterium anwenden
  \item Vergleichssatz anwenden, Vergleichsreihen suchen
  \item Leibnizkriterium anwenden
+ \item Integral-Test anwenden (Reihe zu Integral)
 \end{enumerate}
 
 \section{Funktionen}
@@ -224,7 +258,7 @@ Polynomiale Funktionen sind auf $\R$ stetig.
 \begin{mainbox}{Zwischenwertsatz}
  Wenn $I \subseteq \R$ ein Intervall, $f: I \to \R$ und $a, b \in I$ ist, dann gibt es für jedes $c$ zwischen $f(a)$ und $f(b)$ ein $a \le z \le b$ mit $f(z) = c$.
  \includegraphics[width=\linewidth]{zwischenwertsatz.png}
- Wird häufig verwendet um zu zeigen, das eine Funktion einen gewissen Wert annimmt.
+ Wird häufig verwendet um zu zeigen, das eine Funktion einen gewissen Wert (z.B. Nullstelle) annimmt.
 \end{mainbox}
 Daraus folgt, dass ein Polynom mit ungeradem Grad mindestens eine Nullstelle in $\R$ besitzt.
 
@@ -263,8 +297,8 @@ Die Reihe $\sumk f_k(x)$ konvergiert gleichmässig, falls die durch $S_n(x) = \s
  Sei $f_n$ eine Folge stetiger Funktionen. Ausserdem ist $|f_n(x)| \le c_n \quad \forall x \in D$ und $\sum_{n=0}^\infty c_n$ konvergiert. Dann konvergiert die Reihe $\sum_{n=0}^\infty f_n(x)$ gleichmässig und deren Grenzwert ist eine in $D$ stetige Funktion.
 \end{subbox}
 
-\subsection{Grenzwerte und Potenzreihen}
-\begin{subbox}{Potenzreihe}
+\subsection{Potenzreihen}
+\begin{subbox}{Definition Potenzreihe}
  Potenzreihen sind Reihen der Form $\sum_{n=0}^\infty a_n x^n$. Eine Potenzreihe mit Entwicklungspunkt $x_0$ wird als $\sum_{n=0}^\infty a_n(x-x_0)^n$ definiert.
 \end{subbox}
 
@@ -272,7 +306,7 @@ Die Reihe $\sumk f_k(x)$ konvergiert gleichmässig, falls die durch $S_n(x) = \s
  Der Konvergenzradius einer Potenzreihe um einen Entwicklungspunkt $x_0$ ist die grösste Zahl $r$, so dass die Potenzreihe für alle $x$ mit $|x - x_0| < r$ konvergiert. Falls die Reihe für alle $x$ konvergiert, ist der Konvergenzradius $r$ unendlich. Sonst:
  $$r = \limn \left| \frac{a_n}{a_{n+1}} \right| = \frac{1}{\limn\sup \sqrt[n]{|a_n|}} $$
 \end{mainbox}
-
+Die Potenzreihe $\sum_{k=0}^\infty a_n x^n$ konvergiert absolut für alle $|x| < r$ und divergiert für alle $|x| > r$. Der Fall $|x| = r$ ist unklar und muss geprüft werden.
 \subsubsection{Definitionen per Potenzreihen}
 \begin{align*}
 \exp(x) &= \sumn \frac{x^n}{n!} & r &= \infty \\
@@ -281,6 +315,7 @@ Die Reihe $\sumk f_k(x)$ konvergiert gleichmässig, falls die durch $S_n(x) = \s
 \ln(x + 1) &= \sumk (-1)^{k+1} \frac{x^k}{k} & r &= 1
 \end{align*}
 
+\subsection{Grenzwerte von Funktionen}
 \begin{subbox}{Häufungspunkt}
  $x_0 \in \R$ ist ein Häufungspunkt der Menge D falls $\forall \delta > 0: (]x_0 - \delta, x_0 + \delta[ \backslash \{x_0\}) \cap D \ne \varnothing$.
 \end{subbox}
@@ -289,6 +324,11 @@ Die Reihe $\sumk f_k(x)$ konvergiert gleichmässig, falls die durch $S_n(x) = \s
  Wenn $f: D \to \R, x_0 \in \R$ ein Häufungspunkt von $D$ ist, dann ist $A \in \R$ der Grenzwert von $f(x)$ für $x \to x_0$ ($\lim_{x\to x_0} f(x) = A$), falls $\forall \epsilon > 0 \ \exists \delta > 0$, so dass $\forall x \in D \cap (]x_0 - \delta, x_0 + \delta[ \backslash \{x_0\}): |f(x) - A| < \epsilon$.
 \end{mainbox}
 
+\begin{subbox}{Satz von L'Hôpital}
+  Seien $f,g$ stetig und differenzierbar auf $]a,b[$. Wenn $\lim{x\to c} f(x) = \lim_{x \to c} g(x) = 0$ oder $\pm \infty$ und $g'(x) \ne 0 \ \forall x \in I \backslash \{c\}$, dann gilt $$\lim_{x\to c \frac{f(x)}{g(x)}} = \lim_{x\to c}\frac{f'(x)}{g'(x)}$$
+\end{subbox}
+
+Grenzwerte der Form $\infty^0$ und $1^\infty$ können meist mit $f(x)^{g(x)} = e^{g(x)\cdot \ln(f(x))}$ und dann Bernoulli (nur Exponenten betrachten da $e$ stetig) anwenden oder vereinfachen berechnet werden.
 
 \section{Ableitungen}
 \subsection{Differenzierbarkeit}
@@ -314,25 +354,29 @@ Glatte Funktionen: $\exp, \sin, \cos, \sinh, \cosh, \tanh, \ln,$\\ $ \arcsin, \a
 
 \subsection{Ableitungsregeln}
 
-\begin{subbox}{Linearität der Ableitung}
- $(\alpha \cdot f(x) + g(x))' = \alpha \cdot f'(x) + g'(x)$
-\end{subbox}
+\begin{itemize}
+  \item Linearität der Ableitung
+  $$(\alpha \cdot f(x) + g(x))' = \alpha \cdot f'(x) + g'(x)$$
+  \item Produktregel
+  $$(f(x) + g(x))' = f'(x) \cdot g(x) + f(x) \cdot g'(x)$$
+  \item Quotientenregel
+  $$\left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x) \cdot g(x) - f(x) \cdot g'(x)}{g(x)^2}$$
+  \item Kettenregel
+  $$(f(g(x)))' = g'(x) \cdot f'(g(x))$$
+  \item Potenzregel
+  $$(c \cdot x^a)' = c \cdot a \cdot x^{a - 1}$$
+\end{itemize}
 
-\begin{mainbox}{Produktregel}
- $(f(x) + g(x))' = f'(x) \cdot g(x) + f(x) \cdot g'(x)$
-\end{mainbox}
-
-\begin{mainbox}{Quotientenregel}
- $\left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x) \cdot g(x) - f(x) \cdot g'(x)}{g(x)^2}$
-\end{mainbox}
-
-\begin{mainbox}{Kettenregel}
- $(f(g(x)))' = g'(x) \cdot f'(g(x))$
-\end{mainbox}
-
-\begin{subbox}{Potenzregel}
- $(c \cdot x^a)' = c \cdot a \cdot x^{a - 1}$
-\end{subbox}
+\subsection{Implikationen der Ableitung}
+\begin{enumerate}
+  \item $f$ besitzt ein lokales Minimum in $x_0$, wenn $f'(x_0) = 0$ und $f''(x_0) > 0$ oder falls das Vorzeichen von $f'$ um $x_0$ von $-$ zu $+$ wechselt.
+  \item $f$ besitzt ein lokales Maximum in $x_0$, wenn $f'(x_0) = 0$ und $f''(x_0) < 0$ oder falls das Vorzeichen von $f'$ um $x_0$ von $+$ zu $-$ wechselt.
+  \item $f$ besitzt ein lokales Extremum in $x_0$, wenn $f'(x_0) = 0$ und $f''(x_0) \ne 0$.
+  \item $f$ besitzt einen Sattelpunkt in $x_0$, wenn $f'(x_0) = 0$ und $f''(x_0) = 0$.
+  \item $f$ besitzt einen Wendepunkt in $x_0$, wenn $f''(x_0) = 0$.
+  \item $f$ ist in $x_0$ konvex, wenn $f''(x_0) \ge 0$.
+  \item $f$ ist in $x_0$ konkav, wenn $f''(x_0) \le 0$.
+\end{enumerate}
 
 \subsection{Sätze zur Ableitung}
 \begin{subbox}{Satz von Rolle}
@@ -342,7 +386,6 @@ Glatte Funktionen: $\exp, \sin, \cos, \sinh, \cosh, \tanh, \ln,$\\ $ \arcsin, \a
  Sei $f: [a,b] \to \R$ stetig und in $]a,b[$ differenzierbar. Dann gibt es $\xi \in ]a,b[$ mit $f(b) - f(a) = f'(\xi)(b-a)$.
  \includegraphics[width=\linewidth]{mittelwertsatz.png}
 \end{mainbox}
-
 
 \subsection{Taylorreihen}
 Taylorreihen sind ein Weg, glatte Funktionen als Potenzreihen anzunähern.
@@ -364,6 +407,8 @@ Beispiele Taylorreihen ($a = 0$):
  \item $\cos(x) = \sumn (-1)^n \cdot \frac{x^{2n}}{(2n)!}$
  \item $e^x = \sumn \frac{x^n}{n!}$
  \item $e^{-x} = \sumn (-1)^n \cdot \frac{x^n}{n!}$
+ \item $\sinh(x) = \sumn \frac{x^{2n+1}}{(2n+1)!}$
+ \item $\cosh(x) = \sumn \frac{x^{2n}}{(2n)!}$
 \end{itemize}
 
 \section{Integrale}
@@ -381,14 +426,15 @@ Beispiele Taylorreihen ($a = 0$):
 \begin{mainbox}{Riemann-integrierbar}
  $f:[a,b] \to \R$ ist Riemann-integrierbar, falls $\sup_{p_1} \underline{S}(f,P_1) = \inf_{p_2}\overline{S}(f, P_2)$, also falls Obersumme gleich Untersumme wird, wenn die Partition feiner wird. Dann ist $A := \int_a^b f(x)\dx$.
 \end{mainbox}
+
+\subsection{Integrierbarkeit zeigen}
 \begin{itemize}
  \item $f$ stetig in $[a,b] \implies f$ integrierbar über $[a,b]$
  \item $f$ monoton in $[a,b] \implies f$ integrierbar über $[a,b]$
+ \item Wenn $f,g$ beschränkt und integrierbar sind, dann sind
+ $$f+g, \lambda \cdot f, f \cdot g, |f|, \max(f,g), \min(f,g), \frac{f}{g}$$ integrierbar
+ \item Jedes Polynom ist integrierbar, auch $\frac{P(x)}{Q(x)}$ falls $Q(x)$ in $[a,b]$ keine Nullstellen besitzt
 \end{itemize}
-\begin{subbox}{}
- Wenn $f,g$ beschränkt und integrierbar sind, dann sind
- $$f+g, \lambda \cdot f, f \cdot g, |f|, \max(f,g), \min(f,g), \frac{f}{g}$$ integrierbar.
-\end{subbox}
 
 \subsection{Sätze \& Ungleichungen}
 \begin{itemize}
@@ -462,8 +508,12 @@ $$
   \item Parameter $A_1, \ldots, A_n$ (bzw. $B_1, \ldots, B_n$) bestimmen. ($x$ jeweils gleich Nullstelle setzen, umformen und lösen).
 
  \end{enumerate}
-
 \end{mainbox}
+
+\subsection{Stirling'sche Formel}
+Die Stirling'sche Formel ist eine Abschätzung der Fakultät. Mit der Euler-McLaurin-Formel kombiniert erhalten wir
+$$n! = \frac{\sqrt{2\pi n} \cdot n^n}{e^n} \cdot \exp(\frac{1}{12n}+R_3(n))$$
+wobei $|R_3(n)| \le \frac{\sqrt{3}}{216}\cdot\frac{1}{n^2} \ \forall n \ge 1$
 
 \subsection{Uneigentliche Integrale}
 \begin{subbox}{Definition: Uneigentliches Integral}
@@ -472,9 +522,14 @@ $$
 Diese Definition gilt auch für $f(x) : \ ]-\infty,b] \to \R$, wobei $\int_{-\infty}^b f(x) \dx $ dann $ \lim_{a\to-\infty} \infty_a^b f(x) \dx$ ist.
 \begin{subbox}{McLaurin-Satz}
 Sei $f: \ [1, \infty[ \ \to [0, \infty[$ monoton fallend. Dann konvergiert $\sum_{n=1}^\infty f(n)$ genau, wenn $\int_1^\infty f(x) \dx$ konvergiert.
- 
 \end{subbox}
 
+\subsection{Unbestimmte Integrale}
+Sei $f: I \to \R$ auf dem Intervall $I \subseteq \R$ definiert. Wenn $f$ stetig ist, gibt es eine Stammfunktion $F$. Wir schreiben dann
+
+$$\int f(x) \dx = F(x) + C$$
+
+Das unbestimmte Integral ist die Umkehroperation der Ableitung.
 
 \section{Trigonometrie}
 
@@ -562,6 +617,34 @@ Sei $f: \ [1, \infty[ \ \to [0, \infty[$ monoton fallend. Dann konvergiert $\sum
 \end{mainbox}
 
 \section{Tabellen}
+\subsection{Grenzwerte}
+\begin{center}
+  \begin{tabularx}{\linewidth}{XX}
+    \toprule
+    $\limxi \frac{1}{x} = 0$ & $\limxi 1 + \frac{1}{x} = 1$ \\
+    $\limxi e^x = \infty$ & $\limxn e^x = 0$ \\
+    $\limxi e^{-x} = 0$ & $\limxn e^{-x} = \infty$ \\
+    $\limxi \frac{e^x}{x^m} = \infty$ & $\limxn xe^x = 0$ \\
+    $\limxi \ln(x) = \infty$ & $\limxo \ln(x) = -\infty$ \\
+    $\limxi (1+x)^{\frac{1}{x}} = 1$ & $\limxo (1+x)^{\frac{1}{x}} = e$ \\
+    $\limxi (1+\frac{1}{x})^b = 1$ & $\limxi n^{\frac{1}{n}} = 1$ \\
+    $\lim_{x\to\pm\infty} (1 + \frac{1}{x})^x = e$ & $\limxi (1-\frac{1}{x})^x = \frac{1}{e}$ \\
+    $\lim_{x\to\pm\infty} (1 + \frac{k}{x})^{mx} = e^{km}$ & $\limxi (\frac{x}{x+k})^x = e^{-k}$ \\
+    $\limxo \frac{a^x -1}{x} = \ln(a), \newline \forall a > 0$ &
+    $\limxi x^a q^x = 0, \newline \forall 0 \le q < 1$ \\
+  \end{tabularx}
+  \begin{tabularx}{\linewidth}{XX}
+    $\limxo \frac{\sin x}{x} = 1$ & $\limxo \frac{\sin kx}{x} = k$\\
+    $\limxo \frac{1}{\cos x} = 1$ & $\limxo \frac{\cos x -1}{x} = 0$ \\
+    $\limxo \frac{\log 1 - x}{x} = -1$ & $\limxo x \log x = 0$\\
+    $\limxo \frac{1 - \cos x}{x^2} = \frac{1}{2}$ & $\limxo \frac{e^x-1}{x} = 1$ \\
+    $\limxo \frac{x}{\arctan x} = 1$ & $\limxi \arctan x = \frac{\pi}{2}$ \\
+    $\limxo \frac{e^{ax}-1}{x} = 1$ & $\limxo \frac{\ln(x+1)}{x} = 1$ \\
+    $\lim_{x\to 1} \frac{\ln(x)}{x-1} = 1$ & $\limxi \frac{\log(x)}{x^a} = 0$ \\
+    $\limxi \sqrt[x]{x} = 1$ & $\limxi \frac{2x}{2^x} = 0$ \\
+    \bottomrule
+  \end{tabularx}
+\end{center}
 \subsection{Ableitungen}
 \begin{center}
   % the c>{\centering\arraybackslash}X is a workaround to have a column fill up all space and still be centered
