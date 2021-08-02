@@ -36,6 +36,7 @@ jobs:
       - name: Compile LaTeX
         uses: DanySK/compile-latex-action@master
       - name: Deploy
+        if: ${{ github.event_name == 'push' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
