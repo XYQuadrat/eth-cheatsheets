@@ -41,9 +41,6 @@ jobs:
         run: |
           TAG="nightly"
           git tag -f "$TAG"
-          hub release create -m "Nightly PDF build
-          
-          This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG" || true
           while IFS= read -r file; do
             pdf="${file%.*}.pdf"
             echo "Delivering file $pdf"
