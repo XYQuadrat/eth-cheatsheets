@@ -639,7 +639,7 @@ Das unbestimmte Integral ist die Umkehroperation der Ableitung.
     $\limxo \frac{\log 1 - x}{x} = -1$ & $\limxo x \log x = 0$\\
     $\limxo \frac{1 - \cos x}{x^2} = \frac{1}{2}$ & $\limxo \frac{e^x-1}{x} = 1$ \\
     $\limxo \frac{x}{\arctan x} = 1$ & $\limxi \arctan x = \frac{\pi}{2}$ \\
-    $\limxo \frac{e^{ax}-1}{x} = 1$ & $\limxo \frac{\ln(x+1)}{x} = 1$ \\
+    $\limxo \frac{e^{ax}-1}{x} = a$ & $\limxo \frac{\ln(x+1)}{x} = 1$ \\
     $\lim_{x\to 1} \frac{\ln(x)}{x-1} = 1$ & $\limxi \frac{\log(x)}{x^a} = 0$ \\
     $\limxi \sqrt[x]{x} = 1$ & $\limxi \frac{2x}{2^x} = 0$ \\
     \bottomrule
@@ -653,7 +653,7 @@ Das unbestimmte Integral ist die Umkehroperation der Ableitung.
   $\mathbf{F(x)}$ & $\mathbf{f(x)}$ & $\mathbf{f'(x)}$ \\
   \midrule
   $\frac{x^{-a+1}}{-a+1}$ & $\frac{1}{x^a}$ & $\frac{a}{x^{a+1}}$ \\
-  $\frac{x^{a+1}}{a+1}$ & $x^a (a \ne 1)$ & $a \cdot x^{a-1}$ \\
+  $\frac{x^{a+1}}{a+1}$ & $x^a \ (a \ne 1)$ & $a \cdot x^{a-1}$ \\
   $\frac{1}{k \ln(a)}a^{kx}$ & $a^{kx}$ & $ka^{kx} \ln(a)$ \\
   $\ln |x|$ & $\frac{1}{x}$ & $-\frac{1}{x^2}$ \\
   $\frac{2}{3}x^{3/2}$ & $\sqrt{x}$ & $\frac{1}{2\sqrt{x}}$\\
@@ -673,7 +673,19 @@ Das unbestimmte Integral ist die Umkehroperation der Ableitung.
   \bottomrule
   \end{tabularx}
 \end{center}
-
+\subsection{Weitere Ableitungen}
+\begin{center}
+  \begin{tabularx}{\linewidth}{>{\centering\arraybackslash}X>{\centering\arraybackslash}X}
+  \toprule
+  $\mathbf{F(x)}$ & $\mathbf{f(x)}$ \\
+  \midrule
+  $\arcsin(x)$ & $\frac{1}{\sqrt{1 - x^2}}$ \\
+  $\arccos(x)$ & $\frac{-1}{\sqrt{1 - x^2}}$ \\
+  $\arctan(x)$ & $\frac{1}{1 + x^2}$ \\ 
+  $x^x \ (x > 0)$ & $x^x \cdot (1 + \ln x)$ \\
+  \bottomrule
+  \end{tabularx}
+\end{center}
 \subsection{Integrale}
 \begin{center}
  \begin{tabularx}{\linewidth}{>{\centering\arraybackslash}X>{\centering\arraybackslash}X}
@@ -690,7 +702,7 @@ Das unbestimmte Integral ist die Umkehroperation der Ableitung.
   $\int \frac{ax+b}{cx+d} \dx$ & $\frac{ax}{c} - \frac{ad-bc}{c^2} \ln |cx +d|$ \\
   $\int \frac{1}{x^2+a^2} \dx$ & $\frac{1}{a} \arctan \frac{x}{a}$ \\
   $\int \frac{1}{x^2 - a^2} \dx$ & $\frac{1}{2a} \ln\left| \frac{x-a}{x+a} \right|$ \\
-  $\int \sqrt{a^2+x^2} \dx $ & $\frac{x}{2}\sqrt{a^2 + x^2} + \frac{a^2}{2}\ln(x+\sqrt{a^2+x^2})$ \\
+  $\int \sqrt{a^2+x^2} \dx $ & $\frac{x}{2}f(x) + \frac{a^2}{2}\ln(x+f(x))$ \\
   \bottomrule
  \end{tabularx}
 \end{center}
