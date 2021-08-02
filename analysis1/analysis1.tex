@@ -547,24 +547,15 @@ Somit kommen wir auf die Euler-McLaurin-Summationsformel:
   $$1^l + 2^l + 3^l + ... + n^l = \frac{1}{l + 1} \sum_{j = 0}^l (-1)^j B_j {l + 1 \choose j} n^{l+1-j}$$
 \end{subbox}
 
-\subsection{Stirling'sche Formel}
-Die Stirling'sche Formel macht eine Aussage über das Verhalten der Fakultät:
-$$n! \approx \frac{\sqrt{2 \pi n}\cdot n^n}{e^n} \ \ \text{bzw.} \ \ \limn \frac{n!}{\frac{\sqrt{2 \pi n}\cdot n^n}{e^n}} = 1$$
-
-Wir benützen jetzt die Euler-McLaurin FOrmel um eine präzise Aussage zuerhalten:
-\begin{subbox}{}
-  $$n! = \frac{\sqrt{2 \pi n}\cdot n^n}{e^n} \cdot \exp\left(\frac{1}{12n} + R_3(n)\right)$$ wobei $$|R_3(n)| \leq \frac{\sqrt{3}}{216} \cdot \frac{1}{n^2} \ \ \forall n \geq 1$$
-\end{subbox}
-
-\subsection{Gamma Funktion}
-DIe Gamma Funktion wir dafür gebraucht um die Funktion $n \mapsto (n-1)!$ zu interpolieren. Für $s > 0$ definieren wir: $$\Gamma(s) := \int_0^\infty e^{-x}x^{s-1}\dx = (s-1)!$$
-Die Gamma Funktion konvergiert für alle $s > 0$ und hat folgende weiter Eingeschaften:
+\subsection{Gamma-Funktion}
+DIe Gamma-Funktion wird gebraucht, um die Funktion $n \mapsto (n-1)!$ zu interpolieren. Für $s > 0$ definieren wir: $$\Gamma(s) := \int_0^\infty e^{-x}x^{s-1}\dx = (s-1)!$$
+Die Gamma-Funktion konvergiert für alle $s > 0$ und hat folgende weiter Eingeschaften:
 \begin{enumerate}
   \item $\Gamma(1) = 1$
   \item $\Gamma(s + 1) = s \Gamma(s)$
-  \item $\Gamma$ ist logaritmisch konvex, d.h.: $$\Gamma(\lambda x + (2 - \lambda)y) \leq \Gamma(x)^\lambda \Gamma(y)^{1 - \lambda}$$ für alle $x, y > 0$ und $0 \leq \lambda \leq 1$
+  \item $\Gamma$ ist logarithmisch konvex, d.h.: $$\Gamma(\lambda x + (2 - \lambda)y) \leq \Gamma(x)^\lambda \Gamma(y)^{1 - \lambda}$$ für alle $x, y > 0$ und $0 \leq \lambda \leq 1$
 \end{enumerate}
-Die Gamma Funktion ist die einzige Funktion $]0, \infty[ \to ]0, \infty[$ die $(1), (2)$ und $(3)$ erfüllt. Zudem gilt: $$\Gamma(x) = \limn \frac{n!n^x}{x(x+1)...(x+n)} \ \ \ \forall x > 0$$
+Die Gamma Funktion ist die einzige Funktion $]0, \infty[ \to ]0, \infty[$, die $(1), (2)$ und $(3)$ erfüllt. Zudem gilt: $$\Gamma(x) = \limn \frac{n!n^x}{x(x+1)...(x+n)} \ \ \ \forall x > 0$$
 
 \subsection{Stirling'sche Formel}
 Die Stirling'sche Formel ist eine Abschätzung der Fakultät. Mit der Euler-McLaurin-Formel kombiniert erhalten wir
