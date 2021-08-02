@@ -510,29 +510,27 @@ $$
  \end{enumerate}
 \end{mainbox}
 
-\subsection{Euler-McLaurin Formel}
-Die Formel hilft Summen wie $1^l + 2^l + 3^l + ... + n^l$ abzuschatzen.
-Fur die Formel brauchen wir die Bernoulli Polynome $B_n(x)$,
-sowie die Bernoulli Zahlen $B_n(0)$.
-Wir brauchen dafur Polynome welche durch die folgenden
-Eigenschaften bestimmt sind:
+\subsection{Euler-McLaurin-Formel}
+Die Formel hilft Summen wie $1^l + 2^l + 3^l + ... + n^l$ abzuschätzen.
+Für die Formel brauchen wir die Bernoulli-Polynome $B_n(x)$, sowie die Bernoulli-Zahlen $B_n(0)$.
+Wir brauchen dafür Polynome, welche durch die folgenden Eigenschaften bestimmt sind:
 
 \begin{enumerate}
   \item $P'_k = P_{k-1}, k > 1$
   \item $\int_0^1 P_k(x)\dx = 0, \forall k \geq 1$
 \end{enumerate}
 
-Für das $k$-te Bernoulli Polynom gilt: $B_k(x) = k!P_k(x)$. Wir definieren weiter $B_0=1$ und alle anderen Bernoulli Zahlen rekursiv: $B_{k-1} = \sum_{i=0}^{k-1}{k \choose i}B_i = 0$.
+Für das $k$-te Bernoulli-Polynom gilt: $B_k(x) = k!P_k(x)$. Wir definieren weiter $B_0=1$ und alle anderen Bernoulli-Zahlen rekursiv: $B_{k-1} = \sum_{i=0}^{k-1}{k \choose i}B_i = 0$.
 
-Somit erhalten wir für das Bernoulli Polynom folgenden Definition: $$B_k(x) = \sum_{i=0}^{k}{k \choose i}B_ix^{k-i}$$
+Somit erhalten wir für das Bernoulli-Polynom folgende Definition: $$B_k(x) = \sum_{i=0}^{k}{k \choose i}B_ix^{k-i}$$
 
-Hier ein paar Bernoulli Polynome: $B_0(x) = 1$, $B_1(x) = x - \frac{1}{2}$, $B_2(x) = x^2 - x + \frac{1}{6}$. Nun definieren wir noch: $$\tilde{B}_k(x) = \begin{cases}
+Hier ein paar Bernoulli-Polynome: $B_0(x) = 1$, $B_1(x) = x - \frac{1}{2}$, $B_2(x) = x^2 - x + \frac{1}{6}$. Nun definieren wir noch: $$\tilde{B}_k(x) = \begin{cases}
   B_k(x) & \forall x: 0 \leq x < 1 \\
   B_k(x-n) & \forall x: n \leq x < n + 1
 \end{cases}$$
 
-Somit kommen wir aud die Euler-McLaurin Summationsformel:
-\begin{mainbox}{Euler-McLaurin Summationsformel}
+Somit kommen wir auf die Euler-McLaurin-Summationsformel:
+\begin{mainbox}{Euler-McLaurin-Summationsformel}
   Sei $f: [0, n] \to \R$ $k$-mal stetig differenzierbar. Dann gilt: \\
   Für $k = 1$:
   $$\sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0)) + \int_0^n \tilde{B}_1(x)f'(x)\dx$$
@@ -543,11 +541,12 @@ Somit kommen wir aud die Euler-McLaurin Summationsformel:
   $$ \tilde{R}_k = \frac{(-1)^{k-1}}{k!} \int_0^n \tilde{B}_k(x)f^{(k)}(x)\dx$$
 \end{mainbox}
 
-\begin{subbox}{Example}
-  $$1^l + 2^l + 3^l + ... + n^l \text{ wobei } l \geq 1, l \in \N$$
+\begin{subbox}{Beispiel für Euler-McLaurin}
+  $$1^l + 2^l + 3^l + ... + n^l \text{ wobei } l \geq 1, l \in \mathbb{N}$$
   Angewandt auf $f(x) = x^l$ und $k = l + 1$ folgt für alle $l \geq 1$:
   $$1^l + 2^l + 3^l + ... + n^l = \frac{1}{l + 1} \sum_{j = 0}^l (-1)^j B_j {l + 1 \choose j} n^{l+1-j}$$
 \end{subbox}
+
 \subsection{Stirling'sche Formel}
 Die Stirling'sche Formel macht eine Aussage über das Verhalten der Fakultät:
 $$n! \approx \frac{\sqrt{2 \pi n}\cdot n^n}{e^n} \ \ \text{bzw.} \ \ \limn \frac{n!}{\frac{\sqrt{2 \pi n}\cdot n^n}{e^n}} = 1$$
