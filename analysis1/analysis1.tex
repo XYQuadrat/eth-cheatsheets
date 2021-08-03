@@ -325,7 +325,7 @@ Die Potenzreihe $\sum_{k=0}^\infty a_n x^n$ konvergiert absolut für alle $|x| <
 \end{mainbox}
 
 \begin{subbox}{Satz von L'Hôpital}
-  Seien $f,g$ stetig und differenzierbar auf $]a,b[$. Wenn $\lim{x\to c} f(x) = \lim_{x \to c} g(x) = 0$ oder $\pm \infty$ und $g'(x) \ne 0 \ \forall x \in I \backslash \{c\}$, dann gilt $$\lim_{x\to c \frac{f(x)}{g(x)}} = \lim_{x\to c}\frac{f'(x)}{g'(x)}$$
+  Seien $f,g$ stetig und differenzierbar auf $]a,b[$. Wenn $\lim_{x\to c} f(x) = \lim_{x \to c} g(x) = 0$ oder $\pm \infty$ und $g'(x) \ne 0 \ \forall x \in I \backslash \{c\}$, dann gilt $$\lim_{x\to c} \frac{f(x)}{g(x)} = \lim_{x\to c}\frac{f'(x)}{g'(x)}$$
 \end{subbox}
 
 Grenzwerte der Form $\infty^0$ und $1^\infty$ können meist mit $f(x)^{g(x)} = e^{g(x)\cdot \ln(f(x))}$ und dann Bernoulli (nur Exponenten betrachten da $e$ stetig) anwenden oder vereinfachen berechnet werden.
@@ -358,7 +358,7 @@ Glatte Funktionen: $\exp, \sin, \cos, \sinh, \cosh, \tanh, \ln,$\\ $ \arcsin, \a
   \item Linearität der Ableitung
   $$(\alpha \cdot f(x) + g(x))' = \alpha \cdot f'(x) + g'(x)$$
   \item Produktregel
-  $$(f(x) + g(x))' = f'(x) \cdot g(x) + f(x) \cdot g'(x)$$
+  $$(f(x) \cdot g(x))' = f'(x) \cdot g(x) + f(x) \cdot g'(x)$$
   \item Quotientenregel
   $$\left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x) \cdot g(x) - f(x) \cdot g'(x)}{g(x)^2}$$
   \item Kettenregel
@@ -392,7 +392,7 @@ Taylorreihen sind ein Weg, glatte Funktionen als Potenzreihen anzunähern.
 
 \begin{subbox}{Definition: Taylor-Polynom}
  Das n-te Talyor-Polynom $T_n f(x; a)$ an einer Entwicklungsstelle $a$ ist definiert als:
- $$T_n f(x; a) := \sum_{k=0}^{n} \frac{f^{(k) (a)}}{n!} \cdot (x - a)^k$$ 
+ $$T_n f(x; a) := \sum_{k=0}^{n} \frac{f^{(k)} (a)}{n!} \cdot (x - a)^k$$ 
  $ = f(a) + f'(a) \cdot (x-a) + \frac{f''(a)}{2} \cdot (x - a)^2 + \ldots$
 \end{subbox}
 
