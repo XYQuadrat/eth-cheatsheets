@@ -60,10 +60,16 @@
 % To include sketches
 \usepackage{graphicx}
 
+% For hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true
+}
+
 % Metadata
 \title{Cheatsheet Analysis 1}
 \author{Julian Steinmann}
-\date{Juni 2021}
+\date{August 2021}
 
 % Math helper stuff
 \def\limn{\lim_{n\to \infty}}
@@ -82,12 +88,16 @@
 % Not actually an abstract. We abuse it for licencing
 \renewcommand{\abstractname}{Lizenz}
 \begin{abstract}
- Dieses Dokument ist unter CC BY-SA 3.0 lizenziert. Es darf verbreitet oder verändert werden, solange der Urheber erhalten bleibt und die neue Version unter CC BY-SA 3.0 lizenziert ist.
+ Dieses Dokument ist unter CC BY-SA 3.0 lizenziert. Es darf verbreitet oder verändert werden, solange der Urheber und die Lizenz erhalten bleibt. \\
+
+ \begin{center}
+ Der \LaTeX-Quelltext ist verfügbar auf \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{github.com/XYQuadrat/eth-cheatsheets}.
+ \end{center}
 \end{abstract}
 
 \section{Folgen}
 \subsection{Konvergenz}
-Eine Folge $(a_n)_{n\in \mathbb{N}}$ konvergiert gegen L \\ $\iff \lim_{n \to \infty} a_n = L $ \\ $\iff \forall \epsilon > 0 \ \exists N_e \ \forall n \ge N_\epsilon : \ | a_n - L | < e$. \\
+Eine Folge $(a_n)_{n\in \mathbb{N}}$ konvergiert gegen L \\ $\iff \lim_{n \to \infty} a_n = L $ \\ $\iff \forall \epsilon > 0 \ \exists N_e \ \forall n \ge N_\epsilon : \ | a_n - L | < e$\\
 
 Wir dürfen (o.B.d.A.) annehmen, dass $\epsilon$ durch eine Konstante $C \in \R$ beschränkt ist.
 Es gilt ausserdem:
@@ -529,14 +539,18 @@ Hier ein paar Bernoulli-Polynome: $B_0(x) = 1$, $B_1(x) = x - \frac{1}{2}$, $B_2
   B_k(x-n) & \forall x: n \leq x < n + 1
 \end{cases}$$
 
-Somit kommen wir auf die Euler-McLaurin-Summationsformel:
 \begin{mainbox}{Euler-McLaurin-Summationsformel}
   Sei $f: [0, n] \to \R$ $k$-mal stetig differenzierbar. Dann gilt: \\
   Für $k = 1$:
-  $$\sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0)) + \int_0^n \tilde{B}_1(x)f'(x)\dx$$
+  \begin{align*}
+  \sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0)) \\ + \int_0^n \tilde{B}_1(x)f'(x)\dx
+  \end{align*}
   Für $k>1$:
-  $$\sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0))+$$
-  $$\sum_{j = 2}^k \frac{(-1)^j B_j}{j!}(f^{(j-1)}(n) + f^{(j-1)}(0)) + \tilde{R}_k$$
+  \begin{align*}
+  \sum_{i = 1}^n f(i) = \int_0^n f(x) \dx + \frac{1}{2}(f(n) - f(0))+ \\
+  \sum_{j = 2}^k \frac{(-1)^j B_j}{j!}(f^{(j-1)}(n) + f^{(j-1)}(0)) + \tilde{R}_k
+  \end{align*}
+  
   wobei
   $$ \tilde{R}_k = \frac{(-1)^{k-1}}{k!} \int_0^n \tilde{B}_k(x)f^{(k)}(x)\dx$$
 \end{mainbox}
@@ -555,10 +569,10 @@ Die Gamma-Funktion konvergiert für alle $s > 0$ und hat folgende weiter Eingesc
   \item $\Gamma(s + 1) = s \Gamma(s)$
   \item $\Gamma$ ist logarithmisch konvex, d.h.: $$\Gamma(\lambda x + (2 - \lambda)y) \leq \Gamma(x)^\lambda \Gamma(y)^{1 - \lambda}$$ für alle $x, y > 0$ und $0 \leq \lambda \leq 1$
 \end{enumerate}
-Die Gamma Funktion ist die einzige Funktion $]0, \infty[ \to ]0, \infty[$, die $(1), (2)$ und $(3)$ erfüllt. Zudem gilt: $$\Gamma(x) = \limn \frac{n!n^x}{x(x+1)...(x+n)} \ \ \ \forall x > 0$$
+Die Gamma-Funktion ist die einzige Funktion $]0, \infty[ \to ]0, \infty[$, die $(1), (2)$ und $(3)$ erfüllt. Zudem gilt: $$\Gamma(x) = \limn \frac{n!n^x}{x(x+1)...(x+n)} \ \ \ \forall x > 0$$
 
 \subsection{Stirling'sche Formel}
-Die Stirling'sche Formel ist eine Abschätzung der Fakultät. Mit der Euler-McLaurin-Formel kombiniert erhalten wir
+Die Stirling'sche Formel ist eine Abschätzung der Fakultät. Mit der Euler-McLaurin-Formel kombiniert folgt
 $$n! = \frac{\sqrt{2\pi n} \cdot n^n}{e^n} \cdot \exp(\frac{1}{12n}+R_3(n))$$
 wobei $|R_3(n)| \le \frac{\sqrt{3}}{216}\cdot\frac{1}{n^2} \ \forall n \ge 1$
 
