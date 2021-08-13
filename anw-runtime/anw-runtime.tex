@@ -1,0 +1,63 @@
+\documentclass[a4paper,10pt]{article}
+
+%\usepackage[landscape]{geometry}
+
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\title{\vspace*{-2cm}Big \(\bigO\)-notation for A\&W algorithms}
+\date{}
+
+\pagenumbering{gobble}
+
+\newcommand{\bigO}{\mathcal{O}}
+
+\begin{document}
+    \maketitle
+    \renewcommand{\arraystretch}{1.25}
+    \subsection*{Definitions}
+    \begin{center}
+        \begin{tabularx}{\textwidth}{l >{\raggedleft\arraybackslash}X}
+            \toprule
+            Number of vertices in a graph & \(n\) \\
+            Number of edges in a graph & \(m\) \\
+            Highest capacity in network & \(U\) \\
+            Number of vertices at the edge of a convex hull & \(h\) \\
+            Variable chosen for desired accuracy of Monte-Carlo algorithms & \(\lambda\) \\
+            \bottomrule
+        \end{tabularx}
+    \end{center}
+
+    \subsection*{Overview of algorithms}
+
+    Some of the algorithms are randomized. They thus have their average runtime noted.
+    \begin{center}
+    \begin{tabular}{lr}
+        \toprule
+        Maximal flow (Ford-Fulkerson) & \(\bigO(mnU)\)\\
+        Maximal flow (Capacity Scaling) & \(\bigO(mn(1 + \log U))\) \\
+        Maximal flow (Dynamic Trees) & \(\bigO(mn\log n)\) \\
+        Smallest enclosing disc (naive) & \(\bigO(n^4)\) \\
+        Eulerian path in connected graph & \(\bigO(m)\) \\
+        Count Hamiltonian cycles in graph & \(\bigO(n^{2.81}\log n \cdot 2^n)\) \\
+        2-approximation of Metric TSP & \(\bigO(n^2)\) \\
+        1.5-approximation of Metric TSP & \(\bigO(n^3)\) \\
+        Maximal matching & \(\bigO(m)\) \\
+        Maximum matching in bipartite graph (Hopcroft-Karp) & \(\bigO(\sqrt{n}(n+m))\) \\
+        Perfect matching in \(2^k\)-regular bipartite graph & \(\bigO(m)\) \\
+        Greedy coloring & \(\bigO(m)\) \\
+        \(\bigO(\sqrt{n})\)-coloring for 3-colorable graphs & \(\bigO(m)\) \\
+        Convex hull (Jarvis-Wrap) & \(\bigO(nh)\) \\
+        Convex hull with \textit{sorted} points (LocalRepair) & \(\bigO(n)\) \\
+        QuickSelect & \(\bigO(n)\) \\
+        Miller-Rabin prime test & \(\bigO(\ln n)\) \\
+        Colorful-Path with length \(\log n\) & \(\bigO(mn \log n)\) \\
+        Minimal cut (naive) & \(\bigO(\lambda n^4)\) \\
+        Minimal cut (single bootstrapping) & \(\bigO(\lambda n^3)\) \\
+        Minimal cut (repeated bootstrapping) & \(\bigO(n^2\text{poly}(\log n))\) \\
+        Smallest enclosing disc (clever randomized) & \(\bigO(n \log n)\) \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{document}
