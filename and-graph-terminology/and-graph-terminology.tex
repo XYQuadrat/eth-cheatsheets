@@ -1,0 +1,91 @@
+\documentclass[a4paper,10pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FORMATTING
+%----------------------------------------------------------------------------------------
+
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\voffset}{-15pt}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage[a4paper, margin=2.5cm]{geometry} % Sets margin to 2.5cm for A4 Paper
+\usepackage[onehalfspacing]{setspace} % Sets Spacing to 1.5
+
+\usepackage[T1]{fontenc} % Use European encoding
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+\usepackage{charter} % Use the Charter font
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english, ngerman]{babel} % Language hyphenation and typographical rules
+
+\usepackage{amsthm, mathtools, amssymb} % Mathematical typesetting
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true, 
+linkcolor = black, 
+citecolor = black,
+urlcolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{listings} % Environment for non-formatted code
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+\usepackage{booktabs} % Enhances quality of tables
+\usepackage{tabularx}
+
+\usepackage{titlesec} % Allows customization of titles
+\titleformat{\section}{\large}{\currentSeries.\thesection}{1em}{}
+\renewcommand\thesubsection{\alph{subsection})} % Alphabetic numerals for subsections
+\titleformat{\subsection}[runin]{\large}{\thesubsection}{1em}{}
+\renewcommand\thesubsubsection{\roman{subsubsection}.} % Roman numbering for subsubsections
+\titleformat{\subsubsection}[runin]{\large}{\thesubsubsection}{1em}{}
+
+% DATES
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{.}
+
+% HEADER & FOOTER
+\title{Graph Terminology Overview}
+\author{Algorithms \& Datastructures}
+\pagenumbering{gobble}
+
+\begin{document}
+  \maketitle
+  \bigskip
+  \begin{center}
+    
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\linewidth}{llr}
+      \toprule
+      walk & Weg & A series of connected vertices. \\
+      trail & kantendisjunkter Weg & A walk without repeated edges. \\
+      path & Pfad & A walk without repeated vertices. \\
+      cycle\footnote{In some literature a cycle is also more generally equivalent to a circuit.} & Kreis & A path where \(v_0 = v_{end}\) holds.\footnote{This is not formally correct, since a path cannot have repeating vertices.} \\
+      circuit, tour & kantendisjunkter Zyklus & A trail where \(v_0 = v_{end}\) holds. \\
+      closed walk & Zyklus & A walk where \(v_0 = v_{end}\) holds.\\
+      \midrule
+      incident & inzident & connected (vertex \& edge)  \\
+      adjacent & adjazent & neighboring (vertex \& vertex) \\
+      reachable & \(u\) erreicht \(v\) & \(\exists\) walk from \(u\) to \(v\) \\
+      connected & zusammenhängend & \(G\) has one connected component \\
+      undirected & ungerichtet & all edges go both ways \\
+      acyclic & azyklisch & no cycles in \(G\) \\
+      \midrule
+      degree & Grad & \# of edges incident to \(v\) \\
+      indegree & Eingangsgrad & \# of incoming edges incident to \(v\) \\
+      outdegree & Ausgangsgrad & \# of outgoing edges incident to \(v\) \\
+      tree & Baum & connected graph without cycles \\
+      leaf & Blatt & vertex with degree 1 \\
+      forest & Wald & graph where every ZHK is a tree \\
+      connected component & Zusammenhangskomponente & parts of a graph that are connected \\
+      neighborhood & Nachbarschaft & subgraph of all vertices adjacent to \(v\)\\
+      bridge, cut edge & Brücke & If \(e\) removed, \(G\) no longer connected \\
+      articulation point, cut vertex & Artikulationsknoten& If \(v\) removed, \(G\) no longer connected \\
+      \bottomrule
+    \end{tabularx}
+    \\ \bigskip 
+  \end{center}
+\end{document}
