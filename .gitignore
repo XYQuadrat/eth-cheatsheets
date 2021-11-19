@@ -274,3 +274,8 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# PDFs are generated from an action
+*.pdf
+
+.directory
