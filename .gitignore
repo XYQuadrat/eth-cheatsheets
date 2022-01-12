@@ -277,5 +277,6 @@ TSWLatexianTemp*
 
 # PDFs are generated from an action
 *.pdf
+!include*.pdf
 
 .directory
