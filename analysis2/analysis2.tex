@@ -132,7 +132,7 @@ Wir betrachten DGL der Form \[y' + a(x)y = b(x)\]
 Sei \(f_p = z(x)e^{-A(x)}\) für eine Funktion \(z: I \to \C\). Wir 
 
 
-\section{Ableitungen in \(\R^n\)}
+\section{Ableitungen in \texorpdfstring{\(\R^n\)}{Rⁿ}}
 \begin{subbox}{Monom}
   Ein Monom vom Grad \(e\) ist
   \begin{align*}
@@ -230,13 +230,13 @@ Sei \(f: \X \subset \R^n \to \R^m\) und \(\X\) eine offene Menge. Die Jacobi-Mat
 \[J_f = \left( \pdv{f_i}{x_j} \right)_{\substack{1 \leq j \leq n \\ 1 \leq i \leq m}}\]
 \end{mainbox}
 \begin{mainbox}{Gradient}
-  Die Jacobi-Matrix einer Funktion \(f: X \subset \R^n \to \R\) ist ein Spaltenvektor, der mit \(\nabla f\) bezeichnet wird. Die geometrische Interpretation ist ein Vektorfeld, definiert durch \(\nabla f\), welches die Richtung und Magnitude des grössten Wachstums von \(f\) angibt.
+  Die Jacobi-Matrix einer Funktion \(f: \X \subset \R^n \to \R\) ist ein Spaltenvektor, der mit \(\nabla f\) bezeichnet wird. Die geometrische Interpretation ist ein Vektorfeld, definiert durch \(\nabla f\), welches die Richtung und Magnitude des grössten Wachstums von \(f\) angibt.
 \end{mainbox}
 \begin{subbox}{Divergenz}
   Die Divergenz einer Funktion \(f\) ist die Spur der Jacobi-Matrix von \(f\). \[\text{div}(f)(x_0) = \text{Tr}(J_f(x_0)) = \sum_{i=0}(J_f)_{i,i}\]
 \end{subbox}
 \subsection{Differenzierbarkeit}
-Sei \(f: \X \subset \R^n \to \R^m, x_0 \in \X\). \(f\) ist differenzierbar an der Stelle \(x_0\), falls eine lineare Abbildung \(L: \R^n \to R^m\) (d.h. eine \(m \times n\)-Matrix \(L\)) existiert, so dass \(\forall x_0 + v \in \X\):
+Sei \(f: \X \subset \R^n \to \R^m, x_0 \in \X\). \(f\) ist differenzierbar an der Stelle \(x_0\), falls eine lineare Abbildung \(L: \R^n \to \R^m\) (d.h. eine \(m \times n\)-Matrix \(L\)) existiert, so dass \(\forall x_0 + v \in \X\):
 \[f(x_0 + v) = f(x_0) + L(v) + R(x_0,v)\]
 wobei für den Fehlerterm \(R\) folgendes gilt: 
 \[\lim_{v \to 0} \frac{||R(x_0,v)||}{||v||} = 0\]
@@ -275,7 +275,7 @@ $$\pdv{f}{x_i, x_j} = \pdv{f}{ x_j, x_i}$$
   \[\text{Hess}_f(x_0) := \left(\pdv{f(x_0)}{x_i, x_j}\right)_{1\le i,j \le n}\] 
 \end{mainbox}
 \subsection{Taylorpolynome}
-Sei \(k \le 1\) und \(f: \X \mapsto R\) ist eine Funktion der Klasse \(C^k\) auf \(\X\). Sei \(x_0 \in \X\) fix. Das \(k\)-te Taylorpolynom von \(f\) am Punkt \(x_0\) ist das Polynom in \(n\) Variablen vom Grad \(\le k\):
+Sei \(k \le 1\) und \(f: \X \mapsto \R\) ist eine Funktion der Klasse \(C^k\) auf \(\X\). Sei \(x_0 \in \X\) fix. Das \(k\)-te Taylorpolynom von \(f\) am Punkt \(x_0\) ist das Polynom in \(n\) Variablen vom Grad \(\le k\):
 \begin{align*}
   &T_k f(y; x_0) = f(x_0) + \sum_{i=1}^n \partial_i f(x_0) \cdot y_i + \dots \\
   &+ \sum_{m_1 + \cdots + m_n = k} \frac{1}{m_1! \cdots m_n!} \pdv{^k f(x_0) }{x_1^{m_1} \cdots \partial x_n^{m_n}} \cdot y_1^{m_1} \cdots y_n^{m_n}
@@ -377,19 +377,133 @@ Wenn wir Minimas/Maximas einer Funktion \(f: \X \mapsto \R\) mit einer Nebenbedi
   \[\exists \delta > 0, f(y) \le (\ge) f(x_0), \quad \forall y \in B_\delta(x_0) \cap Y\]
   gilt. Nun ist entweder \(\nabla g(x_0) = 0\) oder \(\exists \lambda \in \R, \nabla f(x_0) = \lambda \cdot \nabla g(x_0)\), wobei \(\lambda\) dann Lagrange-Multiplikator gennant wird.
 \end{subbox}
-\section{Integrale in \(R^n\)}
+\section{Integrale in \texorpdfstring{\(\R^n\)}{Rⁿ}}
+\subsection{Einfache Integrale}
+Für \(f: \R \mapsto \R^n\) ist das Integral definiert als
+\[\int_a^b f(t)dt = 
+\begin{pmatrix*}
+  \int_a^b f_1(t) dt \\
+  \vdots\\
+  \int_a^b f_n(t) dt
+\end{pmatrix*}
+\]
 
+\begin{mainbox}{Kurve}
+  Eine parametrisierte Kurve in \(\R^n\) ist eine stetige Ableitung \(\gamma: \left[a,b\right] \mapsto \R^n\) wobei \(\gamma\) stückweise in \(C^1\) ist, d.h. wir können \(\gamma\) so partitionieren, das alle Partitionen in \(C^1\) sind. Eine parametrisierte Kurve muss nicht injektiv sein.
+\end{mainbox}
+\subsection{Wegintegrale}
+Sei \(\gamma : \left[a,b\right] \mapsto \R^n\) eine parametrisierte Kurve und \(\X \subset \R^n\) eine Menge, welche das Bild von \(\gamma\) beinhaltet. Sei \(f : \X \mapsto \R^n\) eine stetige Funktion. Dann ist ein Wegintegral (auch: Kurvenintegral) definiert als:
+\[\int_\gamma f(s) ds = \int_a^b f(\gamma(t)) \cdot \gamma'(t) dt\]
 
+Wegintegrale haben folgende Eigenschaften:
+\begin{enumerate}
+  \item Sie sind unabhängig von orientierungserhaltenden Reparametrisierungen, d.h. sie hängen nur vom Bild der Kurve und nicht von der Parametrisierung ab.
+  \begin{align*}
+    \gamma&: [a,\, b] \mapsto \R^n\\
+    \tilde{\gamma}&: [c,\, d] \mapsto \R^n\\
+    \varPhi&: [c, \, d] \mapsto [a, \, b]\\
+    \tilde{\gamma} &= \gamma \circ \varPhi = \gamma(\varPhi)\\
+    \Rightarrow &\int_\gamma f(s) \; ds = \int_{\tilde{\gamma}} f(s) \; ds
+  \end{align*}
+  \item Sei \(\gamma_1 + \gamma_2\) ein Pfad gegeben durch die Vereinigung zweier Kurven. Dann gilt
+  \begin{align*}
+    \gamma_1 + \gamma_2 &:=
+    \begin{cases}
+      \gamma_1(t) \quad& t \in [a, \, b]\\
+      \gamma_2(t) \quad& t \in [b, \, d + b - c]
+    \end{cases}\\
+    \int_{\gamma_1 + \gamma_2} f(s) \; ds &= \int_{\gamma_1} f(s) \; ds + \int_{\gamma_2} f(s)\; ds
+  \end{align*}
+  \item Sei \(\gamma : \left[a,b\right] \mapsto \R^n\) ein Pfad und \(-\gamma\) ist der Pfad in die Gegenrichtung (d.h. \((-\gamma)(t) = \gamma(a + b - t)\)). Dann gilt
+  \[\int_{-\gamma} f(s)ds = -\int_\gamma f(s) ds\]
+\end{enumerate}
 
+\subsection{Potential}
+Ein differenzierbares skalares Feld \(g: \X \subset \R^n \mapsto \R\) mit \(\nabla g = f, f: \X \mapsto \R^n\) wird ein \textbf{Potential} von \(f\) genannt. Dies kann wie folgt verwendet werden:
+\begin{align*}
+  \int_\gamma f \; ds &= \int_a^b f(\gamma(t)) \cdot \gamma'(t) \; dt\\
+  &= \int_a^b \nabla g(\gamma(t)) \cdot \gamma'(t) \; dt\\
+  &= \int_a^b \frac{d}{dt} (g \circ \gamma) \; dt\\
+  &= (g \circ \gamma)(b) - (g \circ \gamma)(a)
+\end{align*}
 
+\section{Konservative Vektorfelder}
+Sei \(\X\) offen und \(f: \X \subset \R^n \mapsto \R^n\) ein stetiges Vektorfeld. Die folgenden Aussagen sind äquivalent:
+\begin{enumerate}
+  \item Falls für irgendwelche \(x_1, x_2 \in \X\) das Wegintegral \(\int_\gamma f(s) ds\) unabhängig von der Kurve in \(\X\) von \(x_1\) nach \(x_2\) ist, dann ist das Vektorfeld \(f\) konservativ.
+  \item Jedes Wegintegral in \(f\) entlang einer geschlossenen Kurve (Schlaufe) ist 0.
+  \item Ein Potential für \(f\) existiert.
+\end{enumerate}
+Es gilt ausserdem folgende notwendige, aber nicht ausreichende Bedingung:
+\[f \text{ ist konservativ }\implies \pdv{f_i}{x_j} = \pdv{f_j}{x_i}\]
 
+\begin{subbox}{Wegzusammenhängend}
+  Sei \(\X \subset \R^n\) offen. \(\X\) ist wegzusammenhängend, falls für jedes Paar an Punkten \(x, y \in \X\) ein Pfad \(\gamma : \left(0,1\right] \mapsto \X\) existiert, der in \(C^1\) ist und \(\gamma(0) = x, \gamma(1) = y\) hält.
+\end{subbox}
 
+\begin{subbox}{Sternförmig}
+  Eine Teilmenge \(\X \subset \R^n\) wird sternförmig genannt, falls \(\exists x_0 \in \X\) so dass \(\forall x \in \X\) eine Linie \(x_0\) nach \(x\) existiert, die komplett in \(\X\) enthalten ist. 
+  \[\X \text{ ist konvex} \implies \X \text{ ist sternförmig}\]
+\end{subbox}
+Wenn \(\X\) eine sternförmige, offene Teilmenge von \(\R^n\) und \(f \in C^1\) ein Vektorfeld ist, dann gilt:
+\begin{align*}
+  \partial_j f_i = \partial_i f_j \quad \forall i,\, j
+  \quad &\Rightarrow \quad \text{$f$ ist konservativ}\\
+  \text{curl}(f) = \begin{pmatrix}
+    0\\0\\0
+  \end{pmatrix}
+  \quad &\Rightarrow \quad \text{$f$ ist konservativ}\\
+\end{align*}
 
+\subsection{Riemann-Integral in \texorpdfstring{\(\R^2\)}{R²}}
+\begin{subbox}{Partition in zwei Dimensionen}
+  Eine Partition \(P\) eines abgeschlossenen Rechtecks \(R = \left[a,b\right] \times \left[c,d\right]\) ist eine Menge von Rechtecken. Für jede Partition \(P_x : a = x_0 < \ldots < x_n = b\) von \(\left[a,b\right]\) und \(P_y\) (analog) erhalten wir eine Partition \(P_{i,j} = \left[x_{i-1}, x_i\right] \times \left[y_{j-1},y_j\right]\) von \(R\) mit der Fläche \(\mu({P_{i,j}} = (x_i - x_{i-1})(y_j - y_{j-1}))\).
+\end{subbox}
+Mit den Hilfsdefinitionen
+\[f_{i,j} = \inf_{P_{i,j}} f(x,y), \quad F_{i,j} = \sup_{P_{i,j}} f(x,y)\]
+können wir die Unter- und Obersumme bestimmen:
+\begin{align*}
+  s(P_x \times P_y) &= \sum_{i=1}^n \sum_{j=1}^m f_{i,j} \cdot \mu(P_{i,j}) \\
+  S(P_x \times P_y) &= \sum_{i=1}^n \sum_{j=1}^m F_{i,j} \cdot \mu(P_{i,j})
+\end{align*}
+Sei \(f: R \mapsto \R\) beschränkt. \(f\) ist auf \(R\) integrierbar, falls \(\sup_{(P_x, P_y)} s(P_x, P_y) = \inf_{(P_x, P_y) S(P_x, P_y)}\) gilt. Dieser Wert ist dann definiert als:
+\[\int_R f(x,y) \mathop{d(x,y)} \text{ oder } \int\int_R f(x,y) \mathop{d(x,y)}\]
 
+\subsubsection*{Nicht-Quadratische Flächen}
+Sei \(A \subset R\) eine Fläche. \(f : A \subset R \mapsto \R\) ist auf \(A\) integrierbar, falls \(f \cdot \X_A\) auf \(R\) integrierbar ist. 
+\[\int_R f(x,y) \cdot \X_A(x,y) \mathop{d(x,y)} \text{ oder } \int_A f(x,y) \mathop{d(x,y)}\]
+\(\X_A\) ist die charakteristische Funktion von \(A\).
 
-
+\subsubsection*{Eigenschaften des Integrals}
+Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes:
+\begin{enumerate}
+  \item \(\alpha, \beta \in \R: \alpha f + \beta g\) ist integrierbar:
+  \[\int_A \alpha f + \beta g \mathop{d(x,y)} = \alpha \int_A f \mathop{d(x,y)} + \beta \int_A g \mathop{d(x,y)}\]
+  \item Falls \(\forall (x,y) \in A: f(x,y) \le g(x,y)\), dann gilt:
+  \[\int_A f(x,y) \mathop{d(x,y)} \le \int_A g(x,y) \mathop{d(x,y)}\]
+  \item Falls \(f(x,y) \ge 0\) und \(B \subset A\), dann gilt:
+  \[\int_B f(x,y) \mathop{d(x,y)} \le \int_A f(x,y) \mathop{d(x,y)}\]
+  \item Dreiecksungleichung:
+    \[\left| \int_A f(x,y) \mathop{d(x,y)}\right| \le \int_A \left|f(x,y)\right| \mathop{d(x,y)}\]
+  \item Falls \(f = 1\), dann gilt:
+  \[\int_A f(x,y) \mathop{d(x,y)} = \int_A 1 \mathop{d(x,y)} = \gamma(A)\]
+\end{enumerate}
+\begin{subbox}{Satz von Stolz}
+  Sei \(f: R \mapsto \R\) integrierbar auf \(R = \left[a,b\right] \times \left[c,d\right]\). Sei \(y \mapsto f(x,y)\) integrierbar auf \(\left[c,d\right]\) für jedes \(x \in \left[a,b\right]\). Dann folgt:
+  \[\int_R f(x,y) \mathop(d(x,y)) = \int_a^b \left(\int_c^d f(x,y) \mathop{dy}\right) \mathop{dx}\]
+\end{subbox}
 
 \newpage
+
+
+
+
+
+
+
+
+
+
 
 \begin{mainbox}{Partielle Integration}
  \vspace{-12pt}
