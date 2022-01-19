@@ -91,11 +91,11 @@
 \maketitle
 
 % Not actually an abstract. We abuse it for licencing
-\renewcommand{\abstractname}{License}
+\renewcommand{\abstractname}{Lizenz}
 \begin{abstract}
-  Dieses Dokument ist unter CC BY-SA 4.0 lizenziert. Es darf verbreitet oder verändert werden, solange der Urheber und die Lizenz erhalten bleibt. \\
-
- \begin{center}
+  Dieses Dokument ist unter CC BY-SA 4.0 lizenziert. Es darf verbreitet oder verändert werden, wenn der Urheber \& die Lizenz erhalten bleibt. \\
+  
+  \begin{center}
  Der \LaTeX-Quelltext ist verfügbar auf \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{github.com/XYQuadrat/eth-cheatsheets}.
  \end{center}
 \end{abstract}
@@ -113,7 +113,7 @@ Die Menge \(S\) an Lösungen ist ein Subset des Raums der komplexen Funktionen a
   \item alle Koeffizienten sind stetige Funktionen
   \item keine Produkte von $y$ oder deren Ableitungen
   \item keine Potenzen von $y$ oder deren Ableitungen
-  \item keine von $y$ oder deren Ableitungen abhängige Funktionen
+  \item keine Funktionen von $y$ oder deren Ableitungen
 \end{itemize}
 
 \subsection{Lineare DGL erster Ordnung}
@@ -129,8 +129,72 @@ Wir betrachten DGL der Form \[y' + a(x)y = b(x)\]
   \item (partikuläre Lösung) Verwende entweder ``Variation der Konstanten'' oder ``Fundiertes Raten''.
 \end{enumerate}
 \subsection{Variation der Konstanten}
-Sei \(f_p = z(x)e^{-A(x)}\) für eine Funktion \(z: I \to \C\). Wir 
+Sei \(f_p = z(x)e^{-A(x)}\) für eine Funktion \(z: I \to \C\). Dann ist \(z'(x) = b(x) e^{A(x)}\) und somit \[z(x) = \int_{x_0}^x b(t) e^{A(t)} \mathop{dt}\] Daraus erhalten wir \[f_p = \int_{x_0}^x b(t) e^{A(t)} \mathop{dt} \cdot e^{-A(x)}\]
 
+\subsection{Fundiertes Raten}
+
+Wenn $b(x)$ von einer bestimmten Form ist, versuchen wir folgende $f_p$:
+
+\begin{center}
+  \renewcommand*{\arraystretch}{1.6}
+  \begin{tabular}{cc} 
+    \toprule
+    $b(x)$ & Raten \\ 
+    \midrule
+    $a \cdot e^{\alpha x}$ & $b \cdot e^{\alpha x}$\\
+    $a \sin(\beta x)$ & $c \sin(\beta x) + d \cos(\beta x)$\\
+    $b \cos(\beta x)$ & $c \sin(\beta x) + d \cos(\beta x)$\\
+    $a e^{\alpha x} \sin(\beta x)$ & $e^{\alpha x} \Big( c \sin(\beta x) + d \cos(\beta x) \Big)$\\
+    $b e^{\alpha x} \cos(\beta x)$ & $e^{\alpha x} \Big( c \sin(\beta x) + d \cos(\beta x) \Big)$\\
+    $P_n e^{\alpha x}$ & $R_n(x) \cdot e^{\alpha x}$\\
+    $P_n e^{\alpha x} \sin(\beta x)$ & $e^{\alpha x} \left( R_n \sin(\beta x) + S_n \cos(\beta x) \right)$\\
+    $P_n e^{\alpha x} \cos(\beta x)$ & $e^{\alpha x} \left( R_n \sin(\beta x) + S_n \cos(\beta x) \right)$\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\(P_n, R_n \) und \(S_n\) sind Funktionen von \(x\).
+
+\begin{enumerate}
+  \item Wenn \(b(x)\) eine Linearkombination der Basisfunktionen ist, dann versuche eine Linearkombination.
+  \item Wenn die geratene Lösung der homogenen Lösung entspricht, dann multipliziere mit \(x^m\), wobei \(x\) die Vielfachheit der Wurzel ist.
+\end{enumerate}
+
+\subsection{Lineare DGL mit konstanten Koeffizienten}
+Wir betrachten DGL der Form
+\[y^{(k)} + a_{k-1} y^{(k-1)} + \ldots + a_1 y' + a_0 y = b(x)\]
+Wir suchen eine homogene Lösung der Form \(e^{\lambda x}\). Jetzt können wir das charakteristische Polynom lösen:
+\begin{align*}
+  P(\lambda) = e^{\lambda x} \left(\lambda^k + a_{k-1}\lambda^{k-1} + \ldots + a_0\right) = 0 \\ 
+  \implies 0 = \lambda^k + a_{k-1}\lambda^{k-1} + \ldots+ a_0
+\end{align*}
+
+Die Nullstellen von \(P(\lambda)\) sind Eigenwerte \(\lambda_i\), mit dazugehöriger Multiplizität \(m_r\). Nun spannen die Funktionen \(f_{i,r} : x \to x^r e^{\lambda_i x}\) den Raum der Lösungen \(S_0\) auf.
+
+Falls \(\lambda = \beta + \gamma i\) eine komplexe Nullstelle von \(P(\lambda)\) ist, so ist auch 
+\(\bar{\lambda} = \beta - \gamma i\) eine Nullstelle. Daher sind \(f_1 = e^{\lambda x}\) und \(f_2 = e^{\bar{\lambda} x}\) Lösungen und könen durch eine Linearkombination von \(\tilde{f_1} = e^{\beta x} \cos(\gamma x)\) und \(\tilde{f_2} = e^{\beta x} \sin(\gamma x)\) ersetzt werden.
+
+Falls \(y^{(k)} + a_{k-1}y^{(k-1)} + \dots + a_0 y = 0\) reelle Koeffizienten hat, so führt jedes Paar von komplex konjugierten Nullstellen $\beta_j \pm \gamma_j i$ mit Multiplizität $m_j$ zu einer Lösung
+\[x^l e^{\beta_j x} \Big( \cos(\gamma_j x) + i \sin(\gamma_j x) \Big) \quad \text{für }0 \leq l \leq m_j\]
+
+Um eine partikuläre Lösung zu finden, können wir wieder fundiertes Raten oder Variation der Konstanten verwenden. 
+Variation der Konstanten funktioniert wie folgt (hier 2D):
+
+\begin{enumerate}[label=(\arabic*)]
+  \item Nimm an, dass die homogene Lösung \(f = z_1 f_1 + z_2 f_2\) ist
+  \item Versuche nun \(f_p = z_1(x) f_1 + z_2(x) f_2\)
+  \item Löse das folgende System
+  \begin{align*}
+    z_1'(x) f_1 + z_2'(x) f_2 &= 0\\
+    z_1'(x) f_1' + z_2'(x) f_2' &= b(x)\\
+  \end{align*}
+  Hier gehen wir wie folgt vor:
+  \begin{align*}
+    W &= f_1 f_2' - f_2 f_1' \neq 0\\
+    \Rightarrow z_1' &= \frac{-f_2 b}{W} \; , z_2' = \frac{-f_1 b}{W}\\
+    \Rightarrow f_p &= -f_1 \int \frac{f_2 b}{W} dt + f_2 \int \frac{f_1 b}{W} dt
+  \end{align*}
+\end{enumerate}
 
 \section{Ableitungen in \texorpdfstring{\(\R^n\)}{Rⁿ}}
 \begin{subbox}{Monom}
@@ -263,7 +327,7 @@ Die Ableitung einer Funktion ist gegeben durch
   Der Tangentialraum eines Graphen \(f\) am Punkt \(x_0\) ist gegeben durch \(g(x) = f(x_0) + df(x_0)(x-x_0)\).
 \end{subbox}
 \subsection{Höhere Ableitungen}
-Sei \(\X \subset \R^n\) offen, \(f: \X \mapsto \R^m\). \(f\) ist eine Funktion der Klasse \(C^1\) falls \(f\) auf \(\X\) differenzierbar ist und alles partiellen Ableitungen stetig sind. \\
+Sei \(\X \subset \R^n\) offen, \(f: \X \mapsto \R^m\). \(f\) ist eine Funktion der Klasse \(C^1\) falls \(f\) auf \(\X\) differenzierbar ist und alle partiellen Ableitungen stetig sind. \\
 Allgemein gilt \(f \in \C^k\) für \(k \ge 2\) wenn \(f\) differenzierbar ist und für alle partiellen Ableitungen \(\partial_{x_i} f \in C^{k-1}\) gilt. \\
 \(f\) ist glatt oder in \(C^\infty\) falls \(\forall k: f \in C^k \). Alle Polynome sind glatt.
 
@@ -427,7 +491,7 @@ Ein differenzierbares skalares Feld \(g: \X \subset \R^n \mapsto \R\) mit \(\nab
   &= (g \circ \gamma)(b) - (g \circ \gamma)(a)
 \end{align*}
 
-\section{Konservative Vektorfelder}
+\subsection{Konservative Vektorfelder}
 Sei \(\X\) offen und \(f: \X \subset \R^n \mapsto \R^n\) ein stetiges Vektorfeld. Die folgenden Aussagen sind äquivalent:
 \begin{enumerate}
   \item Falls für irgendwelche \(x_1, x_2 \in \X\) das Wegintegral \(\int_\gamma f(s) ds\) unabhängig von der Kurve in \(\X\) von \(x_1\) nach \(x_2\) ist, dann ist das Vektorfeld \(f\) konservativ.
@@ -493,18 +557,48 @@ Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes
   \[\int_R f(x,y) \mathop(d(x,y)) = \int_a^b \left(\int_c^d f(x,y) \mathop{dy}\right) \mathop{dx}\]
 \end{subbox}
 
-\newpage
+\begin{mainbox}{Nullmenge}
+  Eine Nullmenge \(X \subset R \subset \R^2\) ist eine Menge, so dass für alle \(\epsilon > 0\) eine endliche Menge an Rechtecken \(R_k, 1 \le k \le n\) existiert, so dass:
+  \[X \subset \bigcup_{k = 1}^n R_k, \; \sum_{k = 1}^n \mu (R_k) < \epsilon\]
+  (Informell: Wir können die ganze Menge mit einer endlichen Menge an Rechtecken beliebiger Grösse überdecken.)
+\end{mainbox}
 
+\subsubsection*{Weitere Integrationskriterien}
+\begin{enumerate}
+  \item Sei \(R\) ein kompaktes Rechteck und \(f: R \mapsto \R\) ist stetig. Dann ist \(f\) integrierbar auf \(R\).
+  \item Sei \(f: R \mapsto \R\) beschränkt und \(X\) die Menge aller nicht stetigen Punkte von \(f\). Wenn \(X\) eine Nullmenge ist, dann ist \(f\) auf \(R\) integrierbar.
+  \item Sei \(\varphi_1, \varphi_2: \left[a,b\right]\mapsto \R\)stetig mit \(\forall x \in \left[a,b\right]: \varphi_1(x) \le \varphi_2(x)\) und \(A = \{(x,y)\mid a\le x \le b, \varphi_1(x) \le y \le \varphi_2(x)\}\). Falls \(f: A \mapsto \R\) stetig ist, so ist \(f\) auf \(A\) integrierbar und es folgt dass
+  \[\int_A f(x,y) \mathop{d(x,y)} = \int_a^b \left(\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) \mathop{dy}\right) \mathop{dx}\]
+\end{enumerate}
 
+\subsection{Variablenwechsel}
+Sei \(\partial A\) der Rand einer Menge \(A\):
+\begin{align*}
+    \partial A = \Big\{ &(x,y) \in \R^2 \mid \forall \delta > 0, \\ &R = (x - \delta, x + \delta) \times (y - \delta, y + \delta), \\
+    &A \cap R \neq \emptyset \text{ und } \R^2 \backslash A \cap R \neq \emptyset \Big\}
+\end{align*}
 
+Sei \(\varphi : B \mapsto A\) eine stetige Abbildung, wobei \(A= A_0 \cup \partial A, \) \(B = B_0 \cup \partial B\) kompakte Mengen mit \(A_0, B_0\) offen und \(\partial A, \partial B\) Nullmengen sind. Wenn \(\varphi : B \setminus \N \mapsto A\) injektiv ist und \(N \subset B\) die Nullmenge ist, dann folgt
+\[\int_A f(x,y) \mathop{d(x,y)} = \int_B f(\varphi(u,v)) \cdot \left|\det J_\varphi (u,v)\right| \mathop{d(u,v)}\]
+Für Polarkoordinaten: \(\mathop{dx}\mathop{dy} = r \mathop{dr} \mathop{d\theta}\)
 
+\subsection{Satz von Green}
+Der Satz von Green ist ein Verallgemeinerung des Fundamentalsatzes der Analysis auf \(\R^2\). Er stellt eine Beziehung zwischen Linienintegralen und Doppelintegralen über einen von einer parametrisierten Kurve umschlossenen Bereich her. 
 
+Eine parametrisierte Jordan-Kurve ist eine geschlossene parametrisierte Kurve \(\gamma : \left[a,b\right] \mapsto \R\), wobei \(\gamma : \left] a,b \right] \mapsto \R\) injektiv ist. Eine Jordan-Kurve in \(\R^2\) ist das Bild einer parametrisierten Jordan-Kurve.
 
+Seien \(b_1, b_2\) die Basisvektoren von \(\R^2\). Dann ist die Orientierung genau dann positiv, wenn die Matrix \(\left[b_1, b_2\right]\) eine positive Determinante hat.
 
+Ein reguläres Gebiet ist eine offene, beschränkte Teilmenge \(A\subset \R^2\), deren Rand \(\partial A\) endliche Vereinungen von disjunkten Jordan-Kurven ist.
 
+Eine parametrisierte Jordan-Kurve \(\gamma\), die eine Randkomponente von \(A\) bildet, hat einen positiven Umlaufsinn, falls \((n(t), \gamma'(t))\) eine positiv orientierte Basis von \(\R^2\) bildet. Dabei ist \(n(t)\) der Einheitsvektor, welcher orthogonal zu \(\gamma'(t)\) steht und von \(A\) weg zeigt.
 
+\begin{mainbox}{Satz von Green}
+  Sei \(A \subset \R^2\) ein reguläres Gebiet und \(F: U \mapsto \R^2\) ein Vektorfeld der Klasse \(C^1\), wobei \((A \cup \partial A) \subset U \subset \R^2\). Dann gilt
+  \[\int_{\partial a} F(x) \mathop{ds} = \int \int_A \left(\partial_x f_2 - \partial_y f_1\right) \mathop{dx} \mathop{dy}\]
+\end{mainbox}
 
-
+\section{Themen aus Analysis I}
 \begin{mainbox}{Partielle Integration}
  \vspace{-12pt}
  $$\int f'(x) g(x) \dx = f(x)g(x) - \int f(x) g'(x) \dx$$
@@ -674,5 +768,6 @@ Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes
 
 % end of larger array spacing
 \endgroup
-
+\section{Quellen}
+Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von Danny Camenisch (https://github.com/dannycamenisch) inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Schliesslich sind die Definitionen meistens dem Skript ``Analysis 1'' von Marc Burger entnommen.
 \end{document}
