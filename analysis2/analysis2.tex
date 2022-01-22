@@ -360,8 +360,8 @@ dann gilt
 
 \subsubsection*{Beispiele}
 \begin{align*}
-  T_1 f(\vec{x}; x_0) &:= f(x_0) + \nabla f(x_0) \cdot (x - x_0) \\
-  T_2 f(\vec{x}; x_0) &:= T_1f + \frac{1}{2} \cdot (x - x_0)^\top \cdot \text{Hess}_f(x_0) \cdot (x - x_0)
+  T_1 f(\vec{x}; x_0) &:= f(x_0) + \nabla f(x_0) \cdot \vec{x} \\
+  T_2 f(\vec{x}; x_0) &:= T_1f + \frac{1}{2} \cdot \vec{x}^\top \cdot \text{Hess}_f(x_0) \cdot \vec{x}
 \end{align*}
 
 \subsection{Definit}
@@ -582,6 +582,7 @@ Sei \(\varphi : B \mapsto A\) eine stetige Abbildung, wobei \(A= A_0 \cup \parti
 \[\int_A f(x,y) \mathop{d(x,y)} = \int_B f(\varphi(u,v)) \cdot \left|\det J_\varphi (u,v)\right| \mathop{d(u,v)}\]
 Für Polarkoordinaten: \(\mathop{dx}\mathop{dy} = r \mathop{dr} \mathop{d\theta}\)
 
+\textbf{Achtung: Multiplikation mit der Determinante von Jacobi-Matrix nicht vergessen!}
 \subsection{Satz von Green}
 Der Satz von Green ist ein Verallgemeinerung des Fundamentalsatzes der Analysis auf \(\R^2\). Er stellt eine Beziehung zwischen Linienintegralen und Doppelintegralen über einen von einer parametrisierten Kurve umschlossenen Bereich her. 
 
