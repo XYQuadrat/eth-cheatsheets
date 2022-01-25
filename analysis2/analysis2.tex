@@ -133,7 +133,7 @@ Sei \(f_p = z(x)e^{-A(x)}\) für eine Funktion \(z: I \to \C\). Dann ist \(z'(x)
 
 \subsection{Fundiertes Raten}
 
-Wenn $b(x)$ von einer bestimmten Form ist, versuchen wir folgende $f_p$:
+Wenn $b(x)$ von einer bestimmten Form ist, versuchen wir folgende $f_p$, wobei wir unseren Versuch in die DGL einsetzen, was uns dann ein Gleichungssystem für die Konstanten gibt:
 
 \begin{center}
   \renewcommand*{\arraystretch}{1.6}
@@ -153,7 +153,7 @@ Wenn $b(x)$ von einer bestimmten Form ist, versuchen wir folgende $f_p$:
   \end{tabular}
 \end{center}
 
-\(P_n, R_n \) und \(S_n\) sind Funktionen von \(x\).
+\(P_n, R_n \) und \(S_n\) sind Funktionen von \(x\). 
 
 \begin{enumerate}
   \item Wenn \(b(x)\) eine Linearkombination der Basisfunktionen ist, dann versuche eine Linearkombination.
@@ -240,7 +240,7 @@ Sei \(f: \X \subset \R^n \to \R^m\)  und \(x_0 \in \X\). \(f\) ist stetig in \(x
   \item \(f(x = x_1, \ldots, x_n) \mapsto (f_1(x),\ldots,f_m(x))\) und \(f_i: \R^n \to \R\) stetig \(\iff \forall i = 1, \ldots, m \ f_i\) stetig.
   \item Lineare Funktionen \(x \mapsto Ax\) sind stetig.
   \item Polynome sind stetig.
-  \item Summen und Produkte von stetigen Funktionen sind stetig.
+  \item Summen + Produkte von stetigen Funktionen sind stetig.
   \item Funktionen unterschiedlicher Variablen sind stetig, falls alle Variablen stetig sind.
   \item Verknüpfungen stetiger Funktionen sind stetig.
 \end{enumerate}
@@ -344,19 +344,6 @@ Sei \(k \le 1\) und \(f: \X \mapsto \R\) ist eine Funktion der Klasse \(C^k\) au
   &T_k f(y; x_0) = f(x_0) + \sum_{i=1}^n \partial_i f(x_0) \cdot y_i + \dots \\
   &+ \sum_{m_1 + \cdots + m_n = k} \frac{1}{m_1! \cdots m_n!} \pdv{^k f(x_0) }{x_1^{m_1} \cdots \partial x_n^{m_n}} \cdot y_1^{m_1} \cdots y_n^{m_n}
 \end{align*}
-Mit folgender Notation kann der Term vereinfacht werden:
-\begin{align*}
-    m!  &= m_1! \cdots m_n! \\
-    |m| &= m_1 + ... + m_n \\
-    y^m &= y_1^{m_1} \cdots y_n^{m_n} \\
-    \partial_x^m f &= \frac{\partial^{|m|} f}{\partial x_1^{m_1} \cdots \partial x_n^{m_n}}
-\end{align*}
-Dann ist der obrige Term gleich
-\[T_k f(y; x_0) = \sum_{|m| \leq k} \frac{1}{m!}\partial_x^m f(x_0) \cdot y^m\]
-Wenn wir \(E_k f(x, x_0)\) wie folgt definieren:
-\[f(x) = T_k f(x - x_0, x_0) + E_k f(x, x_0)\]
-dann gilt
-\[\lim_{x\to x_0} \frac{E_k f(x,x_0)}{||x-x_0||^k} = 0\]
 
 \subsubsection*{Beispiele}
 \begin{align*}
@@ -419,6 +406,7 @@ Wenn \(x_0 \in \X\) ein lokales Extrema ist, dann gilt ausserdem \(\nabla f(x_0)
 
 \subsubsection*{Kritische Punkte}
 Ein Punkt \(x_0 \in \X\) wo \(\nabla f(x_0) = 0\) gilt ist ein kritischer Punkt. Wenn \(\det(\text{Hess}_f(x_0)) \ne 0\), dann ist \(x_0\) nicht-degeneriert.
+
 \subsubsection*{Sattelpunkt}
 Wenn ein kritischer Punkt weder Maximum noch Minimum ist, dann nennen wir ihn Sattelpunkt.
 
@@ -516,9 +504,14 @@ Wenn \(\X\) eine sternförmige, offene Teilmenge von \(\R^n\) und \(f \in C^1\) 
   \text{curl}(f) = \begin{pmatrix}
     0\\0\\0
   \end{pmatrix}
-  \quad &\Rightarrow \quad \text{$f$ ist konservativ}\\
+  \quad &\Rightarrow \quad \text{$f$ ist konservativ}
 \end{align*}
-
+\(\text{curl}(f)\) ist definiert als
+\[\text{curl}(f) := \begin{pmatrix}
+  \partial_y f_3 - \partial_z f_2 \\
+  \partial_y f_1 - \partial_x f_3 \\
+  \partial_x f_2 - \partial_y f_1
+\end{pmatrix}\]
 \subsection{Riemann-Integral in \texorpdfstring{\(\R^2\)}{R²}}
 \begin{subbox}{Partition in zwei Dimensionen}
   Eine Partition \(P\) eines abgeschlossenen Rechtecks \(R = \left[a,b\right] \times \left[c,d\right]\) ist eine Menge von Rechtecken. Für jede Partition \(P_x : a = x_0 < \ldots < x_n = b\) von \(\left[a,b\right]\) und \(P_y\) (analog) erhalten wir eine Partition \(P_{i,j} = \left[x_{i-1}, x_i\right] \times \left[y_{j-1},y_j\right]\) von \(R\) mit der Fläche \(\mu({P_{i,j}} = (x_i - x_{i-1})(y_j - y_{j-1}))\).
@@ -552,11 +545,18 @@ Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes
   \item Falls \(f = 1\), dann gilt:
   \[\int_A f(x,y) \mathop{d(x,y)} = \int_A 1 \mathop{d(x,y)} = \gamma(A)\]
 \end{enumerate}
+
+
+\begin{mainbox}{Satz von Fubini}
+  Für eine Region \(D \subset \R^2 := \{\left(x,y\right) \mid a \le x \le b, g(x) < y < h(x)\}\) gilt:
+  \[\int_D f(x,y)\mathop{dx} \mathop{xy} = \int_a^b \left(\int_{g(x)}^{h(x)} f(x,y) \mathop{dy}\right)\mathop{dx}\]
+  Für eine Region \(D \subset \R^2 := \{ \left(x,y\right) \mid c \le y \le d, G(y) < x < H(y)\) gilt:
+  \[\int_D f(x,y) \mathop{dx} \mathop{dy} = \int_c^d \left(\int_{G(y)}^{H(y)} f(x,y)\mathop{dx}\right) \mathop{dy}\]
+\end{mainbox}
 \begin{subbox}{Satz von Stolz}
   Sei \(f: R \mapsto \R\) integrierbar auf \(R = \left[a,b\right] \times \left[c,d\right]\). Sei \(y \mapsto f(x,y)\) integrierbar auf \(\left[c,d\right]\) für jedes \(x \in \left[a,b\right]\). Dann folgt:
   \[\int_R f(x,y) \mathop(d(x,y)) = \int_a^b \left(\int_c^d f(x,y) \mathop{dy}\right) \mathop{dx}\]
 \end{subbox}
-
 \begin{mainbox}{Nullmenge}
   Eine Nullmenge \(X \subset R \subset \R^2\) ist eine Menge, so dass für alle \(\epsilon > 0\) eine endliche Menge an Rechtecken \(R_k, 1 \le k \le n\) existiert, so dass:
   \[X \subset \bigcup_{k = 1}^n R_k, \; \sum_{k = 1}^n \mu (R_k) < \epsilon\]
@@ -567,9 +567,15 @@ Sei \(f,g : A \subset R \mapsto \R\) auf \(A\) integrierbar, dann gilt folgendes
 \begin{enumerate}
   \item Sei \(R\) ein kompaktes Rechteck und \(f: R \mapsto \R\) ist stetig. Dann ist \(f\) integrierbar auf \(R\).
   \item Sei \(f: R \mapsto \R\) beschränkt und \(X\) die Menge aller nicht stetigen Punkte von \(f\). Wenn \(X\) eine Nullmenge ist, dann ist \(f\) auf \(R\) integrierbar.
-  \item Sei \(\varphi_1, \varphi_2: \left[a,b\right]\mapsto \R\)stetig mit \(\forall x \in \left[a,b\right]: \varphi_1(x) \le \varphi_2(x)\) und \(A = \{(x,y)\mid a\le x \le b, \varphi_1(x) \le y \le \varphi_2(x)\}\). Falls \(f: A \mapsto \R\) stetig ist, so ist \(f\) auf \(A\) integrierbar und es folgt dass
+  \item Sei \(\varphi_1, \varphi_2: \left[a,b\right]\mapsto \R\) stetig mit \(\forall x \in \left[a,b\right]: \varphi_1(x) \le \varphi_2(x)\) und \(A = \{(x,y)\mid a\le x \le b, \varphi_1(x) \le y \le \varphi_2(x)\}\). Falls \(f: A \mapsto \R\) stetig ist, so ist \(f\) auf \(A\) integrierbar und es folgt dass
   \[\int_A f(x,y) \mathop{d(x,y)} = \int_a^b \left(\int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) \mathop{dy}\right) \mathop{dx}\]
 \end{enumerate}
+
+\begin{subbox}{Lipschitz-Kurve}
+  Eine Kurve \(\varphi : \left[0, 1\right] \mapsto \R^2\) ist Lipschitz, falls
+  \[||\varphi(s) - \varphi(t)|| \le M \cdot |s-t| \ \forall s,t \in \left[0,1\right]\]
+  Es folgt ausserdem, dass \(\varphi(\left[0,1\right]) \subset \R^2\) eine Nullmenge ist.
+\end{subbox}
 
 \subsection{Variablenwechsel}
 Sei \(\partial A\) der Rand einer Menge \(A\):
@@ -580,11 +586,21 @@ Sei \(\partial A\) der Rand einer Menge \(A\):
 
 Sei \(\varphi : B \mapsto A\) eine stetige Abbildung, wobei \(A= A_0 \cup \partial A, \) \(B = B_0 \cup \partial B\) kompakte Mengen mit \(A_0, B_0\) offen und \(\partial A, \partial B\) Nullmengen sind. Wenn \(\varphi : B \setminus \N \mapsto A\) injektiv ist und \(N \subset B\) die Nullmenge ist, dann folgt
 \[\int_A f(x,y) \mathop{d(x,y)} = \int_B f(\varphi(u,v)) \cdot \left|\det J_\varphi (u,v)\right| \mathop{d(u,v)}\]
-Für Polarkoordinaten: \(\mathop{dx}\mathop{dy} = r \mathop{dr} \mathop{d\theta}\)
+\begin{enumerate}
+  \item Polarkoordinaten: \(\mathop{dx}\mathop{dy} = r \mathop{dr} \mathop{d\theta}\)
+  \item Zylindrische Koordinaten: \(\mathop{dx} \mathop{dy} \mathop{dz} = r \mathop{dr} \mathop{d\theta} \mathop{dz}\)
+  \item Kugelkoordinaten: \(\mathop{dx}\mathop{dy}\mathop{dz} = r^2 \sin(\varphi) \mathop{dr} \mathop{d\theta} \mathop{d\varphi}\)
+\end{enumerate}
 
 \textbf{Achtung: Multiplikation mit der Determinante von Jacobi-Matrix nicht vergessen!}
+
+\subsubsection*{Beispiel mit Kettenregel}
+Sei \(f: \R^3 \mapsto \R\) eine glatte Funktion mit \(\nabla f \left(-\frac{\sqrt{3}}{2}, \frac{3}{2},7\right) = (6,2,0)\). Wenn wir nun \(\frac{\partial f}{\partial r}\left(\sqrt{3}, \frac{2}{3}\pi, 7\right)\) mit zylindrischen Koordinaten berechnen wollen, dann ist
+\[\frac{\partial f(g(r,\theta,z))}{\partial r} = \frac{\partial f}{\partial x} \frac{\partial g_1}{\partial r} + \frac{\partial f}{\partial y} \frac{\partial g_2}{\partial r} + \frac{\partial f}{\partial z} \frac{\partial g_3}{\partial r}\]
+Nun können wir die obige Information brauchen, um für \(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\) einzusetzen.
+
 \subsection{Satz von Green}
-Der Satz von Green ist ein Verallgemeinerung des Fundamentalsatzes der Analysis auf \(\R^2\). Er stellt eine Beziehung zwischen Linienintegralen und Doppelintegralen über einen von einer parametrisierten Kurve umschlossenen Bereich her. 
+Der Satz von Green stellt eine Beziehung zwischen Linienintegralen und Doppelintegralen über einen von einer parametrisierten Kurve umschlossenen Bereich her. 
 
 Eine parametrisierte Jordan-Kurve ist eine geschlossene parametrisierte Kurve \(\gamma : \left[a,b\right] \mapsto \R\), wobei \(\gamma : \left] a,b \right] \mapsto \R\) injektiv ist. Eine Jordan-Kurve in \(\R^2\) ist das Bild einer parametrisierten Jordan-Kurve.
 
@@ -592,12 +608,13 @@ Seien \(b_1, b_2\) die Basisvektoren von \(\R^2\). Dann ist die Orientierung gen
 
 Ein reguläres Gebiet ist eine offene, beschränkte Teilmenge \(A\subset \R^2\), deren Rand \(\partial A\) endliche Vereinungen von disjunkten Jordan-Kurven ist.
 
-Eine parametrisierte Jordan-Kurve \(\gamma\), die eine Randkomponente von \(A\) bildet, hat einen positiven Umlaufsinn, falls \((n(t), \gamma'(t))\) eine positiv orientierte Basis von \(\R^2\) bildet. Dabei ist \(n(t)\) der Einheitsvektor, welcher orthogonal zu \(\gamma'(t)\) steht und von \(A\) weg zeigt.
+Eine parametrisierte Jordan-Kurve \(\gamma\), die eine Randkomponente von \(A\) bildet, hat einen positiven Umlaufsinn, falls \((n(t), \gamma'(t))\) eine positiv orientierte Basis von \(\R^2\) bildet. Dabei ist \(n(t)\) der Einheitsvektor, welcher orthogonal zu \(\gamma'(t)\) steht und von \(A\) weg zeigt. (Intuitiv: wenn die umschlossene Menge immer ``links'' liegt.)
 
 \begin{mainbox}{Satz von Green}
   Sei \(A \subset \R^2\) ein reguläres Gebiet und \(F: U \mapsto \R^2\) ein Vektorfeld der Klasse \(C^1\), wobei \((A \cup \partial A) \subset U \subset \R^2\). Dann gilt
   \[\int_{\partial a} F(x) \mathop{ds} = \int \int_A \left(\partial_x f_2 - \partial_y f_1\right) \mathop{dx} \mathop{dy}\]
 \end{mainbox}
+Um Flächen mit dem Satz von Green zu berechnen, benutzen wir ein Vektorfeld mit \(\text{curl}(f) = 1\), beispielsweise \[f = (0,x) \text{ oder } f(-y, 0)\]
 
 \section{Themen aus Analysis I}
 \begin{mainbox}{Partielle Integration}
@@ -770,5 +787,5 @@ Eine parametrisierte Jordan-Kurve \(\gamma\), die eine Randkomponente von \(A\) 
 % end of larger array spacing
 \endgroup
 \section{Quellen}
-Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von Danny Camenisch (https://github.com/dannycamenisch) inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Schliesslich sind die Definitionen meistens dem Skript ``Analysis 1'' von Marc Burger entnommen.
+Ein Grossteil des Cheatsheets wurde stark vom Cheatsheet von \href{https://github.com/dannycamenisch}{Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind meistens dem Skript ``Analysis 1'' von Marc Burger und dem Skript ``Analysis 2'' von E. Kowalski entnommen.
 \end{document}
