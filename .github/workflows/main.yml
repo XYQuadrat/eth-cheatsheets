@@ -33,6 +33,8 @@ jobs:
         run: git fetch --tags -f
       - name: Compile LaTeX
         uses: DanySK/compile-latex-action@0.3.70
+        with:
+          command: rubber --module xelatex --unsafe --inplace -d --synctex -s -W all
       - name: Deploy
         if: ${{ github.event_name == 'push' }}
         env:
