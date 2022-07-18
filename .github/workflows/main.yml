@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           mkdir $GITHUB_WORKSPACE/latex-output
-          find . -name '*.tex' \( -exec latexmk -synctex=1 -xelatex -interaction=nonstopmode -outdir=$GITHUB_WORKSPACE/latex-output -cd -pdf "$PWD"/{} \; -o -print \)
+          find . -name '*.tex' \( -exec latexmk -synctex=1 -xelatex -interaction=nonstopmode -outdir=$GITHUB_WORKSPACE/latex-output -cd "$PWD"/{} \; -o -print \)
       - name: Deploy
         if: ${{ github.event_name == 'push' }}
         env:
