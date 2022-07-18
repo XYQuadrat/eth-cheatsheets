@@ -8,6 +8,7 @@ Currently, the following cheatsheets are hosted here:
 - Analysis 2 (whole course)
 - Algorithms & Datastructures - an overview of all important graph terminology
 - Algorithms & Probability - an overview of runtimes of the covered algorithms
+- Wahrscheinlichkeit & Statistik (in german)
 
 You can find compiled `.pdf`s based on the latest source files in the Release section.
 
