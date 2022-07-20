@@ -192,7 +192,7 @@ Die Verteilungsfunktion hat folgende Eigenschaften:
     \item \(a < b \implies \P[a < X \le b] = F_X(b) - F_X(a)\)
     \item \(F\) ist monoton wachsend
     \item \(F\) ist rechtsstetig, d.h. \(\lim{t \to 0} F_(x+t) = F(x)\)
-    \item \(\lim{x\to - \infty} F_X(x) = 0\) und \(\lim_{x\to \infty} F_X(x) = 1\)
+    \item \(\lim_{x\to - \infty} F_X(x) = 0\) und \(\lim_{x\to \infty} F_X(x) = 1\)
 \end{enumerate}
 \subsubsection*{Linksstetigkeit}
 Die Definition der Linksstetigkeit ist
@@ -334,7 +334,7 @@ wobei \(\E[1/Y]\) separat berechnet werden muss.
 
 \subsection{Extremwertformel}
 Sei \(X\) eine diskrete ZV mit Werten in \(\mathbb{N}\). Dann gilt folgende Identität:
-\[\E[X] = \sum_{n=1}^\infty \P[X\le n]\]
+\[\E[X] = \sum_{n=1}^\infty \P[X\ge n]\]
 Sei \(X\) eine stetige ZV mit \(X \ge 0\) f.s., dann gilt:
 \[\E[X] = \int_0^\infty \P[X > x] dx\]
 
@@ -559,13 +559,13 @@ Wir nehmen an, dass \(X_1, \ldots, X_n\) diskret oder gemeinsam stetig unter \(\
 (Falls \(L(x_1, \ldots, x_n; \theta_0) = 0\) setzen wir \(R(x_1, \ldots, x_n) = +\infty\).) Wenn \(R \gg 1\), so gilt \(H_A > H_0\) und analog \(R \ll 1 \implies H_A < H_0\).
 
 \begin{subbox}{Likelihood-Quotient-Test}
-    Der Likelihood-Quotient-Test (LQ-Test) mit Parameter \(c \le 0\) ist definiert durch:
+    Der Likelihood-Quotient-Test (LQ-Test) mit Parameter \(c \ge 0\) ist definiert durch:
     \[T = R(x_1, \ldots, x_n) \quad \text{und} \quad K = (c, \infty]\]
 \end{subbox}
 Der LQ-Test ist optimal, da jeder andere Test mit kleinerem Signifikanzniveau auch eine kleinere Macht hat (Neyman-Pearson-Lemma).
 
 \subsection{p-Wert}
-Sei \(T = t(X_1, \ldots, X_n)\) eine Teststatistik und \((T,K_t)_{t\le 0}\) eine Familie von Tests.
+Sei \(T = t(X_1, \ldots, X_n)\) eine Teststatistik und \((T,K_t)_{t\ge 0}\) eine Familie von Tests.
 
 \begin{subbox}{Geordnete Teststatistik}
     Eine Familie von Tests heisst geordnet bzgl. \(T\) falls \(K_t \subset \R\) und \(s \le t \implies K_t \subset K_S\). Beispiele:
@@ -609,7 +609,7 @@ Insgesamt gilt also:
     \toprule
     Ber(\(p\))             & \(p^x(1-p)^{1-x}\)       & \(1-p\)             \\
     Bin(\(n,p\))           & \(\binompdf\)            & -                   \\
-    Geom(\(p\))            & \(p(1-p)^{x-2}\)         & \(1-(1-p)^x\)       \\
+    Geom(\(p\))            & \(p(1-p)^{x-1}\)         & \(1-(1-p)^x\)       \\
     Poisson(\(λ\))         & \(\frac{λ^x}{x!}e^{-λ}\) & -                   \\
     \(\mathcal{U}([a,b])\) & \(\uniformpdf\)          & \(\frac{x-a}{b-a}\) \\
     Exp(\(\lambda\))       & \(λe^{-λx}\)             & \(1-e^{-λx}\)       \\
@@ -628,7 +628,7 @@ Insgesamt gilt also:
         \(\mathcal{U}([a,b])\) & \(\frac{a+b}{2}\) & \(\frac{1}{12}(b-a)^2\) \\
         Exp(\(\lambda\))       & \(\frac{1}{λ}\)   & \(\frac{1}{\lambda^2}\) \\
         \(\mathcal{N}(m,σ^2)\) & \(m\)             & \(\sigma^2\)            \\
-        \(\Chi_n\)             & \(n\)             & \(2n\)                  \\
+        \(\chi_n^2\)             & \(n\)             & \(2n\)                  \\
         \(t_n\)                & \(0\)             & \(\frac{n}{n-2}\)       \\
         \bottomrule
     \end{tabularx}
