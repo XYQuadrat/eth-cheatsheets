@@ -112,6 +112,7 @@ Eine Sigma-Algebra ist ein Subset \(\F \subseteq \mathcal{P}(\Omega)\) mit den f
 	\item \(A, B \in \F \implies A \cup B \in \F\)
 	\item \(A, B \in \F \implies A \cap B \in \F\)
 \end{enumerate}
+Nützlich ist ausserdem die De-Morgan-Regel: \[(\cup_{i=1}^\infty A_i)^\complement = \cap_{i=1}^\infty(A_i)^\complement\]
 
 \subsection{Wahrscheinlichkeitsmass}
 Ein Wahrscheinlichkeitsmass \(\P\) ist eine Abbildung
@@ -296,6 +297,13 @@ Sei \(\phi = \) id, gilt
 Sei \(X\) eine stetige ZV mit Dichtefunktion \(f\). Sei \(\phi :\R\mapsto \R\) eine Abbildung, sodass \(\phi(x)\) eine Zufallsvariable ist. Sofern das Integral wohldefiniert ist, gilt
 \[\E[\phi(X)] = \int_{-\infty}^{\infty}\phi(x)f(x)dx\]
 Die Definition für \(\phi = \) id ist analog zum diskreten Fall.
+\subsubsection{\texorpdfstring{Bestimmen der Dichte von \(f(X)\)}{Bestimmen der Dichte von f(X)}}
+\begin{enumerate}
+	\item Sei \(\phi: \R \mapsto \R\) stückweise beschränkt und stetig.
+	\item \(\E[\phi(Y)] = \E[\phi(f(X))] = \E[\tau(X)]\)
+	\item Dichte von \(X\) in vorheriger Gleichung einsetzen.
+	\item Variablenwechsel \(u = f(x)\) \& Grenzen anpassen
+\end{enumerate}
 
 \subsection{Rechnen mit Erwartungswerten}
 \begin{subbox}{Linearität des Erwartungswertes}
@@ -455,8 +463,6 @@ wobei \(Z \sim \mathcal{N}(0,1)\). Für normalverteilte ZV \(X_1, \ldots, X_n\) 
 \section{Schätzer}
 Wir treffen folgende Annahmen:
 \begin{itemize}
-	\item Grundraum \(\Omega\)
-	\item \(\sigma\)-Algebra \(\F\)
 	\item Parameterraum \(\theta \subset \R\)
 	\item Familie von Wahrscheinlichkeitsmassen \((\P_\theta)_{\theta \in \Theta}\) auf \((\Omega, \F)\); für jedes Element im Parameterraum existiert ein Wahrscheinlichkeitsmodell
 	\item Zufallsvariablen \(X_1, \ldots, X_n\) auf \((\Omega, \F)\)
@@ -515,16 +521,25 @@ Hierbei gilt:
 wobei \(Z = \sqrt{n}(T-m)\) ist.
 
 \subsection{Häufige Fälle}
-\subsubsection{\texorpdfstring{Normalverteilt - \(m\) unbekannt, \(\sigma^2\) bekannt}{Normalverteilt - m unbekannt, σ² bekannt}}
+\subsubsection{\texorpdfstring{Normalverteilt - \(\mu\) unbekannt, \(\sigma^2\) bekannt}{Normalverteilt - μ unbekannt, σ² bekannt}}
 Erwartungstreuer Schätzer: \(\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)\\
-Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \mu}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
+Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \theta_0}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
 \begin{enumerate}
 	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_\theta\)
 	\item Hypothesen \(H_0 : \theta = \theta_0\), z.B. \(H_A : \theta \ne \theta_0\)
-	\item Test \(Z = \frac{\overline{X}_n - \mu}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
-	\item Verwerfungsbereich \(]-\infty, -c[ \cup ] c, \infty\) für \(c\ge 0\)
-	\item
+	\item Test \(T = \frac{\overline{X}_n - \mu}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
+	\item Verwerfungsbereich \(]-\infty, -c[ \ \cup \ ] c, \infty\) für \(c\ge 0\)
 \end{enumerate}
+
+\subsubsection{\texorpdfstring{Normalverteilt - \(\mu\), \(\sigma^2\) unbekannt}{Normalverteilt - μ, σ² unbekannt}}
+Wir definieren \(\vec{\theta} = (\mu, \sigma^2)\) und den Varianz-Schätzer \(S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X}_n)^2\).
+\begin{enumerate}
+	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_{\vec{\theta}}\)
+	\item Test \(T = \frac{\overline{X}_n - \mu_0}{\sqrt{S^2/n}} \sim t_{n-1}\)
+\end{enumerate}
+
+\subsection{Approximatives Konfidenzintervall}
+Wir können den zentralen Grenzwertsatz benutzen, um eine standardnormalverteilte ZV zu erhalten, und damit die Konfidenzintervalle zu bestimmen.
 
 \section{Tests}
 \begin{subbox}{Null- und Alternativhypothese}
@@ -593,6 +608,11 @@ Der \(p\)-Wert hat folgende Eigenschaften:
 Insgesamt gilt also:
 \[p\text{-Wert ist klein } \implies H_0 \text{wird wahrscheinlich verworfen} \]
 
+\section{Quellen}
+Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}{Cheatsheet von Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind grösstenteils vom offiziellen Vorlesungsskript (V. Tassion) übernommen.
+
+
+\clearpage
 \section{Tabellen}
 
 \subsection{Grenzwerte}
@@ -697,7 +717,7 @@ Insgesamt gilt also:
 
 		Bernoulli & \( p: \) ErfolgsWK & \( p \) & \( p \cdot (1-p) \) & \( p^t(1-p)^{1-t} \) & \( 1-p \) für \( 0 \leq t < 1 \) \\
 
-		Binomial & \makecell[l] {\( p: \) ErfolgsWK \\ \( n \): Anzahl Versuche} & \( np \) & \( np(1-p) \) & \( \binom{n}{t}p^t(1-p)^{n-t} \) & \( \sum_{k=0}^{t} \binom{n}{k} p^k(1-p)^{n-k} \)  \\
+		Binomial & \makecell[l] {\( n \): Anzahl Versuche \\ \( p: \) ErfolgsWK } & \( np \) & \( np(1-p) \) & \( \binom{n}{t}p^t(1-p)^{n-t} \) & \( \sum_{k=0}^{t} \binom{n}{k} p^k(1-p)^{n-k} \)  \\
 
 		Geometrisch & \makecell[l] { \( p \): ErfolgsWK \\ \( t: \) Anzahl Versuche} & \( \frac{1}{p} \) & \( \frac{1-p}{p^2} \) & \( p(1-p)^{t-1} \) & \( 1-(1-p)^t\) \\
 
@@ -730,10 +750,5 @@ t-Verteilung & \( n \): Freiheitsgrad & \( \begin{cases} 0 & n>1 \\ \text{undef.
 \bottomrule
 	\end{tabularx}
 \end{center}
-
-\clearpage
-
-\section{Quellen}
-Dieses Cheatsheet wurde stark inspiriert vom \href{https://n.ethz.ch/~dcamenisch/summaries}{Cheatsheet von Danny Camenisch}. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind grösstenteils vom offiziellen Vorlesungsskript (V. Tassion) übernommen.
 
 \end{document}
