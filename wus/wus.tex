@@ -77,7 +77,6 @@
 \def\sumk{\sum_{k=1}^\infty}
 \def\sumn{\sum_{n=0}^\infty}
 \def\R{\mathbb{R}}
-\def\dx{\text{ d}x}
 \def\P{\mathbb{P}}
 \def\F{\mathcal{F}}
 \def\E{\mathbb{E}}
@@ -241,15 +240,15 @@ Die Gewichtsfunktion einer diskreten ZV ist:
 \[\forall k \in \mathbb{N} - \{0\} \quad \P[X=k]=(1-p)^{k-1}\cdot p\]
 
 \noindent \textbf{Poisson-Verteilung} (\(X \sim \text{Poisson}(\lambda)\)): Annäherung an die Binomialverteilung für grosse \(n\) und kleine \(p\) (d.h. rare Ereignisse). Sie ist definiert als
-\[\forall k \in \mathbb{N}, \lambda > 0 \quad \P[X=k]=\frac{\lambda^k}{k!}\cdot e^{-k}\]
+\[\forall k \in \mathbb{N}, \lambda > 0 \quad \P[X=k]=\frac{\lambda^k}{k!}\cdot e^{-\lambda}\]
 
 \subsection{Stetige Zufallsvariablen}
 \begin{subbox}{Definition stetige ZV}
 	Eine ZV \(X\) heisst stetig, wenn ihre Verteilungsfunktion \(F_X\) wie folgt geschrieben werden kann:
-	\[\forall x \in \R \quad F_X(x) = \int_{-\infty}^x f(y)dy\]
+	\[\forall x \in \R \quad F_X(x) = \int_{-\infty}^x f(y) \mathop{dy}\]
 \end{subbox}
 Hierbei ist \(f: \R \mapsto \R_+\) die Dichte von X. Für die Dichte gilt:
-\[\int_{-\infty}^{+\infty}f(y)dy = 1\]
+\[\int_{-\infty}^{+\infty}f(y) \mathop{dy} = 1\]
 Es gelten folgende Eigenschaften:
 \begin{enumerate}
 	\item \(\P[a \le x \le b] = \P[a < x < b]\)
@@ -269,6 +268,10 @@ Es gelten folgende Eigenschaften:
 	0                            & x < 0    \\
 	\lambda \cdot e^{-\lambda x} & x \geq 0
 \end{cases}\]
+\begin{itemize}
+	\item Wenn \(Y\sim \text{Exp}(\lambda)\), dann ist \(c \cdot Y \sim \text{Exp}(\frac{\lambda}{c})\)
+	\item \(X_1, X_2 \sim \mathcal{N}(0,1)\) uiv. \(\implies \chi_2 = X_1^2 +X_2^2 \sim \text{Exp}(\frac{1}{2})\)
+\end{itemize}
 
 \noindent \textbf{Normalverteilung} (\(X \sim \mathcal{N}(m, \sigma^2)\)): Die wohl wichtigste Verteilung. Sie ist definiert als
 \[f_{m, \sigma}(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \cdot e^{-\frac{(x-m)^2}{2 \sigma^2}}\]
@@ -279,7 +282,7 @@ Es gelten folgende Eigenschaften:
 \section{Erwartungswert}
 \begin{mainbox}{Definition Erwartungswert}
 	Sei \(X: \Omega \mapsto \R_+\) eine ZV mit nicht-negativen Werten. Dann ist
-	\[\E[X] = \int_0^\infty (1- F_X(x)dx)\]
+	\[\E[X] = \int_0^\infty 1- F_X(x) \mathop{dx}\]
 	der Erwartungswert von \(X\).
 \end{mainbox}
 Wenn \(\E[|X|] < \infty\), dann ist der Erwartungswert definiert als
@@ -295,7 +298,7 @@ Sei \(\phi = \) id, gilt
 
 \subsection{Erwartungswert stetiger ZV}
 Sei \(X\) eine stetige ZV mit Dichtefunktion \(f\). Sei \(\phi :\R\mapsto \R\) eine Abbildung, sodass \(\phi(x)\) eine Zufallsvariable ist. Sofern das Integral wohldefiniert ist, gilt
-\[\E[\phi(X)] = \int_{-\infty}^{\infty}\phi(x)f(x)dx\]
+\[\E[\phi(X)] = \int_{-\infty}^{\infty}\phi(x)f(x) \mathop{dx}\]
 Die Definition für \(\phi = \) id ist analog zum diskreten Fall.
 \subsubsection{\texorpdfstring{Bestimmen der Dichte von \(f(X)\)}{Bestimmen der Dichte von f(X)}}
 \begin{enumerate}
@@ -333,7 +336,7 @@ wobei \(\E[1/Y]\) separat berechnet werden muss.
 Sei \(X\) eine diskrete ZV mit Werten in \(\mathbb{N}\). Dann gilt folgende Identität:
 \[\E[X] = \sum_{n=1}^\infty \P[X\ge n]\]
 Sei \(X\) eine stetige ZV mit \(X \ge 0\) f.s., dann gilt:
-\[\E[X] = \int_0^\infty \P[X > x] dx\]
+\[\E[X] = \int_0^\infty \P[X > x] \mathop{dx}\]
 
 \subsection{Ungleichungen}
 \begin{subbox}{Monotonie}
@@ -353,11 +356,11 @@ Sei \(X\) eine stetige ZV mit \(X \ge 0\) f.s., dann gilt:
 \subsection{Varianz}
 Sei \(X\) eine ZV sodass \(\E[X^2] < \infty\). Die Varianz von \(X\) ist definiert durch
 \[\Var(X) = \sigma_X^2 = \E[(X-m)^2]\]
-wobei \(m=\E[X]\). Dabei wird \(\sigma_X\) auch die Standardabweichung von\(X\) genannt und beschreibt die typische Distanz eines Wertes \(x\in X\) zu \(\E[X]\).
+wobei \(m=\E[X]\). Dabei wird \(\sigma_X\) auch die Standardabweichung von \(X\) genannt und beschreibt die typische Distanz eines Wertes \(x\in X\) zu \(\E[X]\).
 
 \begin{subbox}{Chebychev-Ungleichung}
 	Wenn \(X\) eine ZV mit \(\E[X^2] < \infty\) ist, dann gilt für jedes \(a \ge 0\):
-	\[\P[|X - m| \ge a] \le \frac{\sigma_X^2}{a^2}\]
+	\[\P[|X - \E[X]| \ge a] \le \frac{\sigma_X^2}{a^2}\]
 \end{subbox}
 
 \begin{enumerate}
@@ -407,20 +410,20 @@ Die gemeinsame Verteilung von \(X_1, \ldots, X_n\) erfüllt
 \begin{subbox}{Definition gemeinsame Verteilung}
 	Seien \(X_1, \ldots, X_n\) stetige ZV, so haben sie eine gemeinsame Verteilung, falls eine Funktion \(f: \R^n \mapsto \R_+\) existiert, die für jedes \(a_1, \ldots, a_n \in \R\) folgende Eigenschaft erfüllt:
 	\begin{align*}
-		\P[X_1 \le a_1, \ldots, X_n \le a_n] \\= \int_{-\infty}^{a_1} \cdots \int_{-\infty}^{a_n} f(x_1, \ldots, x_n) dx_n \ldots dx_1
+		\P[X_1 \le a_1, \ldots, X_n \le a_n] \\= \int_{-\infty}^{a_1} \cdots \int_{-\infty}^{a_n} f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
 	\end{align*}
 	Dann ist \(f\) die \textbf{gemeinsame Dichte}.
 \end{subbox}
 
 Seien \(X_1, \ldots, X_n\) stetige ZV mit einer gemeinsamen Dichte \(f\) und \(\phi: \R^n \mapsto \R\). Dann ist der Erwartungswert definiert als
 \begin{align*}
-	\E[\phi(X_1, \ldots, X_n)] \\= \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \phi(x_1, \ldots, x_n) f(x_1, \ldots, x_n) dx_n \ldots dx_1
+	\E[\phi(X_1, \ldots, X_n)] \\= \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \phi(x_1, \ldots, x_n) f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
 \end{align*}
 
 Falls \(X_1, \ldots, X_n\) eine gemeinsame Dichte \(f\) besitzen, ist die Randverteilung 
 \begin{align*}
 	f_i(z) = \int_{x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n \in \R^{n-1}}\\
-	f(x_1, \ldots, x_{i-1}, z, x_{i+1}, \ldots, x_n) dx_n \ \ldots \ dx_1 \\
+	f(x_1, \ldots, x_{i-1}, z, x_{i+1}, \ldots, x_n) \mathop{dx_n} \ \ldots \mathop{dx_1} \\
 \end{align*}
 
 Wenn \(X_1, \ldots, X_n\) stetige ZV mit Dichten \(f_1, \ldots, f_n\) sind, dann sind die folgenden Aussagen äquivalent:
@@ -431,8 +434,6 @@ Wenn \(X_1, \ldots, X_n\) stetige ZV mit Dichten \(f_1, \ldots, f_n\) sind, dann
 	\item Für alle \(\phi_1, \ldots, \phi_n: \R \mapsto \R\) gilt:
 		\[\E[\phi_1 (x_1)\cdot \ldots\cdot (x_n)] = \E[\phi_1(x_1)] \cdot \ldots \cdot \E[\phi_n(x_n)]\]
 \end{enumerate}
-
-% TODO Finish this
 
 \section{Grenzwertsätze}
 Sei \(X_1, X_2, \ldots\) eine unendliche Sequenz an uiv. ZV. Wir betrachten die Teilsumme \(S_n = X_1 + \ldots + X_n\).
@@ -451,7 +452,7 @@ falls \(\forall x \in \R\) gilt:
 \begin{mainbox}{Zentraler Grenzwertsatz}
 	Sei \(\E[X^2_1] < \infty\) und wohldefiniert. Weiter sei \(m = \E[X_1]\) und \(\sigma^2 = \Var(X_1)\), so gilt:
 	\begin{align*}
-		\P\left[\frac{S_n - nm}{\sqrt{\sigma^2 n}} \leq a\right] \xrightarrow[n \to \infty]{} \Phi(a) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^a e^{\frac{-x^2}{2}} dx
+		\P\left[\frac{S_n - nm}{\sqrt{\sigma^2 n}} \leq a\right] \xrightarrow[n \to \infty]{} \Phi(a) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^a e^{\frac{-x^2}{2}} \mathop{dx}
 	\end{align*}
 \end{mainbox}
 Der zentrale Grenzwertsatz sagt aus, dass die Verteilung einer ZV
@@ -690,17 +691,17 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 		\toprule
 		$\mathbf{f(x)}$                      & $\mathbf{F(x)}$                                                  \\
 		\midrule
-		$\int f'(x) f(x) \dx$                & $\frac{1}{2}(f(x))^2$                                            \\
-		$\int \frac{f'(x)}{f(x)} \dx$        & $\ln|f(x)|$                                                      \\
-		$\int_{-\infty}^\infty e^{-x^2} \dx$ & $\sqrt{\pi}$                                                     \\
-		$\int (ax+b)^n \dx$                  & $\frac{1}{a(n+1)}(ax+b)^{n+1}$                                   \\
-		$\int x(ax+b)^n \dx$                 & $\frac{(ax+b)^{n+2}}{(n+2)a^2} - \frac{b(ax+b)^{n+1}}{(n+1)a^2}$ \\
-		$\int (ax^p+b)^n x^{p-1} \dx$        & $\frac{(ax^p+b)^{n+1}}{ap(n+1)}$                                 \\
-		$\int (ax^p + b)^{-1} x^{p-1} \dx$   & $\frac{1}{ap} \ln |ax^p + b|$                                    \\
-		$\int \frac{ax+b}{cx+d} \dx$         & $\frac{ax}{c} - \frac{ad-bc}{c^2} \ln |cx +d|$                   \\
-		$\int \frac{1}{x^2+a^2} \dx$         & $\frac{1}{a} \arctan \frac{x}{a}$                                \\
-		$\int \frac{1}{x^2 - a^2} \dx$       & $\frac{1}{2a} \ln\left| \frac{x-a}{x+a} \right|$                 \\
-		$\int \sqrt{a^2+x^2} \dx $           & $\frac{x}{2}f(x) + \frac{a^2}{2}\ln(x+f(x))$                     \\
+		$\int f'(x) f(x) \mathop{dx}$                & $\frac{1}{2}(f(x))^2$                                            \\
+		$\int \frac{f'(x)}{f(x)} \mathop{dx}$        & $\ln|f(x)|$                                                      \\
+		$\int_{-\infty}^\infty e^{-x^2} \mathop{dx}$ & $\sqrt{\pi}$                                                     \\
+		$\int (ax+b)^n \mathop{dx}$                  & $\frac{1}{a(n+1)}(ax+b)^{n+1}$                                   \\
+		$\int x(ax+b)^n \mathop{dx}$                 & $\frac{(ax+b)^{n+2}}{(n+2)a^2} - \frac{b(ax+b)^{n+1}}{(n+1)a^2}$ \\
+		$\int (ax^p+b)^n x^{p-1} \mathop{dx}$        & $\frac{(ax^p+b)^{n+1}}{ap(n+1)}$                                 \\
+		$\int (ax^p + b)^{-1} x^{p-1} \mathop{dx}$   & $\frac{1}{ap} \ln |ax^p + b|$                                    \\
+		$\int \frac{ax+b}{cx+d} \mathop{dx}$         & $\frac{ax}{c} - \frac{ad-bc}{c^2} \ln |cx +d|$                   \\
+		$\int \frac{1}{x^2+a^2} \mathop{dx}$         & $\frac{1}{a} \arctan \frac{x}{a}$                                \\
+		$\int \frac{1}{x^2 - a^2} \mathop{dx}$       & $\frac{1}{2a} \ln\left| \frac{x-a}{x+a} \right|$                 \\
+		$\int \sqrt{a^2+x^2} \mathop{dx} $           & $\frac{x}{2}f(x) + \frac{a^2}{2}\ln(x+f(x))$                     \\
 		\bottomrule
 	\end{tabularx}
 \end{center}
