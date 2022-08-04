@@ -512,7 +512,7 @@ Unter dem gefundenen \(\theta\) ist die Likelihood-Funktion maximal.
 	wobei \(A\) und \(B\) Zufallsvariablen der Form \(A = a(X_1, \ldots, X_n), B = b(X_1, \ldots, X_n)\) mit \(a,b: \R^n \to \R\) sind.
 \end{mainbox}
 
-Wenn wir einen Schätzer \(T = T_{ML} \sim \mathcal{N}(\theta, \frac{1}{n})\) haben, suchen wir ein Konfidenzintervall der Form
+Wenn wir einen Schätzer \(T = T_{ML} \sim \mathcal{N}(m, \frac{1}{n})\) haben, suchen wir ein Konfidenzintervall der Form
 \[I = [T-c/\sqrt{n}, T+c/\sqrt{n}]\]
 Hierbei gilt:
 \begin{align*}
@@ -564,7 +564,7 @@ Wir wollen nun anhand der Daten \((X_1(\omega), \ldots, X_n(\omega))\) entscheid
 \end{subbox}
 \subsection{Signifikanzniveau und Macht}
 Ein Test hat Signifikanzniveau \(a \in [0,1]\) falls
-\[\forall \theta \in \Theta \quad \P_\theta[T \in K] \le a\]
+\[\forall \theta \in \Theta_0 \quad \P_\theta[T \in K] \le a\]
 Es ist meist unser primäres Ziel, die Fehler 1. Art zu minimieren.
 
 Das sekundäre Ziel ist, Fehler 2. Art zu vermeiden. Hierfür definieren wir die Macht eines Tests als Funktion:
