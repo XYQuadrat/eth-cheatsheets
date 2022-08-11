@@ -620,30 +620,35 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 \begin{center}
 	\begin{tabularx}{\linewidth}{XX}
 		\toprule
-		$\limxi \frac{1}{x} = 0$                                   & $\limxi 1 + \frac{1}{x} = 1$             \\
-		$\limxi e^x = \infty$                                      & $\limxn e^x = 0$                         \\
-		$\limxi e^{-x} = 0$                                        & $\limxn e^{-x} = \infty$                 \\
 		$\limxi \frac{e^x}{x^m} = \infty$                          & $\limxn xe^x = 0$                        \\
-		$\limxi \ln(x) = \infty$                                   & $\limxo \ln(x) = -\infty$                \\
 		$\limxi (1+x)^{\frac{1}{x}} = 1$                           & $\limxo (1+x)^{\frac{1}{x}} = e$         \\
 		$\limxi (1+\frac{1}{x})^b = 1$                             & $\limxi n^{\frac{1}{n}} = 1$             \\
-		$\lim_{x\to\pm\infty} (1 + \frac{1}{x})^x = e$             & $\limxi (1-\frac{1}{x})^x = \frac{1}{e}$ \\
+		$\limxo \frac{e^x-1}{x} = 1$ & $\limxi (1-\frac{1}{x})^x = \frac{1}{e}$ \\
 		$\lim_{x\to\pm\infty} (1 + \frac{k}{x})^{mx} = e^{km}$     & $\limxi (\frac{x}{x+k})^x = e^{-k}$      \\
-		$\limxo \frac{a^x -1}{x} = \ln(a), \newline \forall a > 0$ &
-		$\limxi x^a q^x = 0, \newline \forall 0 \le q < 1$                                                    \\
-	\end{tabularx}
-	\begin{tabularx}{\linewidth}{XX}
-		$\limxo \frac{\sin x}{x} = 1$                 & $\limxo \frac{\sin kx}{x} = k$     \\
-		$\limxo \frac{1}{\cos x} = 1$                 & $\limxo \frac{\cos x -1}{x} = 0$   \\
 		$\limxo \frac{\log 1 - x}{x} = -1$            & $\limxo x \log x = 0$              \\
-		$\limxo \frac{1 - \cos x}{x^2} = \frac{1}{2}$ & $\limxo \frac{e^x-1}{x} = 1$       \\
-		$\limxo \frac{x}{\arctan x} = 1$              & $\limxi \arctan x = \frac{\pi}{2}$ \\
 		$\limxo \frac{e^{ax}-1}{x} = a$               & $\limxo \frac{\ln(x+1)}{x} = 1$    \\
 		$\lim_{x\to 1} \frac{\ln(x)}{x-1} = 1$        & $\limxi \frac{\log(x)}{x^a} = 0$   \\
-		$\limxi \sqrt[x]{x} = 1$                      & $\limxi \frac{2x}{2^x} = 0$        \\
 		\bottomrule
 	\end{tabularx}
 \end{center}
+
+\begin{mainbox}{Partielle Integration}
+ \vspace{-12pt}
+ $$\int f'(x) g(x) \mathop{dx} = f(x)g(x) - \int f(x) g'(x) \mathop{dx}$$
+\end{mainbox}
+\begin{itemize}
+ \item Meist gilt: Polynome ableiten ($g(x)$), wo das Integral periodisch ist ($\sin, \cos, e^x$,...) integrieren ($f'(x)$)
+ \item Teils: mit $1$ multiplizieren, um partielle Integration anwenden zu können (z.B. im Fall von $\int \log(x) \mathop{dx}$)
+\end{itemize}
+\begin{mainbox}{Substitution}
+		Um $\int_a^b f(g(x)) \mathop{dx}$ zu berechnen: Ersetze $g(x)$ durch $u$ und integriere $\int_{g(a)}^{g(b)} f(u) \frac{\text{d}u}{g'(x)}$.
+\end{mainbox}
+\begin{itemize}
+ \item $g'(x)$ muss sich herauskürzen, sonst nutzlos.
+ \item Grenzen substituieren nicht vergessen.
+ \item Alternativ: unbestimmtes Integral berechnet werden und dann $u$ wieder durch $x$ substituieren.
+\end{itemize}
+
 \subsection{Ableitungen}
 \begin{center}
 	% the c>{\centering\arraybackslash}X is a workaround to have a column fill up all space and still be centered
