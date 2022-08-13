@@ -7,7 +7,8 @@
 \usepackage{flowfram}
 \ffvadjustfalse
 \setlength{\columnsep}{1cm}
-\Ncolumn{3}
+\Ncolumn[<9]{3}
+\onecolumn[9]
 
 % define nice looking boxes
 \usepackage[many]{tcolorbox}
@@ -67,15 +68,12 @@
 % Metadata
 \title{Cheatsheet\\ Wahrscheinlichkeit \& Statistik}
 \author{Julian Steinmann}
-\date{Sommer 2022}
+\date{\vspace{-10pt}Sommer 2022}
 
 % Math helper stuff
-\def\limn{\lim_{n\to \infty}}
 \def\limxo{\lim_{x\to 0}}
 \def\limxi{\lim_{x\to\infty}}
 \def\limxn{\lim_{x\to-\infty}}
-\def\sumk{\sum_{k=1}^\infty}
-\def\sumn{\sum_{n=0}^\infty}
 \def\R{\mathbb{R}}
 \def\P{\mathbb{P}}
 \def\F{\mathcal{F}}
@@ -741,19 +739,18 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 		\toprule
 Verteilung & Parameter & \( \E[X] \) & \( \Var(X) \) & \( f_X(t) \) & \( F_X(t) \) \\
 
-\midrule
+		\midrule
 Gleichverteilung & \( [a,b] \): Intervall & \( \frac{a+b}{2} \) & \( \frac{1}{12}(b-a)^2 \) & \( \frac{1}{b-a} \) & \( \frac{t-a}{b-a} \) \\
 
 Exponentialverteilung & \( \lambda: \frac{1}{\E[X]} \) & \( \frac{1}{\lambda} \) & \( \frac{1}{\lambda^2} \) & \( \begin{cases} \lambda e^{-\lambda t} & t \geq 0 \\ 0 & t < 0 \end{cases} \) & \( \begin{cases} 1-e^{-\lambda t} & t>0 \\ 0 & t \leq 0\end{cases}\) \\
 
 Normalverteilung & \makecell[l]{\( \sigma^2 \): Varianz \\ \( \mu: \E[X] \)} & \( \mu \) & \( \sigma ^2 \) & \( \frac{1}{\sqrt{2\pi \sigma^2} }e^{-{\frac{(t-\mu)^2}{2\sigma^2} }} -\infty < t <\infty \) & \( \frac{1}{\sigma {\sqrt{2\pi}}} \int_{-\infty}^t e^{-\frac{1}{2}\left( \frac{y-\mu}{\sigma} \right) ^2} \mathrm{d} y \) \\ 
 
-\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad & \( n \) & \( 2n \) & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \quad t>0\) & Gamma\(\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
+\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad & \( n \) & \( 2n \) & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \quad t>0\) & \(P\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
 
 t-Verteilung & \( n \): Freiheitsgrad & \( \begin{cases} 0 & n>1 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \begin{cases} \frac{n}{n-2} & n> 2 \\ \infty & 1<n \leq 2 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \frac{\Gamma \left( \frac{n+1}{2} \right) }{\sqrt{n\pi } \cdot \Gamma (\frac{n}{2}}) \left( 1+ \frac{t^2}{n} \right) ^{- \frac{n+1}{2}} \) & I'd rather not \\
 
-
-\bottomrule
+		\bottomrule
 	\end{tabularx}
 \end{center}
 
