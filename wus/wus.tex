@@ -115,7 +115,7 @@ Nützlich ist ausserdem die De-Morgan-Regel: \[(\cup_{i=1}^\infty A_i)^\compleme
 Ein Wahrscheinlichkeitsmass \(\P\) ist eine Abbildung
 \begin{align*}
 	\P: \  & \F \mapsto \left[0,1\right] \\
-				 & A \mapsto \P[A]
+	       & A \mapsto \P[A]
 \end{align*}
 mit den Eigenschaften
 \begin{enumerate}
@@ -148,10 +148,7 @@ Sei \((\Omega, \F, \P)\) ein Wahrscheinlichkeitsraum mit \(A, B \in \F\) und \(\
 	Zwei Ereignisse \(A, B\in \F\) sind unabhängig, falls gilt:
 	\[\P[A\cap B] = \P[A] \cdot \P[B]\]
 	Alternative Definitionen sind:
-	\begin{align*}
-		\P[A|B] & = \P[A] \\
-		\P[B|A] & = \P[B]
-	\end{align*}
+	\[\P[A|B] = \P[A] \text{ bzw. } \P[B|A] = \P[B]\]
 \end{mainbox}
 \begin{itemize}
 	\item Falls \(\P[A] \in \{0,1\}\), dann ist \(A\) zu jedem Ereignis unabhängig.
@@ -189,7 +186,7 @@ Daraus lässt sich für stetige ZV \(P[X=x] = 0\) folgern.
 Die Zufallsvariablen \(X_1, \ldots, X_n\) sind unabhängig, falls:
 \begin{align*}
 	\forall x_1, \ldots, x_n \in \R: \quad & \P[X_1 \le x_1, \ldots, X_n \le x_n] =             \\
-																				 & \P[X_1 \le x_1] \cdot \ldots \cdot \P[X_n \le x_n]
+	                                       & \P[X_1 \le x_1] \cdot \ldots \cdot \P[X_n \le x_n]
 \end{align*}
 Eine Folge von Zufallsvariablen \(X_1, X_2, \ldots\) ist unabhängig, falls \(
 \forall n \ X_1, \ldots X_n\) unabhängig sind. Sie ist zusätzlich identisch verteilt (uiv.), falls ausserdem \(\forall i,j \quad F_{X_i} = F_{X_j}\) gilt.
@@ -257,15 +254,15 @@ Es gelten folgende Eigenschaften:
 \subsection{Stetige Verteilungen}
 \textbf{Gleichverteilung} (\(X \sim \mathcal{U}[a,b]\)): Jedes Ereignis hat die gleiche Wahrscheinlichkeit. Sie ist definiert als
 \[f_{a,b}(x) = \begin{cases}
-	0             & x \notin [a,b] \\
-	\frac{1}{b-a} & x \in [a,b]
-\end{cases}\]
+		0             & x \notin [a,b] \\
+		\frac{1}{b-a} & x \in [a,b]
+	\end{cases}\]
 
 \noindent \textbf{Exponentialverteilung} (\(X \sim \text{Exp}(\lambda)\)): Das stetige Gegenstück zur Geometrischen Verteilung. Sie ist definiert als
 \[f_{a,b}(x) = \begin{cases}
-	0                            & x < 0    \\
-	\lambda \cdot e^{-\lambda x} & x \geq 0
-\end{cases}\]
+		0                            & x < 0    \\
+		\lambda \cdot e^{-\lambda x} & x \geq 0
+	\end{cases}\]
 \begin{itemize}
 	\item Wenn \(Y\sim \text{Exp}(\lambda)\), dann ist \(c \cdot Y \sim \text{Exp}(\frac{\lambda}{c})\)
 	\item \(X_1, X_2 \sim \mathcal{N}(0,1)\) uiv. \(\implies \chi_2 = X_1^2 +X_2^2 \sim \text{Exp}(\frac{1}{2})\)
@@ -292,7 +289,7 @@ Sei \(X\) eine diskrete ZV mit \(X \in W\) f.s. Sei \(\phi: \R \mapsto \R\) eine
 Sei \(\phi = \) id, gilt
 \[
 	\E[X] = \sum_{x\in W} x \cdot \P[X=x]
-.\] 
+	.\]
 
 \subsection{Erwartungswert stetiger ZV}
 Sei \(X\) eine stetige ZV mit Dichtefunktion \(f\). Sei \(\phi :\R\mapsto \R\) eine Abbildung, sodass \(\phi(x)\) eine Zufallsvariable ist. Sofern das Integral wohldefiniert ist, gilt
@@ -319,7 +316,6 @@ Falls zwei ZV \(X,Y\) unabhängig sind, gilt auch
 
 Für Divison hingegen gilt:
 \[\E[\frac{X}{Y}] = \E[X] \cdot \E[\frac{1}{Y}]\]
-wobei \(\E[1/Y]\) separat berechnet werden muss.
 
 \begin{subbox}{Alternativdefinition unabhängige ZV}
 	Seien \(X_1, \ldots, X_n\) diskrete ZV. Dann sind folgende Aussagen äquivalent:
@@ -327,7 +323,7 @@ wobei \(\E[1/Y]\) separat berechnet werden muss.
 		\item \(X_1, \ldots, X_n\) sind unabhängig.
 		\item Für jedes \(\phi_1, \ldots, \phi_n: \R \mapsto\R\) beschränkt gilt:
 	\end{enumerate}
-\[\E[\phi_1(X_1)\cdot\ldots\cdot\phi_n(X_n)] = \E[\phi_1(X_1)] \cdot\ldots\cdot \E[\phi_n(X_n)]\]
+	\[\E[\phi_1(X_1)\cdot\ldots\cdot\phi_n(X_n)] = \E[\phi_1(X_1)] \cdot\ldots\cdot \E[\phi_n(X_n)]\]
 \end{subbox}
 
 \subsection{Extremwertformel}
@@ -398,7 +394,7 @@ Seien \(X_1,\ldots,X_n\) diskrete ZV mit GV \(p\), dann sind die folgenden Aussa
 \begin{enumerate}
 	\item \(X_1,\ldots,X_n\) sind unabhängig
 	\item Für alle \(x_1 \in W_1, \ldots, x_n \in W_n\) gilt:
-		\[p(x_1,\ldots,x_n) = \P[X_1 = x_1] \cdot \ldots \cdot \P[X_n = x_n]\]
+	      \(p(x_1,\ldots,x_n) = \P[X_1 = x_1] \cdot \ldots \cdot \P[X_n = x_n]\)
 \end{enumerate}
 
 Die gemeinsame Verteilung von \(X_1, \ldots, X_n\) erfüllt
@@ -418,9 +414,9 @@ Seien \(X_1, \ldots, X_n\) stetige ZV mit einer gemeinsamen Dichte \(f\) und \(\
 	\E[\phi(X_1, \ldots, X_n)] \\= \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \phi(x_1, \ldots, x_n) f(x_1, \ldots, x_n) \mathop{dx_n} \ldots \mathop{dx_1}
 \end{align*}
 
-Falls \(X_1, \ldots, X_n\) eine gemeinsame Dichte \(f\) besitzen, ist die Randverteilung 
+Falls \(X_1, \ldots, X_n\) eine gemeinsame Dichte \(f\) besitzen, ist die Randverteilung
 \begin{align*}
-	f_i(z) = \int_{x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n \in \R^{n-1}}\\
+	f_i(z) = \int_{x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n \in \R^{n-1}}               \\
 	f(x_1, \ldots, x_{i-1}, z, x_{i+1}, \ldots, x_n) \mathop{dx_n} \ \ldots \mathop{dx_1} \\
 \end{align*}
 
@@ -428,9 +424,9 @@ Wenn \(X_1, \ldots, X_n\) stetige ZV mit Dichten \(f_1, \ldots, f_n\) sind, dann
 \begin{enumerate}
 	\item \(X_1, \ldots, X_n\) sind unabhängig
 	\item \(X_1, \ldots, X_n\) sind stetig mit gemeinsamer Dichte
-		\[f(x_1, \ldots, x_n) = f_1(x_1) \cdot \ldots \cdot f_n(x_n)\]
+	      \[f(x_1, \ldots, x_n) = f_1(x_1) \cdot \ldots \cdot f_n(x_n)\]
 	\item Für alle \(\phi_1, \ldots, \phi_n: \R \mapsto \R\) gilt:
-		\[\E[\phi_1 (x_1)\cdot \ldots\cdot (x_n)] = \E[\phi_1(x_1)] \cdot \ldots \cdot \E[\phi_n(x_n)]\]
+	      \[\E[\phi_1 (x_1)\cdot \ldots\cdot (x_n)] = \E[\phi_1(x_1)] \cdot \ldots \cdot \E[\phi_n(x_n)]\]
 \end{enumerate}
 
 \section{Grenzwertsätze}
@@ -485,18 +481,18 @@ Der mittlere quadratische Schätzfehler (MSE) von \(T\) im Modell \(\P_\theta\) 
 \subsubsection{Likelihood-Funktion, ML-Schätzer}
 Die Likelihood-Funktion ist definiert als
 \[L(x_1, \ldots, x_n; \theta) = \begin{cases}
-	p(x_1, \ldots, x_n; \theta) \quad \text{(diskret)} \\
-	f(x_1, \ldots, x_n; \theta) \quad \text{(stetig)}
-\end{cases} \]
+		p(x_1, \ldots, x_n; \theta) \quad \text{(diskret)} \\
+		f(x_1, \ldots, x_n; \theta) \quad \text{(stetig)}
+	\end{cases} \]
 
 \noindent Für jedes \(x_1, \ldots, x_n \in W\) sei \(t_{ML}(x_1, \ldots, x_n)\) der Wert, welcher die Funktion \(\Theta \mapsto L(x_1, \ldots, x_n; \theta)\) maximiert. Ein Maximum-Likelihood-Schätzer ist dann definiert als
 \[T_{ML} = t_{ML}(X_1, \ldots, X_n)\]
 
-\subsection{Anwendung der Methode}
+\subsubsection{Anwendung der Methode}
 Die Maximum-Likelihood-Methode ist ein Weg, um systematisch einen Schätzer zu bestimmen.
 \begin{enumerate}
 	\item Gemeinsame Dichte/Verteilung der ZV finden
-	\item Bestimme davon die Log-Likelihood-Funktion\\ \(f(\theta) := \ln(L(x_1, \ldots, x_n;\theta))\) 
+	\item Bestimme davon die Log-Likelihood-Funktion\\ \(f(\theta) := \ln(L(x_1, \ldots, x_n;\theta))\)
 	\item \(f(\theta)\) nach \(\theta\) ableiten
 	\item Nullstelle von \(f'(\theta)\) finden
 \end{enumerate}
@@ -520,7 +516,7 @@ Hierbei gilt:
 wobei \(Z = \sqrt{n}(T-m)\) ist.
 
 \subsection{Häufige Fälle}
-\subsubsection{\texorpdfstring{Normalverteilt - \(\mu\) unbekannt, \(\sigma^2\) bekannt}{Normalverteilt - μ unbekannt, σ² bekannt}}
+\subsubsection*{\texorpdfstring{Normalverteilt - \(\mu\) unbekannt, \(\sigma^2\) bekannt (z-Test)}{Normalverteilt - μ unbekannt, σ² bekannt (z-Test)}}
 Erwartungstreuer Schätzer: \(\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)\\
 Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \theta_0}{\sqrt{\sigma^2/n}} \sim \mathcal{N}(0,1)\)
 \begin{enumerate}
@@ -530,7 +526,7 @@ Verteilung unter \(\P_\theta: \frac{\overline{X}_n - \theta_0}{\sqrt{\sigma^2/n}
 	\item Verwerfungsbereich \(]-\infty, -c[ \ \cup \ ] c, \infty\) für \(c\ge 0\)
 \end{enumerate}
 
-\subsubsection{\texorpdfstring{Normalverteilt - \(\mu\), \(\sigma^2\) unbekannt}{Normalverteilt - μ, σ² unbekannt}}
+\subsubsection*{\texorpdfstring{Normalverteilt - \(\mu\), \(\sigma^2\) unbekannt (t-Test)}{Normalverteilt - μ, σ² unbekannt (t-Test)}}
 Wir definieren \(\vec{\theta} = (\mu, \sigma^2)\) und den Varianz-Schätzer \(S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \overline{X}_n)^2\).
 \begin{enumerate}
 	\item Modell \(X_1, \ldots, X_n \sim \mathcal{N}(\theta, \sigma^2)\) uiv. unter \(\P_{\vec{\theta}}\)
@@ -542,7 +538,7 @@ Wir können den zentralen Grenzwertsatz benutzen, um eine standardnormalverteilt
 
 \section{Tests}
 \begin{subbox}{Null- und Alternativhypothese}
-	Die Nullhypothese \(H_0\) und die Alternativhypothese \(H_A\) sind zwei Teilmengen \(\Theta_0 \subseteq \Theta, \Theta_A \subseteq \Theta\) wobei \(\Theta_0 \cap \Theta_A \ne \varnothing\). Eine Hypothese heisst \textit{einfach}, falls die Teilmenge aus einem einzelnen Wort besteht; sonst \textit{zusammengesetzt}.
+	Die Nullhypothese \(H_0\) und die Alternativhypothese \(H_A\) sind zwei Teilmengen \(\Theta_0 \subseteq \Theta, \Theta_A \subseteq \Theta\) wobei \(\Theta_0 \cap \Theta_A = \varnothing\). Eine Hypothese heisst \textit{einfach}, falls die Teilmenge aus einem einzelnen Wert besteht; sonst \textit{zusammengesetzt}.
 \end{subbox}
 
 \begin{mainbox}{Definition Test}
@@ -605,7 +601,86 @@ Der \(p\)-Wert hat folgende Eigenschaften:
 \end{enumerate}
 
 Insgesamt gilt also:
-\[p\text{-Wert ist klein } \implies H_0 \text{wird wahrscheinlich verworfen} \]
+\[\text{kleiner } p\text{-Wert} \implies H_0 \text{ wird wahrscheinlich verworfen} \]
+
+\section{Aufgaben}
+\subsection{Multiple Choice}
+
+Seien \(X,Y\) zwei ZV mit gemeinsamer Dichte \(f_{X,Y}\). Welche Aussage ist korrekt?
+\begin{itemize}
+	\item[\checkmark] \(X,Y\) sind immer stetig
+	\item[\(\square\)] Die ZV sind nicht notwendigerweise stetig.
+\end{itemize}
+
+\noindent
+Seien \((X_i)_{i = 1}^n\) uiv. mit Verteilungsfunktion \(F_{X_i} = F\). Was ist die Verteilungsfunktion von \(M = \text{max}(X_1,...,X_n)\)?
+\begin{itemize}
+	\item[\checkmark] \(F_M(a) = F(a)^n\)
+	\item[\(\square\)] \(F_M(a) = 1 - F(a)^n\)
+	\item[\(\square\)] \(F_M(a) = (1 - F(a))^n\)
+\end{itemize}
+
+\noindent
+Seien \(X, Y\) unabhängig und lognormalverteilt (\(\ln X, \ln Y\) sind normalverteilt). Welche Aussage ist korrekt?
+\begin{itemize}
+	\item[\checkmark] \(XY\) ist lognormalverteilt
+	\item[\(\square\)] \(XY\) ist normalverteilt
+	\item[\(\square\)] \(e^{X + Y}\) ist normalverteilt
+\end{itemize}
+
+\subsection{Aufgaben Wahrscheinlichkeit}
+\subsubsection*{\texorpdfstring{Dichte von \(\max(X_1,X_2)\)}{Dichte von max()}}
+
+Seien \(X_1, X_2 \sim \mathcal{U}[0,1]\) unabhängige ZV und sei \(X = \max (X_1, X_2)\). Berechne die Dichtefunktion von \(X\) und \(\P[X_1 \leq x \mid X \geq y]\).
+\begin{align*}
+	F_X(t) & = \P[\max(X_1, X_2) \leq t]                                                                                                              \\ &= \P[X_1 \leq t] \cdot \P[X_2 \leq t] = F_{X_1}(t) \cdot F_{X_2}(t) \\
+	f_X(t) & = \frac{d}{dt} F_{X_1}(t) \cdot F_{X_2}(t) = \frac{d}{dt} t^2 \cdot \mathbb{I}_{0 \leq t \leq 1} = 2t \cdot \mathbb{I}_{0 \leq t \leq 1}
+\end{align*}
+
+Für die Wahrscheinlichkeit brauchen wir eine Fallunterscheidung: \smallskip
+
+\begin{enumerate}
+	\item \(x < 0\) oder \(1 < x\):
+	      \[\mathbb{P}[X_1 \leq x \mid X \geq y] = 0\]
+	\item \(0 \leq x \leq y \leq 1\):
+	      \[\frac{\mathbb{P}[X_1 \leq x \cap X \geq y]}{\mathbb{P}[X \geq y]} = \frac{x(1-y)}{1 - y^2}\]
+	\item \(0 \leq y \leq x \leq 1\):
+	      \[\frac{\mathbb{P}[X_1 \leq x \cap X \geq y]}{\mathbb{P}[X \geq y]} = \frac{x - y^2}{1 - y^2}\]
+\end{enumerate}
+
+\subsubsection*{Gemeinsame Dichte}
+
+Bestimme die gemeinsame Dichte von \(P \sim \mathcal{U}[0,1]\) und \(H \sim \mathcal{U}[0,P]\). Wir wissen:
+\[f_P(p) = \mathbb I_{p \in [0,1]} \quad f_{H | P}(h \mid p) = \frac{1}{p} \cdot \mathbb{I}_{h \in [0,p]}\]
+
+\noindent
+Somit ist:
+\[f_{P, H} (p, h) = f_P(p) \cdot f_{H | P}(h \mid p) = \frac{1}{p} \cdot \mathbb I_{0 \leq h \leq p \leq 1}\]
+
+\subsubsection*{Zentraler Grenzwertsatz}
+Sei \(\bar X = \frac{1}{n} \sum_{i=1}^n X_i\) mit \(X_1,...,X_n\) uiv. und \(\sigma_{X_i} = 6, \mu\). Zeige, dass für \(n\) gross genug gilt:
+\[\P[|\bar X - \mu| \leq 1] \approx 2 \Phi \left[\frac{\sqrt{n}}{6} \right] - 1\]
+
+\noindent
+Hierfür verwenden wir den zentralen Grenzwertsatz:
+\begin{align*}
+	\P[|\bar X - \mu| \leq 1] & = \P[|n \cdot \bar X - n \cdot \mu| \leq n]                                                                                          \\
+	                          & = \P \left[\left|\frac{n \cdot \bar X - n \cdot \mu}{\sqrt{6^2 n}}\right| \leq \frac{n}{\sqrt{6^2 n}}\right]                         \\
+	                          & = \P \left[\left|\frac{n \cdot \bar X - n \cdot \mu}{6 \sqrt n}\right| \leq \frac{\sqrt n}{6}\right]                                 \\
+	                          & \approx \Phi \left[ \frac{\sqrt n}{6} \right] - \Phi \left[ -\frac{\sqrt n}{6} \right] = 2 \Phi \left[ \frac{\sqrt n}{6} \right] - 1
+\end{align*}
+
+\subsubsection*{Dichte via Erwartungswert}
+Sei \(U \sim \mathcal{U}[0,1]\). Berechne die Dichte von
+\[U' = a + (b-a)U\]
+Wir definieren \(\tau(x) = \phi(a +(b-a)U)\). Dann verwenden wir
+\begin{align*}
+	\E[\tau(U)] & = \int_{-\infty}^\infty \tau(x) \mathbb{I}_{x\in [0,1]}\mathop{dx}              \\
+	            & = \int_0^1 \phi(a + (b-a)x) \mathop{dx}                                         \\
+	            & = \int_a^b \phi(y)\frac{1}{b-a} \mathop{dy}                                     \\
+	            & = \int_{-\infty}^\infty \phi(y)\frac{1}{b-a} \mathbb{I}_{y\in[a,b]} \mathop{dy}
+\end{align*}
+Die Dichte von \(U'\) ist also \(\frac{1}{b-a} \mathbb{I}_{y\in[a,b]}\).
 
 \section{Quellen}
 Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}{Cheatsheet von Danny Camenisch} inspiriert. Ausserdem stammen Teile der Tabellen aus dem Buch ``Formeln, Tabellen und Konzepte''. Die Definitionen sind grösstenteils vom offiziellen Vorlesungsskript (V. Tassion) übernommen.
@@ -618,33 +693,33 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 \begin{center}
 	\begin{tabularx}{\linewidth}{XX}
 		\toprule
-		$\limxi \frac{e^x}{x^m} = \infty$                          & $\limxn xe^x = 0$                        \\
-		$\limxi (1+x)^{\frac{1}{x}} = 1$                           & $\limxo (1+x)^{\frac{1}{x}} = e$         \\
-		$\limxi (1+\frac{1}{x})^b = 1$                             & $\limxi n^{\frac{1}{n}} = 1$             \\
-		$\limxo \frac{e^x-1}{x} = 1$ & $\limxi (1-\frac{1}{x})^x = \frac{1}{e}$ \\
-		$\lim_{x\to\pm\infty} (1 + \frac{k}{x})^{mx} = e^{km}$     & $\limxi (\frac{x}{x+k})^x = e^{-k}$      \\
-		$\limxo \frac{\log 1 - x}{x} = -1$            & $\limxo x \log x = 0$              \\
-		$\limxo \frac{e^{ax}-1}{x} = a$               & $\limxo \frac{\ln(x+1)}{x} = 1$    \\
-		$\lim_{x\to 1} \frac{\ln(x)}{x-1} = 1$        & $\limxi \frac{\log(x)}{x^a} = 0$   \\
+		$\limxi \frac{e^x}{x^m} = \infty$                      & $\limxn xe^x = 0$                        \\
+		$\limxi (1+x)^{\frac{1}{x}} = 1$                       & $\limxo (1+x)^{\frac{1}{x}} = e$         \\
+		$\limxi (1+\frac{1}{x})^b = 1$                         & $\limxi n^{\frac{1}{n}} = 1$             \\
+		$\limxo \frac{e^x-1}{x} = 1$                           & $\limxi (1-\frac{1}{x})^x = \frac{1}{e}$ \\
+		$\lim_{x\to\pm\infty} (1 + \frac{k}{x})^{mx} = e^{km}$ & $\limxi (\frac{x}{x+k})^x = e^{-k}$      \\
+		$\limxo \frac{\log 1 - x}{x} = -1$                     & $\limxo x \log x = 0$                    \\
+		$\limxo \frac{e^{ax}-1}{x} = a$                        & $\limxo \frac{\ln(x+1)}{x} = 1$          \\
+		$\lim_{x\to 1} \frac{\ln(x)}{x-1} = 1$                 & $\limxi \frac{\log(x)}{x^a} = 0$         \\
 		\bottomrule
 	\end{tabularx}
 \end{center}
 
 \begin{mainbox}{Partielle Integration}
- \vspace{-12pt}
- $$\int f'(x) g(x) \mathop{dx} = f(x)g(x) - \int f(x) g'(x) \mathop{dx}$$
+	\vspace{-12pt}
+	$$\int f'(x) g(x) \mathop{dx} = f(x)g(x) - \int f(x) g'(x) \mathop{dx}$$
 \end{mainbox}
 \begin{itemize}
- \item Meist gilt: Polynome ableiten ($g(x)$), wo das Integral periodisch ist ($\sin, \cos, e^x$,...) integrieren ($f'(x)$)
- \item Teils: mit $1$ multiplizieren, um partielle Integration anwenden zu können (z.B. im Fall von $\int \log(x) \mathop{dx}$)
+	\item Meist gilt: Polynome ableiten ($g(x)$), wo das Integral periodisch ist ($\sin, \cos, e^x$,...) integrieren ($f'(x)$)
+	\item Teils: mit $1$ multiplizieren, um partielle Integration anwenden zu können (z.B. im Fall von $\int \log(x) \mathop{dx}$)
 \end{itemize}
 \begin{mainbox}{Substitution}
-		Um $\int_a^b f(g(x)) \mathop{dx}$ zu berechnen: Ersetze $g(x)$ durch $u$ und integriere $\int_{g(a)}^{g(b)} f(u) \frac{\text{d}u}{g'(x)}$.
+	Um $\int_a^b f(g(x)) \mathop{dx}$ zu berechnen: Ersetze $g(x)$ durch $u$ und integriere $\int_{g(a)}^{g(b)} f(u) \frac{\text{d}u}{g'(x)}$.
 \end{mainbox}
 \begin{itemize}
- \item $g'(x)$ muss sich herauskürzen, sonst nutzlos.
- \item Grenzen substituieren nicht vergessen.
- \item Alternativ: unbestimmtes Integral berechnet werden und dann $u$ wieder durch $x$ substituieren.
+	\item $g'(x)$ muss sich herauskürzen, sonst nutzlos.
+	\item Grenzen substituieren nicht vergessen.
+	\item Alternativ: unbestimmtes Integral berechnet werden und dann $u$ wieder durch $x$ substituieren.
 \end{itemize}
 
 \subsection{Ableitungen}
@@ -664,7 +739,7 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 		$\frac{1}{2}(x-\frac{1}{2}\sin(2x))$   & $\sin^2(x)$              & $2 \sin(x)\cos(x)$       \\
 		$\frac{1}{2}(x + \frac{1}{2}\sin(2x))$ & $\cos^2(x)$              & $-2\sin(x)\cos(x)$       \\
 		\multirow{2}*{$-\ln|\cos(x)|$}         & \multirow{2}*{$\tan(x)$} & $\frac{1}{\cos^2(x)}$    \\
-																					 &                          & $1 + \tan^2(x)$          \\
+		                                       &                          & $1 + \tan^2(x)$          \\
 		$\cosh(x)$                             & $\sinh(x)$               & $\cosh(x)$               \\
 		$\log(\cosh(x))$                       & $\tanh(x)$               & $\frac{1}{\cosh^2(x)}$   \\
 		$\ln | \sin(x)|$                       & $\cot(x)$                & $-\frac{1}{\sin^2(x)}$   \\
@@ -692,7 +767,7 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 \begin{center}
 	\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}X>{\centering\arraybackslash}X}
 		\toprule
-		$\mathbf{f(x)}$                      & $\mathbf{F(x)}$                                                  \\
+		$\mathbf{f(x)}$                              & $\mathbf{F(x)}$                                                  \\
 		\midrule
 		$\int f'(x) f(x) \mathop{dx}$                & $\frac{1}{2}(f(x))^2$                                            \\
 		$\int \frac{f'(x)}{f(x)} \mathop{dx}$        & $\ln|f(x)|$                                                      \\
@@ -715,20 +790,19 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 \begin{center}
 	\begin{tabularx}{\textwidth}{llXXXX}
 		\toprule
-		Verteilung & Parameter & \( \E[X] \) & \( \Var(X) \) & \( p_X(t) \) & \( F_X(t) \) \\
+		Verteilung       & Parameter                                   & \( \E[X] \) & \( \Var(X) \)       & \( p_X(t) \)         & \( F_X(t) \)                     \\
 		\midrule
-		Gleichverteilung & \makecell[l]{\( n \): Anzahl Ereignisse \\ \( x_i \): Ereignisse} & \( \frac{1}{n} \sum_{i=1}^{n} x_i \) & \( \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^{n} x_i \right)^2 \) & \( \frac{1}{n} \) & \( \frac{|\{k:x_k \leq t\}}{n} \) \\
+		Gleichverteilung & \makecell[l]{\( n \): Anzahl Ereignisse                                                                                                   \\ \( x_i \): Ereignisse} & \( \frac{1}{n} \sum_{i=1}^{n} x_i \) & \( \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^{n} x_i \right)^2 \) & \( \frac{1}{n} \) & \( \frac{|\{k:x_k \leq t\}}{n} \) \\
 
-		Bernoulli & \( p: \) ErfolgsWK & \( p \) & \( p \cdot (1-p) \) & \( p^t(1-p)^{1-t} \) & \( 1-p \) für \( 0 \leq t < 1 \) \\
+		Bernoulli        & \( p: \) ErfolgsWK                          & \( p \)     & \( p \cdot (1-p) \) & \( p^t(1-p)^{1-t} \) & \( 1-p \) für \( 0 \leq t < 1 \) \\
 
-		Binomial & \makecell[l] {\( n \): Anzahl Versuche \\ \( p: \) ErfolgsWK } & \( np \) & \( np(1-p) \) & \( \binom{n}{t}p^t(1-p)^{n-t} \) & \( \sum_{k=0}^{t} \binom{n}{k} p^k(1-p)^{n-k} \)  \\
+		Binomial         & \makecell[l] {\( n \): Anzahl Versuche                                                                                                    \\ \( p: \) ErfolgsWK } & \( np \) & \( np(1-p) \) & \( \binom{n}{t}p^t(1-p)^{n-t} \) & \( \sum_{k=0}^{t} \binom{n}{k} p^k(1-p)^{n-k} \)  \\
 
-		Geometrisch & \makecell[l] { \( p \): ErfolgsWK \\ \( t: \) Anzahl Versuche} & \( \frac{1}{p} \) & \( \frac{1-p}{p^2} \) & \( p(1-p)^{t-1} \) & \( 1-(1-p)^t\) \\
+		Geometrisch      & \makecell[l] { \( p \): ErfolgsWK                                                                                                         \\ \( t: \) Anzahl Versuche} & \( \frac{1}{p} \) & \( \frac{1-p}{p^2} \) & \( p(1-p)^{t-1} \) & \( 1-(1-p)^t\) \\
 
-		Poisson & \makecell[l]{ \( \lambda \): Erwartungswert \\ und Varianz} & \( \lambda \) & \( \lambda \) & \( \frac{\lambda^t}{t!}e^{-\lambda} \) & \( e^{-\lambda} \sum_{k=0}^{t} \frac{\lambda^{k}}{k!} \) \\
+		Poisson          & \makecell[l]{ \( \lambda \): Erwartungswert                                                                                               \\ und Varianz} & \( \lambda \) & \( \lambda \) & \( \frac{\lambda^t}{t!}e^{-\lambda} \) & \( e^{-\lambda} \sum_{k=0}^{t} \frac{\lambda^{k}}{k!} \) \\
 
 		\bottomrule
-
 	\end{tabularx}
 \end{center}
 
@@ -737,18 +811,19 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 \begin{center}
 	\begin{tabularx}{\textwidth}{llXXXX}
 		\toprule
-Verteilung & Parameter & \( \E[X] \) & \( \Var(X) \) & \( f_X(t) \) & \( F_X(t) \) \\
+		Verteilung               & Parameter                            & \( \E[X] \)                      & \( \Var(X) \)                    & \( f_X(t) \)                                                                                                                                  & \( F_X(t) \)                                  \\
 
 		\midrule
-Gleichverteilung & \( [a,b] \): Intervall & \( \frac{a+b}{2} \) & \( \frac{1}{12}(b-a)^2 \) & \( \frac{1}{b-a} \) & \( \frac{t-a}{b-a} \) \\
+		Gleichverteilung         & \( [a,b] \): Intervall               & \( \frac{a+b}{2} \)              & \( \frac{1}{12}(b-a)^2 \)        & \( \frac{1}{b-a} \)                                                                                                                           & \( \frac{t-a}{b-a} \)                         \\
 
-Exponentialverteilung & \( \lambda: \frac{1}{\E[X]} \) & \( \frac{1}{\lambda} \) & \( \frac{1}{\lambda^2} \) & \( \begin{cases} \lambda e^{-\lambda t} & t \geq 0 \\ 0 & t < 0 \end{cases} \) & \( \begin{cases} 1-e^{-\lambda t} & t>0 \\ 0 & t \leq 0\end{cases}\) \\
+		Exponentialverteilung    & \( \lambda: \frac{1}{\E[X]} \)       & \( \frac{1}{\lambda} \)          & \( \frac{1}{\lambda^2} \)        & \( \begin{cases} \lambda e^{-\lambda t} & t \geq 0 \\ 0 & t < 0 \end{cases} \)                                                                                                              & \( \begin{cases} 1-e^{-\lambda t} & t>0 \\ 0 & t \leq 0\end{cases}\)               \\
 
-Normalverteilung & \makecell[l]{\( \sigma^2 \): Varianz \\ \( \mu: \E[X] \)} & \( \mu \) & \( \sigma ^2 \) & \( \frac{1}{\sqrt{2\pi \sigma^2} }e^{-{\frac{(t-\mu)^2}{2\sigma^2} }} -\infty < t <\infty \) & \( \frac{1}{\sigma {\sqrt{2\pi}}} \int_{-\infty}^t e^{-\frac{1}{2}\left( \frac{y-\mu}{\sigma} \right) ^2} \mathrm{d} y \) \\ 
+		Normalverteilung         & \makecell[l]{\( \sigma^2 \): Varianz                                                                                                                                                                                                                                                                       \\ \( \mu: \E[X] \)} & \( \mu \) & \( \sigma ^2 \) & \( \frac{1}{\sqrt{2\pi \sigma^2} }e^{-{\frac{(t-\mu)^2}{2\sigma^2} }} -\infty < t <\infty \) & \( \frac{1}{\sigma {\sqrt{2\pi}}} \int_{-\infty}^t e^{-\frac{1}{2}\left( \frac{y-\mu}{\sigma} \right) ^2} \mathrm{d} y \) \\
 
-\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad & \( n \) & \( 2n \) & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \quad t>0\) & \(P\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
+		\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad               & \( n \)                          & \( 2n \)                         & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \quad t>0\)                                               & \(P\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
 
-t-Verteilung & \( n \): Freiheitsgrad & \( \begin{cases} 0 & n>1 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \begin{cases} \frac{n}{n-2} & n> 2 \\ \infty & 1<n \leq 2 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \frac{\Gamma \left( \frac{n+1}{2} \right) }{\sqrt{n\pi } \cdot \Gamma (\frac{n}{2}}) \left( 1+ \frac{t^2}{n} \right) ^{- \frac{n+1}{2}} \) & I'd rather not \\
+		t-Verteilung             & \( n \): Freiheitsgrad               & \( \begin{cases} 0 & n>1 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \begin{cases} \frac{n}{n-2} & n> 2 \\ \infty & 1<n \leq 2 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \frac{\Gamma \left( \frac{n+1}{2} \right) }{\sqrt{n\pi } \cdot \Gamma (\frac{n}{2}}) \left( 1+ \frac{t^2}{n} \right) ^{- \frac{n+1}{2}} \) & I'd rather not                                \\
+
 
 		\bottomrule
 	\end{tabularx}
