@@ -792,7 +792,7 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 		\toprule
 		Verteilung       & Parameter                                   & \( \E[X] \) & \( \Var(X) \)       & \( p_X(t) \)         & \( F_X(t) \)                     \\
 		\midrule
-		Gleichverteilung & \makecell[l]{\( n \): Anzahl Ereignisse                                                                                                   \\ \( x_i \): Ereignisse} & \( \frac{1}{n} \sum_{i=1}^{n} x_i \) & \( \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^{n} x_i \right)^2 \) & \( \frac{1}{n} \) & \( \frac{|\{k:x_k \leq t\}}{n} \) \\
+		Gleichverteilung & \makecell[l]{\( n \): Anzahl Ereignisse                                                                                                   \\ \( x_i \): Ereignisse} & \( \frac{1}{n} \sum_{i=1}^{n} x_i \) & \( \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \frac{1}{n^2} \left(\sum_{i=1}^{n} x_i \right)^2 \) & \( \frac{1}{n} \) & \( \frac{|\{k:x_k \leq t\}|}{n} \) \\
 
 		Bernoulli        & \( p: \) ErfolgsWK                          & \( p \)     & \( p \cdot (1-p) \) & \( p^t(1-p)^{1-t} \) & \( 1-p \) für \( 0 \leq t < 1 \) \\
 
@@ -814,15 +814,15 @@ Dieses Cheatsheet wurde stark vom \href{https://n.ethz.ch/~dcamenisch/summaries}
 		Verteilung               & Parameter                            & \( \E[X] \)                      & \( \Var(X) \)                    & \( f_X(t) \)                                                                                                                                  & \( F_X(t) \)                                  \\
 
 		\midrule
-		Gleichverteilung         & \( [a,b] \): Intervall               & \( \frac{a+b}{2} \)              & \( \frac{1}{12}(b-a)^2 \)        & \( \frac{1}{b-a} \)                                                                                                                           & \( \frac{t-a}{b-a} \)                         \\
+		Gleichverteilung         & \( [a,b] \): Intervall               & \( \frac{a+b}{2} \)              & \( \frac{1}{12}(b-a)^2 \)        & \(\begin{cases} \frac{1}{b-a} &a \le x \le b \\ 0 & \text{sonst}\end{cases}\)                                                                                                                & \(\begin{cases} 0 & x\le a \\ \frac{t-a}{b-a} & a < x < b \\ 1 & x \ge b \end{cases}\)                \\
 
 		Exponentialverteilung    & \( \lambda: \frac{1}{\E[X]} \)       & \( \frac{1}{\lambda} \)          & \( \frac{1}{\lambda^2} \)        & \( \begin{cases} \lambda e^{-\lambda t} & t \geq 0 \\ 0 & t < 0 \end{cases} \)                                                                                                              & \( \begin{cases} 1-e^{-\lambda t} & t>0 \\ 0 & t \leq 0\end{cases}\)               \\
 
-		Normalverteilung         & \makecell[l]{\( \sigma^2 \): Varianz                                                                                                                                                                                                                                                                       \\ \( \mu: \E[X] \)} & \( \mu \) & \( \sigma ^2 \) & \( \frac{1}{\sqrt{2\pi \sigma^2} }e^{-{\frac{(t-\mu)^2}{2\sigma^2} }} -\infty < t <\infty \) & \( \frac{1}{\sigma {\sqrt{2\pi}}} \int_{-\infty}^t e^{-\frac{1}{2}\left( \frac{y-\mu}{\sigma} \right) ^2} \mathrm{d} y \) \\
+		Normalverteilung         & \makecell[l]{\( \sigma^2 \): Varianz                                                                                                                                                                                                                                                                       \\ \( \mu: \E[X] \)} & \( \mu \) & \( \sigma ^2 \) & \( \frac{1}{\sqrt{2\pi \sigma^2} }e^{-{\frac{(t-\mu)^2}{2\sigma^2} }} \) & \( \frac{1}{\sigma {\sqrt{2\pi}}} \int_{-\infty}^t e^{-\frac{1}{2}\left( \frac{y-\mu}{\sigma} \right) ^2} \mathrm{d} y \) \\
 
-		\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad               & \( n \)                          & \( 2n \)                         & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \quad t>0\)                                               & \(P\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
+		\( \chi ^2 \)-Verteilung & \( n \): Freiheitsgrad               & \( n \)                          & \( 2n \)                         & \( \frac{1}{2^{\frac{n}{2}}\Gamma (\frac{n}{2})} t^{\frac{n}{2}-1} e^{-\frac{t}{2}} \text{ für } t>0\)                                        & \(P\left( \frac{n}{2}, \frac{t}{2}\right)  \) \\
 
-		t-Verteilung             & \( n \): Freiheitsgrad               & \( \begin{cases} 0 & n>1 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \begin{cases} \frac{n}{n-2} & n> 2 \\ \infty & 1<n \leq 2 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \frac{\Gamma \left( \frac{n+1}{2} \right) }{\sqrt{n\pi } \cdot \Gamma (\frac{n}{2}}) \left( 1+ \frac{t^2}{n} \right) ^{- \frac{n+1}{2}} \) & I'd rather not                                \\
+		t-Verteilung             & \( n \): Freiheitsgrad               & \( \begin{cases} 0 & n>1 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \begin{cases} \frac{n}{n-2} & n> 2 \\ \infty & 1<n \leq 2 \\ \text{undef.} & \text{sonst} \end{cases} \) & \( \frac{\Gamma \left( \frac{n+1}{2} \right) }{\sqrt{n\pi } \cdot \Gamma (\frac{n}{2})} \left( 1+ \frac{t^2}{n} \right) ^{- \frac{n+1}{2}} \) & I'd rather not                                \\
 
 
 		\bottomrule
