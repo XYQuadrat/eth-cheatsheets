@@ -40,8 +40,8 @@ jobs:
           TAG="nightly"
 
           git tag -f "$TAG"
-          hub release delete "$TAG"
-          hub release create -m "Nightly PDF build
+          gh release delete "$TAG"
+          gh release create -m "Nightly PDF build
           
           This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG" || true
           for file in $GITHUB_WORKSPACE/latex-output/*.pdf; do
