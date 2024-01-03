@@ -41,9 +41,7 @@ jobs:
 
           git tag -f "$TAG"
           gh release delete "$TAG"
-          gh release create -m "Nightly PDF build
-          
-          This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG" || true
+          gh release create -t "Nightly PDF build" -n "This release always contains the PDFs built from the latest .tex source. It is advised to only use the latest versions for actual exams, as old versions might contain factual errors." "$TAG"
           for file in $GITHUB_WORKSPACE/latex-output/*.pdf; do
             echo "Delivering file $file"
             gh release upload "$TAG" "$file" --clobber
