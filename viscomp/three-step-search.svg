@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg width="210mm" height="297mm" viewBox="0 0 210 297" version="1.1" id="svg1" inkscape:export-filename="test.png" inkscape:export-xdpi="300.06" inkscape:export-ydpi="300.06" inkscape:version="1.3 (0e150ed, 2023-07-21)" sodipodi:docname="three-step-search.svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:zoom="1.9704153" inkscape:cx="378.09287" inkscape:cy="372.51029" inkscape:window-width="1920" inkscape:window-height="1049" inkscape:window-x="1920" inkscape:window-y="0" inkscape:window-maximized="1" inkscape:current-layer="g133" />
+  <defs id="defs1">
+    <marker style="overflow:visible" id="ArrowWide" refX="0" refY="0" orient="auto-start-reverse" inkscape:stockid="Wide arrow" markerWidth="1" markerHeight="1" viewBox="0 0 1 1" inkscape:isstock="true" inkscape:collect="always" preserveAspectRatio="xMidYMid">
+      <path style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt" d="M 3,-3 0,0 3,3" transform="rotate(180,0.125,0)" sodipodi:nodetypes="ccc" id="path1" />
+    </marker>
+  </defs>
+  <g inkscape:label="GridCartesian:X4:Y4" transform="matrix(4.7793382,0,0,4.7793382,24.674785,42.972503)" id="g133" style="stroke:#4d4d4d;stroke-width:0.209234">
+    <g inkscape:label="MajorXGridlines" id="g105" style="stroke:#4d4d4d;stroke-width:0.209234">
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 5,0 V 20" inkscape:label="MajorXDiv1" id="path103" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 10,0 V 20" inkscape:label="MajorXDiv2" id="path104" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 15,0 V 20" inkscape:label="MajorXDiv3" id="path105" />
+    </g>
+    <g inkscape:label="MajorYGridlines" id="g108" style="stroke:#4d4d4d;stroke-width:0.209234">
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 0,5 H 20" inkscape:label="MajorYDiv1" id="path106" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 0,10 H 20" inkscape:label="MajorYDiv2" id="path107" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" d="M 0,15 H 20" inkscape:label="MajorYDiv3" id="path108" />
+    </g>
+    <g inkscape:label="SubMinorXGridlines" id="g120" style="stroke:#4d4d4d;stroke-width:0.209234">
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 1.25,0 V 20" inkscape:label="SubminorXDiv0:0:1" id="path109" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 2.5,0 V 20" inkscape:label="SubminorXDiv0:0:2" id="path110" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 3.75,0 V 20" inkscape:label="SubminorXDiv0:0:3" id="path111" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 6.25,0 V 20" inkscape:label="SubminorXDiv1:0:1" id="path112" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 7.5,0 V 20" inkscape:label="SubminorXDiv1:0:2" id="path113" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 8.75,0 V 20" inkscape:label="SubminorXDiv1:0:3" id="path114" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 11.25,0 V 20" inkscape:label="SubminorXDiv2:0:1" id="path115" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 12.5,0 V 20" inkscape:label="SubminorXDiv2:0:2" id="path116" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 13.75,0 V 20" inkscape:label="SubminorXDiv2:0:3" id="path117" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 16.25,0 V 20" inkscape:label="SubminorXDiv3:0:1" id="path118" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 17.5,0 V 20" inkscape:label="SubminorXDiv3:0:2" id="path119" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 18.75,0 V 20" inkscape:label="SubminorXDiv3:0:3" id="path120" />
+    </g>
+    <g inkscape:label="SubMinorYGridlines" id="g132" style="stroke:#4d4d4d;stroke-width:0.209234">
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,1.25 H 20" inkscape:label="SubminorXDiv0:0:1" id="path121" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,2.5 H 20" inkscape:label="SubminorXDiv0:0:2" id="path122" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,3.75 H 20" inkscape:label="SubminorXDiv0:0:3" id="path123" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,6.25 H 20" inkscape:label="SubminorXDiv1:0:1" id="path124" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,7.5 H 20" inkscape:label="SubminorXDiv1:0:2" id="path125" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,8.75 H 20" inkscape:label="SubminorXDiv1:0:3" id="path126" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,11.25 H 20" inkscape:label="SubminorXDiv2:0:1" id="path127" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,12.5 H 20" inkscape:label="SubminorXDiv2:0:2" id="path128" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,13.75 H 20" inkscape:label="SubminorXDiv2:0:3" id="path129" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,16.25 H 20" inkscape:label="SubminorXDiv3:0:1" id="path130" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,17.5 H 20" inkscape:label="SubminorXDiv3:0:2" id="path131" />
+      <path style="fill:none;stroke:#4d4d4d;stroke-width:0.0166079" d="M 0,18.75 H 20" inkscape:label="SubminorXDiv3:0:3" id="path132" />
+    </g>
+    <rect x="0" y="0" width="20" height="20" style="fill:none;stroke:#4d4d4d;stroke-width:0.0553598" inkscape:label="Border" id="rect132" />
+    <rect style="fill:none;stroke:none;stroke-width:0.0627703;stroke-linecap:round;stroke-dasharray:none" id="rect158" width="15.67057" height="15.422664" x="2.940414" y="1.552948" inkscape:export-filename="three-step-search.png" inkscape:export-xdpi="300.06" inkscape:export-ydpi="300.06" />
+  </g>
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1">
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="path10" cx="72.46817" cy="90.765884" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:#000000;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:none" id="circle134" cx="96.364861" cy="66.869194" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle135" cx="96.364861" cy="90.765884" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle136" cx="72.46817" cy="66.869194" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle137" cx="48.571476" cy="66.869194" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle138" cx="48.571476" cy="90.765884" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle139" cx="48.571476" cy="114.66257" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle140" cx="72.46817" cy="114.66257" r="1.631297" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle141" cx="96.364861" cy="114.66257" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle142" cx="84.416512" cy="78.817543" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:#000000;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:none" id="circle143" cx="96.364861" cy="78.817543" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle144" cx="108.3132" cy="78.817543" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle145" cx="108.3132" cy="66.869194" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle146" cx="108.3132" cy="54.920849" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle147" cx="96.364861" cy="54.920849" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle148" cx="84.416512" cy="54.920849" r="1.631297" />
+    <circle style="fill:#5fd35f;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle149" cx="84.416512" cy="66.869194" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle150" cx="90.390686" cy="78.817543" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle151" cx="90.390686" cy="72.843369" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle152" cx="96.364861" cy="72.843369" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle153" cx="102.33903" cy="72.843369" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle154" cx="102.33903" cy="78.817543" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle155" cx="102.33903" cy="84.79171" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle156" cx="96.364861" cy="84.79171" r="1.631297" />
+    <circle style="fill:#ff5555;stroke:#000000;stroke-width:0.3;stroke-linecap:round;stroke-dasharray:none" id="circle157" cx="90.390686" cy="84.79171" r="1.631297" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#ArrowWide)" d="m 90.390685,84.79171 -17.92252,5.974173" id="path157" />
+    <circle style="fill:#0066ff;stroke:none;stroke-width:0.5;stroke-linecap:round" id="circle133" cx="72.46817" cy="90.765884" r="1.631297" />
+  </g>
+</svg>

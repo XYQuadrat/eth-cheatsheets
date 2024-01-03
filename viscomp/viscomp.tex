@@ -1,0 +1,360 @@
+% Basic stuff
+\documentclass[a4paper,10pt]{article}
+\usepackage[nswissgerman]{babel}
+
+% 3 column landscape layout with fewer margins
+\usepackage[landscape, left=0.75cm, top=0.75cm, right=0.75cm, bottom=1.25cm, footskip=10pt]{geometry}
+\usepackage{flowfram}
+\ffvadjustfalse
+\setlength{\columnsep}{0.75cm}
+\Ncolumn{3}
+
+% define nice looking boxes
+\usepackage[many]{tcolorbox}
+
+% a base set, that is then customised
+\tcbset {
+    base/.style={
+	boxrule=0mm,
+	leftrule=1mm,
+	left=1.75mm,
+	arc=0mm, 
+	fonttitle=\bfseries, 
+	colbacktitle=black!10!white, 
+	coltitle=black, 
+	toptitle=0.75mm, 
+	bottomtitle=0.25mm,
+	title={#1}
+    }
+}
+
+\definecolor{brandblue}{rgb}{0.34, 0.7, 1}
+\newtcolorbox{mainbox}[1]{
+	colframe=brandblue, 
+	base={#1}
+}
+
+\newtcolorbox{subbox}[1]{
+	colframe=black!20!white,
+	base={#1}
+}
+
+% Mathematical typesetting & symbols
+\usepackage{amsthm, mathtools, amssymb} 
+\usepackage{marvosym, wasysym}
+\usepackage{xfrac}
+\usepackage{siunitx}
+\allowdisplaybreaks
+
+% Tables
+\usepackage{tabularx, multirow}
+\usepackage{makecell}
+\usepackage{booktabs}
+\renewcommand*{\arraystretch}{2}
+
+% Make enumerations more compact
+\usepackage{enumitem}
+\setitemize{itemsep=0.5pt, leftmargin=0.5cm}
+\setenumerate{itemsep=0.75pt, leftmargin=0.5cm}
+
+% To include sketches & PDFs
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+% For hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true
+}
+
+% No newline after subsubsections
+\usepackage[compact]{titlesec}
+\titleformat{\subsubsection}[runin]{\bfseries}{}{0pt}{}[]
+
+% Metadata
+\title{Cheatsheet\\ Visual Computing}
+\author{Julian Steinmann}
+\date{\vspace{-10pt}Winter 2023}
+
+% Math helper stuff
+\def\limxo{\lim_{x\to 0}}
+\def\limxi{\lim_{x\to\infty}}
+\def\limxn{\lim_{x\to-\infty}}
+\def\P{\mathbb{P}}
+\def\F{\mathcal{F}}
+\def\E{\mathbb{E}}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\abstractname}{License}
+\begin{abstract}
+	This document is licensed under CC BY-SA 4.0. It may be distributed or modified, as long as the author and the license remain intact.
+
+	\begin{center}
+		The \LaTeX source code is available at \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{github.com/XYQuadrat/eth-cheatsheets}.
+	\end{center}
+\end{abstract}
+
+\section{Computer Vision}
+\subsection{The digital image}
+An image is a representation of a continuous function, with a pixel being a discrete sample of that function.
+
+Digital images have many challenges: transmission interference, compression artifacts, spilling, scratches, sensor noise, bad contrast / resolution, motion blur.
+
+\begin{subbox}{Charge Coupled Device (CCD)}
+    An array of photosites capture the photons and hold a charge proportional to the light intensity.
+    We measure the charge with an analog-digital converter (ADC) line by line. \\
+    \textbf{Issues:}
+    \begin{itemize}
+        \item Blooming - finite bucket capacity, oversaturation causes bright vertical line
+        \item Bleeding/smearing - happens only with electronic shutters, worse for shorter shutter times
+        \item Dark current - thermally generated charges yield noise despite darkness, worsens with age
+    \end{itemize}
+\end{subbox}
+
+\begin{subbox}{CMOS}
+    Every sensor has its own amplifier, otherwise similar to CCD.
+    Compared to CCD, it's cheaper, lower power, less sensitive, has random pixel access and no blooming but more noise.
+    Rolling shutter can be an issue if we read out line by line.
+\end{subbox}
+
+\begin{mainbox}{Nyquist-Shannon sampling theorem}
+    The sample rate must be at least twice as big as the largest frequency of the sampled signal to avoid aliasing.
+\end{mainbox}
+
+\noindent Bilinear interpolation: \(f(x,y) = (1-a)(1-b) \cdot f(i,j) + a(1-b) \cdot f(i+1,j) + ab \cdot f(i+1, j+1) + (1-a)b \cdot f(i,j+1)\) \\
+Geometric resolution: \# of pixels per area \\
+Radiometric resolution: \# of bits per pixel 
+
+\subsection{Image Segmentation}
+\subsubsection{Complete partition} 
+Finite set of non-overlapping regions \( R_1, \dots, R_n \) s.t. \( I = \bigcup_{i=1}^N R_i \) (covers the whole image). 
+
+\subsubsection{Thresholding} 
+label pixel in or out by comparing with a threshold T
+
+\subsubsection{Chromakeying}
+use special background color if segmentation is desired 
+
+\subsubsection{Mahalanobis distance} 
+more sophisticated segmentation formula: \( (x - \mu)^\top \cdot \Sigma^{-1}(x - \mu) > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix\\ (\( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \)), estimate from \( n \) data points: \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
+
+\subsubsection{ROC curve} 
+Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_{TN} + C_{FP}}{V_{TP} + C_{FN}} \) with \( V \) being value and \( C \) being cost.
+
+\subsubsection{Pixel neighbourhoods}
+To improve segmentation: consider local pixels. Either 4-neighb. (horizont./vert. adjacent) or 8-neighb. (+ diagonals)
+
+\subsubsection{Region growing}
+Start from seed point, add neighbouring pixels with shared property (e.g. Mahalanobis dist.), then iterate
+
+\subsubsection{Background subtraction}
+Simple version: \( I_\alpha = \left| I - I_{bg} \right| < T \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
+
+\subsubsection{Morphological operators} 
+Logical transformations based on comparisons: \textit{erode} (delete FG pixels with 8-connected BG pixels), \textit{dilate} (add FG pixel to every 8-connected FG pixel), combination useful for smoothing / removing noise
+
+\subsection{Image Filtering}
+\begin{itemize}
+    \item \textbf{separable} - if we can write a kernel as a product of two simpler filters. Gaussian is separable
+    \item \textbf{shift invariant} - kernel does the same for all pixels
+    \item \textbf{filter at edges} - clip to black, wrap around, copy edge, reflect across edge, vary filter near edge
+\end{itemize}
+\begin{mainbox}{Correlation}
+    Compare how similar \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x+i,y+i) \) patch is to correlation mask (template matching).
+\end{mainbox}
+
+\begin{mainbox}{Convolution}
+    \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x-i, y-i) \)\\
+    For the continous case: \( g(x) = f(x) * k(x) = \int_\mathbb{R} f(a) k(x-a) \mathop{da}  \)\\
+    Convolution is linear associative, shift-invariant and commutative if the dimensions are identical.
+\end{mainbox}
+
+\subsection{Kernel examples}
+Low-pass: \( \frac{1}{9} \left[\begin{smallmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \)\\
+High-pass: \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ -1 & 8 & -1 \\ -1 & -1 & -1 \end{smallmatrix}\right]  \)\\
+Laplacian: \( \left[\begin{smallmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{smallmatrix}\right]  \)\\
+Prewitt (y-dir): \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \)\\
+Sobel (y-dir): \( \left[\begin{smallmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{smallmatrix}\right]  \)\\
+Band-pass: high-pass \( * \) low-pass\\
+Differential: \( x: \left[\begin{smallmatrix} -1 & 1 \end{smallmatrix}\right] \) \( y: \left[\begin{smallmatrix} -1 \\ 1 \end{smallmatrix}\right] \)
+\\
+Gaussian: \( G_\sigma = \frac{1}{2\pi \sigma^2} e^{-\frac{x^2+y^2}{2\sigma^2}} \) (rot. symmetric, single lobe, FT is again Gaussian, separable)
+
+\subsection{Edge detection}
+An edge is a sudden change in brightness. The location is the max. of the first derivative.
+\subsubsection{Laplacian zero-crossings} - find 0's in \( I'' \) by applying Laplacian kernel to \( I \). This yields very noisy but thin and uninterrupted edges. Very sensitive, so blur first (Laplacian of Gaussian) or suppress edges with low gradient magnitude
+\subsubsection{Canny edge detector} -
+    has thin interrupted edges that are extended more completely than with simple thresholding
+    \begin{enumerate}
+	\item Smooth image with Gaussian
+	\item Compute grad. mag. and orientation (Sobel, Prewitt, ...)
+	\item Non-maxima suppresion: quantize edge normal to one of four dirs, if mag. \( <\) either neighbour then suppress, else keep
+	\item Double thresholding: \( T_{high}, T_{low} \), keep if \( \ge T_{high} \) or \( \ge T_{low} \) and 8-connected through \( \ge T_{low} \) to a \( \ge T_{high} \) pixel
+    \end{enumerate}
+\subsubsection{Hough transform} - fits straight lines to edge pixels (\( y = mx + c \))
+    \begin{enumerate}
+	\item Subdivide \( (m, c) \)-space into discrete bins with value 0
+	\item Draw a line in \( (m,c) \)-space for each edge pixel and increment bins by 1 along line
+	\item Detect peaks, e.g. by thresholding after non-maximum suppresion
+    \end{enumerate}
+    Infinite slopes are a problem, so reparametrize line with \( (\Theta , p): \; x \cdot \sin (\Theta )- y \cdot \cos (\Theta ) + p = 0 \). Can be adapted to detect circles with known radius
+\subsubsection{Harris corner detection} - scan picture with a given window size and compute the second moment matrix \( M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \). Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( c(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
+\subsubsection{Scale Invariant Feature Transform (SIFT)} - useful to find corresponding feature points in two images. Approach: Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring gradient mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, so we can compare gradient histograms to find matching points. \[
+	\text{DoG}(x,y) = \frac{1}{k} e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g.} k=\sqrt{2} 
+\] 
+
+\subsection{Fourier Transform}
+
+\begin{mainbox}{The Fourier Transform}	
+    The Fourier Transform (FT) represents a signal \( f \) in terms of amplitudes and phases of its constituent sinusoids.\\
+    1D: \[
+	F(u) = \int_\mathbb{R} f(x) \cdot e^{-i2\pi ux} \mathop{dx}
+    .\] 
+    2D: \[
+	F(u,v) = \int \int_\mathbb{R}^2 f(x,y) \cdot e^{-i2\pi(ux + vy)} \mathop{dx} \mathop{dy}
+    .\] 
+    \( e^{-i2\pi (ux+vy)} = \cos (2\pi (ux+vy)) + i \cdot \sin(2\pi (ux + vy)) \)
+\end{mainbox}
+
+\subsection{Properties of the FT}
+\begin{center}
+    \begin{tabularx}{\linewidth}{lll}
+	\toprule
+	Property & \( f(x) \) & \( F(u) \) \\
+	\midrule
+	Linearity & \( af_{1}(x) + bf_{2}(x) \) & \( aF_{1}(u) + bF_{2}(u) \) \\
+	Duality & \( F(x) \) & \( f(-u) \) \\
+	Convolution & \( (f*g)(x) \) & \( F(u) \cdot G(u) \) \\
+	Product & \( f(x) \cdot g(x) \) & \( (F*G)(u) \) \\
+	Timeshift & \( f(x -x_{0}) \) & \( e^{-2\pi i ux_{0}} \cdot F(u) \) \\
+	Freq. shift & \( e^{2\pi i u_{0}x} f(x) \) & \( F(u - u_{0}) \) \\
+	Differentiation & \( \sfrac{\mathop{dn}}{\mathop{dx^n}} f(x) \) & \( (i_{2}\pi u)^n F(u) \) \\
+	Multiplication & \( xf(x) \) & \( \sfrac{i}{2\pi } (\sfrac{d}{\mathop{du}} F(u)) \) \\
+	\bottomrule
+    \end{tabularx}
+\end{center}
+
+% TODO: Rest of the FFT part
+
+\subsection{PCA (also: KL transform)}
+Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimensional space \( B \) with a compressor \( f: A \to B \) s.t. \( \text{size}(f(x)) \ll \text{size}(x) \). Minimize reconstruction error \( E = \Vert x - f^{-1}(f(x)) \Vert \) and maximize the variance of our encoding. Given \( N \) data samples \( x_i \in \mathbb{R}^d \):
+\begin{enumerate}
+    \item Normalize to remove brightness variations: \( x'_i = \sfrac{x_i}{\Vert x_i\Vert} \)
+    \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum x'_i  \)
+    \item Compute covariance matrix: \( \Sigma = \frac{1}{N-1}\cdot \sum (x''_i)\cdot (x''_i)^\top \)
+    \item Compute eigendecomp. of \( \Sigma \) by solving \( \Sigma e = \lambda e \) with e.g. SVG, i.e. \( \Sigma = U \Lambda U^\top \)
+    \item Define \( U_k \) as the first \( k \) eigenvalues of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \), dirs with largest variance (= eigenvalues)
+    \item \( \text{PCA}(x_i) = U^\top_k (x_i - \mu) = U^\top_k \cdot x''_i \)
+\end{enumerate}
+To decompress, use \( \text{PCA}^{-1}(y_i) = U_k\cdot y_i + \mu  \).
+\begin{itemize}
+    \item Face recognition, compare in projected space and find nearest neighbour
+    \item Face location, compute reconstruction error for every small patch, pick min
+    \item Data compression and visualization
+\end{itemize}
+Eigenfaces struggle with different lighting conditions. Fisherfaces perform better by trying to maximize between-class scatter and minimizing within-class scatter.
+
+\subsection{JPG}
+\begin{enumerate}
+    \item Conversion RGB \( \to \) YUV; only Y carries brightness info (luminance), UV contain color (chrominance)
+    \item Humans are more sensitive to brightness than color, so compress colors with chroma subsampling (e.g. only color of upper left pixel for \( 4\times 4\) grid).
+    \item Go over image with \( 8 \times 8 \) block for each YUV component and apply 2D DCT to it \( \rightarrow 64 \) vals, top left low.freq, bottom right high-freq.
+    \item Compress by integer division with weighting matrix \( \rightarrow \) compress low-right
+    \item Zig-zag run length encoding followed by Huffman
+\end{enumerate}
+High compression (10-100x) and 24 bit color depth is possible, but at the same time artifacts / wrong colors / Moiré. Also edges are softened because sharp edges require \( \infty \) freq.)\\
+JPEG2000 achieves better results by using the Haar transform globally, not just \( 8 \times 8 \), on a successively downsampled image.
+
+\subsection{Video Compression}
+\subsubsection{Bloch's law} If stimulus duration \( \le \qty{100}{\milli\second}\), we can exchange duration for brightness and vice-versa, e.g. if brightness of stimulus is halved, double the duration \( \rightarrow \) can still be detected. This enforces \( > \qty{10}{\hertz} \) for videos
+\subsubsection{Temporal redundancy} - exploit temp. red. by predicting current frame based on previously coded frames. There are 3 types of frames:
+    \begin{itemize}
+	\item \textit{I-Frame} - intra-coded frame, coded indep. of others (use e.g. JPG for spatial red.)
+	\item \textit{P-Frame} - predictively coded frame based on prev. coded I- and P-frames
+	\item \textit{B-Frame} - bi-directionally predicted frame, coded based on both prev. and future frames
+    \end{itemize}
+    This is ineffective if there are many scene changes and/or high motion
+\subsubsection{Motion-compensated prediction} - use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
+
+\begin{wrapfigure}{r}{1.5cm} 
+    \centering 
+    \includegraphics[width=1.5cm]{three-step-search.png}
+\end{wrapfigure}
+
+\begin{itemize}
+    \item can be sped up with 3-step search
+    \item can increase precision by using half-pixel motions (interpolation needed)
+\end{itemize}
+After performing motion prediction, we encode the error between the actual frame and the motion constructed one (e.g. with JPG).
+This assumes a translation model which brekas down for complex motion and produces blocking artifacts. However, the performance is good, the structure is simple and periodic, the motion vector field is easy to represent and half-pixels reduce noise \& prediction error, thus better compression.
+\subsubsection{MPEG Group of Pictures (GOP)} - starts with I-frame, ends with B-frame (``open'') or P-frame (``closed'')
+
+\subsection{Radon Transform}
+Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
+
+Basic concept of image reconstruction:
+% TODO
+Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} = \int \int_\mathbb{R}^2 u(x,y) \delta (p - x \cos \theta - y \sin \theta ) \mathop{dx} \mathop{dy} \). We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
+
+\begin{itemize}
+    \item Linear
+    \item Input shifted \( \implies \) RT shifted
+    \item Coordinate system rotated \( \implies \) RT rotated
+    \item RT of 2D convolution is a 1D conv. of RT'ed functions with respect to \( \rho \) (\( R(f*_\text{2D} g) = R(f) *_\text{1D} R(g) \), rhs. with fixed \( \theta  \))
+\end{itemize}
+\textbf{Back projection} - given RT, find \( u(x,y) \). Example: \\ %TODO 
+\textbf{Fourier / Central Slice Theorem} - % TODO
+
+\subsection{Optical Flow}
+\textbf{Brightness Constancy}
+\begin{align*}
+    I(x,y,t) &= I(x+ \delta x, y + \delta y, t + \delta t) \\
+	     &\approx I(x,y,t) + I_x \delta x + I_y \delta y + I_t \delta t \\
+    \implies &I_x \delta x + I_y \delta y + I_t \delta t \approx 0 \\
+    \implies &I_x \underbrace{\frac{\delta x}{\delta t}}_u + I_y \underbrace{\frac{\delta y}{\delta t}}_v I_t \approx 0 \\
+\end{align*}
+\subsubsection{Aperture problem} - 2 unknowns for every pixel \( (u,v) \) but only one equation \( \implies \infty\)  solutions, opt. flow constraint defines a line in \( (u,v) \) space, can compute normal flow. We therefore need an additional constraint for computation
+\subsubsection{Horn \& Schunck} - Assumption: values \( u(x,y), v(x,y) \) are smooth and change slowly with \( x,y \implies \) Minimize \( E = E_s + \lambda E_c, \lambda > 0 \) where 
+    \begin{align*}
+	E_c &= \int \int (I_x u + I_y v + I_t)^2 \mathop{dx} \mathop{dy} \text{(brightness constancy)} \\ 
+	E_s &= \int \int ((u^2_x u^2_y) + (v^2_x + v^2_y)) \mathop{dx} \mathop{dy} \text{(smoothness)}
+    \end{align*}
+This works, but has errors at boundaries / information spreads from corner-type patterns
+\subsubsection{Applications} - Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
+\subsubsection{Lucas-Kanade} - Assume all neighbouring pixels in a patch \( W \) observer the same motion \( \left[ u,v \right]^\top \) (+ small movement, + brightness constancy). Minimize \[ E = \sum_{(x,y)\in W} (I_x(x,y)u + I_y(x,y)v + I_t(x,y))^2 \]. Solve least squares:
+    \[
+	\left[
+	\begin{smallmatrix} 
+	    \sum_W I^2_x & \sum_W I_x I_y \\
+	    \sum_W I_x I_y & \sum I^2_y \\
+	\end{smallmatrix}
+	\right]
+	\left(
+	    \begin{smallmatrix}
+		u \\ v
+	    \end{smallmatrix}
+	\right)
+	= -
+	\left(
+	\begin{smallmatrix}
+	    \sum_W I_x I_t \\
+	    \sum_W I_y I_t
+	\end{smallmatrix}
+	\right)
+    \] 
+It fails if all grad. in same dir., e.g. for edges or smooth regions. However, it works well for corners and textured areas.
+\subsubsection{Iterative refinement} - Obtain more exact estimate of optical flow:
+    \begin{enumerate}
+	\item Estimate OF with Lucas-Kanade
+	\item Use estimated flow to warp image
+	\item Estimate OF using warped image
+	\item Repeat
+	\item Add up all estimates
+    \end{enumerate}
+    Fails if intensity structure poor or large displacement.
+\subsubsection{Coarse-to-fine pyramids} - create multiple levels by gradual subsampling of the image. Start with coarsest level, estimate OF. Gradually use aggregated OF estimate as initial estimate of the OF in the next finer level and estimate again with Lucas-Kanade. Iterate until finest level. This still fails if large lighting change happens.
+
+\end{document}
