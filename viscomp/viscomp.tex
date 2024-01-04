@@ -137,7 +137,7 @@ label pixel in or out by comparing with a threshold T
 use special background color if segmentation is desired 
 
 \subsubsection{Mahalanobis distance} 
-more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \cdot \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix\\ (\( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \)), estimate from \( n \) data points: \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
+more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix\\ \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate from \( n \) data points: \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
 
 \subsubsection{ROC curve} 
 Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_{TN} + C_{FP}}{V_{TP} + C_{FN}} \) with \( V \) being value and \( C \) being cost.
@@ -149,10 +149,10 @@ To improve segmentation: consider local pixels. Either 4-neighb. (horizont./vert
 Start from seed point, add neighbouring pixels with shared property (e.g. Mahalanobis dist.), then iterate
 
 \subsubsection{Background subtraction}
-Simple version: \( I_\alpha = \left| I - I_{bg} \right| < T \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
+Simple: \( I_\alpha = \left| I - I_{bg} \right| < T \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
 
 \subsubsection{Morphological operators} 
-Logical transformations based on comparisons: \textit{erode} (delete FG pixels with 8-connected BG pixels), \textit{dilate} (add FG pixel to every 8-connected FG pixel), combination useful for smoothing / removing noise
+Logical transformations based on comparisons: \textit{erode} (delete FG pixels with 8-conn. BG pixels), \textit{dilate} (add FG pixel to every 8-connected FG pixel), combination useful for smoothing / removing noise
 
 \subsection{Image Filtering}
 \begin{itemize}
@@ -173,13 +173,13 @@ Logical transformations based on comparisons: \textit{erode} (delete FG pixels w
 \subsection{Kernel examples}
 \bgroup
 \setlength{\tabcolsep}{0.2em}
-\begin{tabularx}{\linewidth}{llll}
+\begin{tabularx}{\linewidth}{lllX}
     Low-pass & \( \frac{1}{9} \left[\begin{smallmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \) & 
     High-pass & \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ -1 & 8 & -1 \\ -1 & -1 & -1 \end{smallmatrix}\right]  \) \\
     Laplacian & \( \left[\begin{smallmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{smallmatrix}\right]  \) &
     Prewitt (y-dir) & \( \left[\begin{smallmatrix} -1 & -1 & -1 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \end{smallmatrix}\right]  \) \\
     Sobel (y-dir) & \( \left[\begin{smallmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{smallmatrix}\right]  \) &
-    Band-pass & high-p. \(*\) low-p. \\
+    Band-pass & high \(*\) low \\
     Diff. (x) & \( \left[\begin{smallmatrix} -1 & 1 \end{smallmatrix}\right] \) &
     Roberts (y-dir) & \( \left[\begin{smallmatrix} 0 & 1 \\ -1 & 0 \end{smallmatrix}\right] \) \\
     Diff. (y) & \( \left[\begin{smallmatrix} -1 \\ 1 \end{smallmatrix}\right] \) &
@@ -226,7 +226,7 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 \subsubsection{Properties of the FT}
 \begin{center}
     {\renewcommand{\arraystretch}{1.2}
-    \begin{tabularx}{\linewidth}{lll}
+    \begin{tabularx}{\linewidth}{Xll}
 	\toprule
 	Property & \( f(x) \) & \( F(u) \) \\
 	\midrule
@@ -287,10 +287,10 @@ JPEG2000 achieves better results by using the Haar transform globally, not just 
 \end{align*}
 \subsubsection{Aperture problem} 2 unknowns for every pixel \( (u,v) \) but only one equation \( \implies \infty\)  solutions, opt. flow constraint defines a line in \( (u,v) \) space, can compute normal flow. We therefore need an additional constraint for computation
 \subsubsection{Horn \& Schunck} Assumption: values \( u(x,y), v(x,y) \) are smooth and change slowly with \( x,y \implies \) Minimize \( E = E_s + \lambda E_c, \lambda > 0 \) where 
-    \begin{align*}
-	E_c &= \iint (I_x u + I_y v + I_t)^2 \mathop{dx} \mathop{dy} \tag*{(brightness constancy)} \\ 
-	E_s &= \iint ((u^2_x u^2_y) + (v^2_x + v^2_y)) \mathop{dx} \mathop{dy} \tag*{(smoothness)}
-    \end{align*}
+    \begin{flalign*}
+	E_c &= \iint (I_x u + I_y v + I_t)^2 \mathop{dx} \mathop{dy} && \text{(brightness constancy)} \\ 
+	E_s &= \iint (u^2_x u^2_y) + (v^2_x + v^2_y) \mathop{dx} \mathop{dy} && \text{(smoothness)}
+    \end{flalign*}
 Has errors at boundaries / information spreads from corner-type patterns
 \subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
 \subsubsection{Lucas-Kanade} Assume all neighbouring pixels in a patch \( W \) observer the same motion \( \left[ u,v \right]^\top \) (+ small movement, brightness constancy). Minimize \[ E = \sum_{(x,y)\in W} (I_x(x,y)u + I_y(x,y)v + I_t(x,y))^2 \] Solve least squares:
@@ -335,12 +335,13 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 	\item \textit{B-Frame} - bi-directionally predicted frame, coded based on both prev. and future frames
     \end{itemize}
     This is ineffective if there are many scene changes and/or high motion
-\subsubsection{Motion-compensated prediction} - use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
 \begin{wrapfigure}{r}{1.5cm} 
     \centering 
     \includegraphics[width=1.5cm]{three-step-search.png}
 \end{wrapfigure}
+
+\subsubsection{Motion-compensated prediction} - use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
 \begin{itemize}
     \item can be sped up with 3-step search
@@ -349,6 +350,9 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 After performing motion prediction, we encode the error between the actual frame and the motion constructed one (e.g. with JPG).
 This assumes a translation model which brekas down for complex motion and produces blocking artifacts. However, the performance is good, the structure is simple and periodic, the motion vector field is easy to represent and half-pixels reduce noise \& prediction error, thus better compression.
 \subsubsection{MPEG Group of Pictures (GOP)} - starts with I-frame, ends with B-frame (``open'') or P-frame (``closed'')
+
+\subsection{Conv. Neural Networks}
+Given a kernel with size \( F \), an image with size \( N \), padding \( P \) and a stride \( S \), the output dimensions of applying the filter to the image is \( \frac{N+2P-F}{S} + 1 \). For stride \( 1 \) and padding \( P = \sfrac{F-1}{2} \), the input dimension is thus preserved.
 
 \subsection{Radon Transform}
 Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
@@ -365,5 +369,133 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
 \end{itemize}
 \textbf{Back projection} - given RT, find \( u(x,y) \). Example: \\ %TODO 
 \textbf{Fourier / Central Slice Theorem} - % TODO
+
+\section{Computer Graphics}
+\subsection{Graphics Pipeline}
+\begin{enumerate}
+    \item Modeling Transform - from oject to world space
+    \item Viewing Transform - from world to camera space, want z-axis = dist. to object
+    \item Primitive Processing - output primitives from transformed vertices
+    \item 3D Clipping - remove unneeded primitives with view frustum, occlusion and back face culling
+    \item Projection to Screen Space
+    \item Scan Conversion - discretize continous primities, interpolate attributes from vertices to pixel granularities (e.g. normals, UV)
+    \item Lighting, Shading, Texturing - compute color based on lighting shading and texture map
+    \item Occlusion Handling - handle occlusions, e.g. with z-Buffer
+    \item Display result
+\end{enumerate}
+
+\subsubsection{Fragment} Generalization of a pixel that stores info such as depth or texture coords in addition to color
+
+\subsection{Light \& Colors}
+
+\subsection{Transformations}
+\subsubsection{Homogeneous coordinates}
+Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\top \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right] \)
+
+\subsubsection{3D Transformations} Examples: \\ 
+\bgroup
+\setlength{\tabcolsep}{0.2em}
+\begin{tabularx}{\linewidth}{lllX}
+    Trans. & \( \left[\begin{smallmatrix} 1 & 0 & 0 & t_x \\ 0 & 1 & 0 & t_y \\ 0 & 0 & 1 & t_z \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & 
+    Scaling & \( \left[\begin{smallmatrix} s_x & 0 & 0 & 0 \\ 0 & s_y & 0 & 0 \\ 0 & 0 & s_z & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
+    Rot. (x) & \( \left[\begin{smallmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & -\sin \theta & 0 \\ 0 & \sin \theta  & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
+    Rot. (y) & \( \left[\begin{smallmatrix} \cos \theta  & 0 & \sin \theta  & 0 \\ 0 & 0 & 1 & 0 \\ -\sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
+    Rot. (z) & \( \left[\begin{smallmatrix} \cos \theta  & -\sin \theta & 0 & 0 \\ \sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
+    Shear (2D) & \( \left[\begin{smallmatrix} 1 & a & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
+    Shear (x) & \( \left[\begin{smallmatrix} 1 & 0 & \text{sh}_x & 0 \\ 0 & 1 & \text{sh}_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & \\
+\end{tabularx}
+\egroup
+
+\subsubsection{Commutativity}
+\( M_1 M_{2} = M_{2} M_{1} \) holds for
+\begin{center}
+    {\renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\linewidth}{c>{\centering\arraybackslash}Xc>{\centering\arraybackslash}Xc}
+	\toprule
+	\( M_{1} \) & \( M_{2} \) & \\
+	\midrule
+	Translation & Translation & \\
+	Rotation & Rotation & (only in 2D!) \\
+	Scaling & Scaling &\\
+	Scaling & Rotation & \\
+	\bottomrule
+    \end{tabularx}
+    }
+\end{center}
+
+\subsubsection{Change of coord. system} Visually:
+
+\begin{figure}[h]
+    \center
+    \includegraphics[width=2.5cm]{coord-system-change.png}
+\end{figure}
+\[ p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp \]
+Transforming a normal \( n \): \( n' = (M^{-1})^\top n \)
+
+\subsubsection{Quaternions} Alternative approach for rotation. \\
+Properties:
+\begin{align*}
+	i^2=j^2=k^2 = -1, \quad ijk = -1, \quad ij=k, \quad ji=-k \\ \quad jk=i, \quad kj = -i, \quad ki = j, \quad ik = -j \\
+	\lVert q \rVert = \sqrt{a^2+b^2+c^2+d^2},\\ \text{where } q = a + \left[\begin{smallmatrix} b & c & d \end{smallmatrix}\right] \left[\begin{smallmatrix} i \\ j \\ k \end{smallmatrix}\right] = a + v \text{ ,v not vector!} \\
+	\overline{z} = a - bi - cj - dk, \quad z^{-1} = \frac{\overline{z}}{\lVert z \rVert}
+\end{align*}
+
+\subsubsection{Rotation with quaternions} Rotate \( p = \left[\begin{smallmatrix} x & y & z \end{smallmatrix}\right] \) around axis \( u = \left[\begin{smallmatrix} u_{1} & u_{2} & u_{3} \end{smallmatrix}\right] \) by angle \( \theta  \).
+\begin{enumerate}
+    \item Convert \( p \) to quaternion \( p_Q = xi + yj + zk \)
+    \item Convert u to quaternion \( q'' = u_{1}i+u_{2}j+u_{3}k \) and \\ normalize \( q'' \) to \( q' = \sfrac{q''}{\lVert q'' \rVert} \)
+    \item Rotation quaternion \( q = \cos (\theta /2) + \sin (\theta /2) q' \) \\ and \( q^{-1} = \cos (\theta /2) - \sin (\theta /2) q' \)
+    \item Rotated point \( p' = q p q^{-1} \)
+    \item Convert \( p' \) back to cartesian
+\end{enumerate}
+
+\subsubsection{Orientation of coord. system}
+Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger is direction.
+
+\subsection{Lighting}
+\subsubsection{Luminous Flux} \( \int P(\lambda)V(\lambda) \mathop{d\lambda} \) \\
+Perceived power of light, weighted with human sensitivity [lumen] 
+\subsubsection{Irradiance / Illumination} \( E(x) = \sfrac{d \phi(A)}{dA(x)} \) \\
+Flux per unit area arriving at surface [\( \unit{W /m^2} \)]
+\subsubsection{Radiosity} \( B(x) = \sfrac{d \phi (A)}{dA(x)} \; \left[\unit{W/m^2}\right] \) \\
+Flux per unit area leaving a surface [\( \unit{W/m^2} \)]
+\subsubsection{Radient/Luminous Intensity} \( I(\vec{w}) = \sfrac{d \phi}{d \vec{w}} \; \left[\unit{W/sr}\right] \) \\
+Outgoing flux per solid angle [\( \unit{W/sr} \)]
+\subsubsection{Radiance/Luminance} \( L(x, \vec{w}) = \sfrac{d^2 \phi (A)}{\cos \theta d A(x) d \vec{w}} \) \\
+Flux per solid angle per perpendicular area = effective intensity per unit area
+% TODO decipher georgette stuff
+
+\subsubsection{Lighting} Modeling physical interactions between materials and light sources
+\subsubsection{Shading} Process of determining the color of a pixel
+\subsubsection{Phong Reflection / Illumination Model} 
+\[
+    I = \underbrace{I_a k_a}_{\text{ambient}} + f_{att} I_p [\underbrace{k_d(N\cdot L)}_{\text{diffuse}} + \underbrace{k_s(R\cdot V)^n}_{\text{specular}}]
+\] 
+\( R = N \cdot \cos (\theta) + S = 2N(N\cdot L) - L \).
+Material parameters: \( k_a, k_d, k_s, n \),
+light parameters: \( I_a, I_p \),
+geometry parameters: \( N, L, V \). Increasing \( n \) leads to smaller highlights in terms of surface area. 
+
+\subsection{Shading Models}
+\subsubsection{Flat shading} One color per primitive
+\subsubsection{Gouraud shading}
+\begin{enumerate}
+    \item Calculate face normals
+    \item Calculate vertex normals by averaging (weighted by angle)
+    \item Evaluate illumination model per vertex
+    \item Interpolate vertex colors bilinearly on current scan line
+\end{enumerate}
+Problems with scan line interpolations are perspective distortion, orientation dependence and shared vertices. Quality depends on primitive size
+
+\subsubsection{Phong shading} Barycentric interpolation of normals\\
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{phong-shading.png}
+\end{figure}
+
+\noindent Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
+Problem: The normal may not be defined or not representative.
+
+\subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \delta t + I_{\lambda_2} e^{-\alpha_1 \delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha \delta t + I_{\lambda_2} (1-\alpha_1 \delta t) \). If it's the last object, set \( \delta t = 1 \). \\
+Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-to-front rendering
 
 \end{document}
