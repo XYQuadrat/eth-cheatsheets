@@ -39,6 +39,7 @@
 	base={#1}
 }
 \definecolor{badred}{rgb}{0.96, 0.26, 0.21}
+\definecolor{goodgreen}{rgb}{0.22, 0.56, 0.24}
 
 % Mathematical typesetting & symbols
 \usepackage{amsthm, mathtools, amssymb} 
@@ -80,7 +81,7 @@
 \author{Julian Steinmann}
 \date{\vspace{-10pt}Winter 2023}
 
-\newcommand*\good{\item[green]}
+\newcommand*\good{\item[goodgreen]}
 \newcommand*\bad{\item[badred]}
 
 \begin{document}
@@ -497,5 +498,83 @@ Problem: The normal may not be defined or not representative.
 
 \subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \delta t + I_{\lambda_2} e^{-\alpha_1 \delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha \delta t + I_{\lambda_2} (1-\alpha_1 \delta t) \). If it's the last object, set \( \delta t = 1 \). \\
 Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-to-front rendering
+
+% TODO: Transparency diagram
+
+\subsection{Geometry \& Textures}
+\subsubsection{Parametric Surface} \( (x(u,v), y(u,v), z(u,v)) \)
+\subsubsection{Subdivision Surface} Define surface by primitives, use recursive algorithm for refining
+\subsubsection{Implicit Surface} Zero set of a function
+\subsubsection{Polygonal Mesh} Explicit set of vertices with position + connectedness information. Every vertex can have additional attributes (color, normal)
+\subsubsection{Texture Mappings} Goal: Map Texture \( (u,v) \)-coords. to geometry \( (x,y,z) \)-coords. Example of sphere mapping: \\\( (u,v) \to (\sin (u) \sin (v), \cos (v), \cos (u) \sin (v)) \). We want low distortion, a bijective mapping that is efficiently computable.
+\subsubsection{Light Maps} Save computation power by precomputing static lighting and applying it to texture (can be dynamically adapted)
+\subsubsection{Environment Maps} Mirror environment with imaginary sphere / cube for easier computation of reflective objects
+\subsubsection{Bump Maps} Perturb normals to fake fine detail, store normal displacement in grayscale value. A \textbf{Normal map} directly stores perturbed normals as \( (r,g,b) \) color where \( n' = (2r - 1, 2g - 1, 2b -1)^\top \). Limitations: No bumps on silhouette, no self-occlusions, no self-shadowing. In contrast, \textbf{displacement mapping} actually modifies geometry, but more complex \& expensive
+\subsubsection{Procedural Textures} Generate textures from noise, e.g. Perlin or Gabor noise by creating a gaussian pyramid of noise and summing all layers in a weighted way
+\subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead
+\subsubsection{Perspective Projection} Linear variations in world coordinates can yield non-linear variation in screen coords \( \to  \) optimal resampling filter is spatially variant
+\subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersmapling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
+%TODO small illustration
+
+\subsection{Curves \& Splines}
+\subsubsection{Bézier curves}
+\( x(t) = b_0 B^n_0(t) + \ldots + b_n B^n_n (t) \) \\
+\( B^n_i(t) = \binom{n}{i} t^i (1-t)^{n-i}, \text{ if } i < 0 \lor i >0 \implies B^n_i (t) = 0 \) \\
+(reminder: \( \binom{n}{i} = \sfrac{n!}{i!(n-i)!} \)) The \( B^n_i \)'s are the Bernstein polynomials.
+It can be constructed visually with the deCasteljau algorithm. 
+% TODO illustration
+\begin{citemize}
+    \good arbitrary \# of control points
+    \bad global support of basis func.
+    \bad insertion of control point \( \to  \) higher degree
+    \bad high degree results in oscillations
+\end{citemize}
+
+\subsubsection{B-splines}
+\( x(t) = \sum_{i=0}^k d_i N_i^n (t) \), basis function is recursively defined by convolution of box func.: 
+\( B^0(t) = 1 \text{ if } t \in [-1, 0] \implies B^1(t) = \int_\mathbb{R} B^0(s) B^0(t-s) \mathop{ds} \text{ und } B^n(t) = B^{n-1}(t) * B^0(t)\)
+
+% TODO check which splies we had
+
+\subsubsection{Subdivision Surfaces} Generalization of spline curves/ surfaces, converge to smooth limit surface, successive refinement.
+\textit{Primal}: Faces are split into sub-faces,
+\textit{Dual}: Vertices are split into multiple vertices
+\textit{Approx.}: Control points are not interpolated
+\textit{Interpol.}: Control points are interpolated
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{Xccc}
+    \toprule
+    & \multicolumn{2}{c}{\textbf{Primal}} & \textbf{Dual} \\
+    & Triangles & Rectangles & \\
+    \midrule
+    \textbf{Approx.} & Loop & Catmull-Clark & Doo-Sabin \\
+    \textbf{Interpol.} & Butterfly & Kobbelt & \\
+    \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Scan Conversion}
+\subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
+% TODO illustration
+After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
+
+\subsubsection{Scan Conversion of Polygons} 
+\begin{enumerate}
+    \item Calculate all intersections on scan line
+    \item Sort intersection points by ascending x-coordinates
+    \item Fill all spans between consecutive intersections if parity is odd
+\end{enumerate}
+% TODO: small illustration
+
+\subsection{Visibility \& Shadows}
+\subsubsection{Painter's Algorithm} Solves visibility problem by rendering objects from furthest to nearest. Has issues with cyclic overlaps \& intersections
+\subsubsection{Z-buffering} Store depth of nearest object for each pixel. Initialize all values to \( \infty \), then iterate over polygons and update z-buffer.
+Limited resolution can cause flickering, so place near clipping plane far from camera.
+
+\subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
+\subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
+\subsubsection{Shadow Maps}
 
 \end{document}
