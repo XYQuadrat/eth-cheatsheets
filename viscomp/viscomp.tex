@@ -575,6 +575,36 @@ Limited resolution can cause flickering, so place near clipping plane far from c
 
 \subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
 \subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
-\subsubsection{Shadow Maps}
+\subsubsection{Shadow Maps} Compute depths from light, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) and \( b \), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
+%TODO: small illustration
+
+\subsubsection{Shadow Volumnes} Explicitly represent shape of space in shadow as volume. Shoot ray from camera, incr./decr. each time a volume is entered/left \( \implies > 0 \implies \) in shadow. (Optimization: Use silhouette edges only.) Introduces lots of new geometry, expensive, objects must be watertight for silhouette optimization
+
+\subsection{Ray Tracing}
+For each pixel, send a ray into the scene. On object hit, send multiple rays (diff., reflected, refracted) further until we hit a light source or reach some \# of bounces. Figure out whether point in shadow by shooting rays to all light sources. For anti-aliasing, use multiple rays per pixel.
+
+\subsubsection{Ray-Surface Intersections} Ray equation: \( r(t) = o + td \)
+Sphere intersection: Solve for \( t: \lVert o + td - c \rVert ^2 - r^2 = 0 \) \\
+Triangle: first intersect with triangles plane: \( t = -\frac{(o+p_{1})n}{dn} \), where \( n = (p_{2}-p_{1})\times(p_{3}-p_{1}) \).
+Then compute barycentric coeff. of intersection point and check whether \( s_{1}+s_{2}+s_{3} = 1 \land 0 \le s_i \le 1 \implies \) if yes, inside triangle
+
+\subsubsection{Ray Tracing Extensions}
+\begin{itemize}
+    \item Add refraction
+    \item Add area lights by having multiple shadow rays
+    \item Motion blur: render objects at diff. times per frame
+    \item Depth of field
+\end{itemize}
+
+\subsubsection{Acceleration Data Structures}
+\smallskip
+\subsubsection{Brute force} Intersect every ray with every primitive
+\subsubsection{Uniform grids} Determine grid resolution, compute AABB's, incrementally rasterize ray, compute intersection with objects in each cell, stop when intersection found, if multiple take closest.
+\begin{citemize}
+    \good easy to code
+    \good building data structure is fast
+    \bad does not adapt to non-uniform scenes (\( \to  \) hierarchical grids)
+\end{citemize}
+\subsubsection{Space partitioning trees} Octree, kd-tree, bsp-tree
 
 \end{document}
