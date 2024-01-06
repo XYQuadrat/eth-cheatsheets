@@ -8,6 +8,7 @@
 \ffvadjustfalse
 \setlength{\columnsep}{0.75cm}
 \Ncolumn{3}
+\setlength\parindent{0pt}
 
 % define nice looking boxes
 \usepackage[many]{tcolorbox}
@@ -123,7 +124,7 @@ Digital images have many challenges: transmission interference, compression arti
     The sample rate must be at least twice as big as the largest frequency of the sampled signal to avoid aliasing.
 \end{mainbox}
 
-\noindent Bilinear interpolation: \(f(x,y) = (1-a)(1-b) \cdot f(i,j) + a(1-b) \cdot f(i+1,j) + ab \cdot f(i+1, j+1) + (1-a)b \cdot f(i,j+1)\) \\
+Bilinear interpolation: \(f(x,y) = (1-a)(1-b) \cdot f(i,j) + a(1-b) \cdot f(i+1,j) + ab \cdot f(i+1, j+1) + (1-a)b \cdot f(i,j+1)\) \\
 Geometric resolution: \# of pixels per area \\
 Radiometric resolution: \# of bits per pixel 
 
@@ -359,7 +360,11 @@ Given a kernel with size \( F \), an image with size \( N \), padding \( P \) an
 Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
 
 Basic concept of image reconstruction:
-% TODO
+\begin{figure}[h]
+    \center
+    \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.png}
+\end{figure}
+
 Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} = \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos \theta - y \sin \theta ) \mathop{dx} \mathop{dy} \). We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 
 \begin{itemize}
@@ -388,6 +393,7 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
 \subsubsection{Fragment} Generalization of a pixel that stores info such as depth or texture coords in addition to color
 
 \subsection{Light \& Colors}
+\subsubsection{Spectral power distribution (SPD)} 
 
 \begin{figure}[h]
     \includegraphics[width=0.6\linewidth]{ciergb.png}
@@ -401,6 +407,9 @@ xyY to XYZ: \( X = \frac{xY}{y}, Y = Y, Z = \frac{(1-x-y)Y}{y} \)
 \subsubsection{RGB} Useful for monitors and displays.
 \subsubsection{HSV} Hue, Saturation, Value. Dimensions correspond to natural notions of ``characteristics'' of color. Useful for color picking.
 \subsubsection{YIQ} Y - luminance, I - in-phase (orange-blue), Q - quadrature (purple-green), based on psycho-physical properties of eye, good for skin colors, used for television
+\[
+    \left[\begin{smallmatrix} Y \\ I \\ Q \end{smallmatrix}\right] = \left[\begin{smallmatrix} 0.229 & 0.587 & 0.114 \\ 0.596 & -0.275 & -0.321 \\ 0.212 & -0.528 & 0.311 \end{smallmatrix}\right] \left[\begin{smallmatrix} R \\ G \\ B \end{smallmatrix}\right]
+\] 
 \subsubsection{CMY(K)} Subtractive color space, used for printing. To convert: \( [CMY] = [111] - [RGB]  \)
 \subsubsection{L*a*b / Luv} Perceptually correct distances, nonlinear warps of CIE chart such that MacAdams ellipses become approx. circular
 
@@ -475,15 +484,15 @@ Properties:
 Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger is direction.
 
 \subsection{Lighting}
-\subsubsection{Luminous Flux} \( \int P(\lambda)V(\lambda) \mathop{d\lambda} \) \\
+\subsubsection{Luminous Flux} \( \Phi(A) = \int P(\lambda)V(\lambda) \mathop{d\lambda} \) \\
 Perceived power of light, weighted with human sensitivity [lumen] 
-\subsubsection{Irradiance / Illumination} \( E(x) = \sfrac{d \phi(A)}{dA(x)} \) \\
+\subsubsection{Irradiance / Illumination} \( E(x) = \sfrac{d \Phi(A)}{dA(x)} \) \\
 Flux per unit area arriving at surface [\( \unit{W /m^2} \)]
-\subsubsection{Radiosity} \( B(x) = \sfrac{d \phi (A)}{dA(x)} \; \left[\unit{W/m^2}\right] \) \\
+\subsubsection{Radiosity} \( B(x) = \sfrac{d \Phi (A)}{dA(x)} \) \\
 Flux per unit area leaving a surface [\( \unit{W/m^2} \)]
-\subsubsection{Radient/Luminous Intensity} \( I(\vec{w}) = \sfrac{d \phi}{d \vec{w}} \; \left[\unit{W/sr}\right] \) \\
+\subsubsection{Radient/Luminous Intensity} \( I(\vec{w}) = \sfrac{d \Phi}{d \vec{w}} \) \\
 Outgoing flux per solid angle [\( \unit{W/sr} \)]
-\subsubsection{Radiance/Luminance} \( L(x, \vec{w}) = \sfrac{d^2 \phi (A)}{\cos \theta d A(x) d \vec{w}} \) \\
+\subsubsection{Radiance/Luminance} \( L(x, \vec{w}) = \sfrac{d^2 \Phi (A)}{\cos \theta d A(x) d \vec{w}} \) \\
 Flux per solid angle per perpendicular area = effective intensity per unit area
 % TODO decipher georgette stuff
 
@@ -509,18 +518,20 @@ geometry parameters: \( N, L, V \). Increasing \( n \) leads to smaller highligh
 \end{enumerate}
 Problems with scan line interpolations are perspective distortion, orientation dependence and shared vertices. Quality depends on primitive size
 
-\subsubsection{Phong shading} Barycentric interpolation of normals\\
+\subsubsection{Phong shading} Barycentric interpolation of normals
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{phong-shading.png}
 \end{figure}
 
-\noindent Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
+Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
 Problem: The normal may not be defined or not representative.
 
-\subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \delta t + I_{\lambda_2} e^{-\alpha_1 \delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha \delta t + I_{\lambda_2} (1-\alpha_1 \delta t) \). If it's the last object, set \( \delta t = 1 \). \\
+\subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} e^{-\alpha_1 \Delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} (1-\alpha_1 \Delta t) \). If it's the last object, set \( \Delta t = 1 \). \\
 Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-to-front rendering
 
-% TODO: Transparency diagram
+\begin{figure}[h]
+    \includegraphics[width=0.6\linewidth]{transparency.png}
+\end{figure}
 
 \subsection{Geometry \& Textures}
 \subsubsection{Parametric Surface} \( (x(u,v), y(u,v), z(u,v)) \)
@@ -534,7 +545,7 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 \subsubsection{Procedural Textures} Generate textures from noise, e.g. Perlin or Gabor noise by creating a gaussian pyramid of noise and summing all layers in a weighted way
 \subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead
 \subsubsection{Perspective Projection} Linear variations in world coordinates can yield non-linear variation in screen coords \( \to  \) optimal resampling filter is spatially variant
-\subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersmapling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
+\subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersampling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
 %TODO small illustration
 
 \subsection{Curves \& Splines}
