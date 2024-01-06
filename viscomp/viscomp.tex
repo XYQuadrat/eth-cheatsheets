@@ -389,6 +389,27 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
 
 \subsection{Light \& Colors}
 
+\begin{figure}[h]
+    \includegraphics[width=0.6\linewidth]{ciergb.png}
+\end{figure}
+
+\subsubsection{Color Spaces}
+\subsubsection{CIE XYZ} Change of basis so that basis functions are non-negative
+\subsubsection{CIE xyY} \( x,y \) - chromaticity/color, \( Y \) brightness\\
+XYZ to xyY: \( x = \frac{X}{X+Y+Z}, y = \frac{Y}{X+Y+Z}, Y = Y \) \\
+xyY to XYZ: \( X = \frac{xY}{y}, Y = Y, Z = \frac{(1-x-y)Y}{y} \) 
+\subsubsection{RGB} Useful for monitors and displays.
+\subsubsection{HSV} Hue, Saturation, Value. Dimensions correspond to natural notions of ``characteristics'' of color. Useful for color picking.
+\subsubsection{YIQ} Y - luminance, I - in-phase (orange-blue), Q - quadrature (purple-green), based on psycho-physical properties of eye, good for skin colors, used for television
+\subsubsection{CMY(K)} Subtractive color space, used for printing. To convert: \( [CMY] = [111] - [RGB]  \)
+\subsubsection{L*a*b / Luv} Perceptually correct distances, nonlinear warps of CIE chart such that MacAdams ellipses become approx. circular
+
+\subsubsection{White point calibration}
+\[
+    \left(\begin{smallmatrix} x \\ y \\ z \end{smallmatrix}\right) = \left[\begin{smallmatrix} x_R C_R & x_G C_G & x_B C_B \\ y_R C_R & y_G C_G & y_B C_B \\ (1-x_R-y_R)C_R & (1-x_G-y_G)C_G & (1-x_B-y_B)C_B \end{smallmatrix}\right] \left[\begin{smallmatrix}R\\G\\B\end{smallmatrix}\right]
+\] 
+Set \( (R,G,B) \) to \( (1,1,1) \). Map it to the given white point, e.g. \( (0.9505, 1, 1.0890) \), then find \( C_R, C_G, C_B \)
+
 \subsection{Transformations}
 \subsubsection{Homogeneous coordinates}
 Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\top \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right] \)
@@ -575,7 +596,7 @@ Limited resolution can cause flickering, so place near clipping plane far from c
 
 \subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
 \subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
-\subsubsection{Shadow Maps} Compute depths from light, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) and \( b \), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
+\subsubsection{Shadow Maps} Compute depths from light source, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) and \( b \), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
 %TODO: small illustration
 
 \subsubsection{Shadow Volumnes} Explicitly represent shape of space in shadow as volume. Shoot ray from camera, incr./decr. each time a volume is entered/left \( \implies > 0 \implies \) in shadow. (Optimization: Use silhouette edges only.) Introduces lots of new geometry, expensive, objects must be watertight for silhouette optimization
@@ -599,7 +620,7 @@ Then compute barycentric coeff. of intersection point and check whether \( s_{1}
 \subsubsection{Acceleration Data Structures}
 \smallskip
 \subsubsection{Brute force} Intersect every ray with every primitive
-\subsubsection{Uniform grids} Determine grid resolution, compute AABB's, incrementally rasterize ray, compute intersection with objects in each cell, stop when intersection found, if multiple take closest.
+\subsubsection{Uniform grids} Determine sensible grid resolution, compute AABB's, incrementally rasterize ray, compute intersection with objects in each cell, stop when intersection found, if multiple take closest.
 \begin{citemize}
     \good easy to code
     \good building data structure is fast
