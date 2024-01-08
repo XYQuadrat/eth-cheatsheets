@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg width="271.86093mm" height="63.464458mm" viewBox="0 0 271.86093 63.464458" version="1.1" id="svg1" inkscape:version="1.3 (0e150ed, 2023-07-21)" sodipodi:docname="radon-back-projection.svg" inkscape:export-filename="../radon-back-projection.png" inkscape:export-xdpi="300.06" inkscape:export-ydpi="300.06" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:zoom="0.98520767" inkscape:cx="464.3691" inkscape:cy="105.5615" inkscape:window-width="1920" inkscape:window-height="1003" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" inkscape:current-layer="layer1" />
+  <defs id="defs1">
+    <marker style="overflow:visible" id="ArrowWideRounded" refX="0" refY="0" orient="auto-start-reverse" inkscape:stockid="Wide, rounded arrow" markerWidth="1" markerHeight="1" viewBox="0 0 1 1" inkscape:isstock="true" inkscape:collect="always" preserveAspectRatio="xMidYMid">
+      <path style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round" d="M 3,-3 0,0 3,3" transform="rotate(180,0.125,0)" sodipodi:nodetypes="ccc" id="path4" />
+    </marker>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath19">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle20" cx="168.4507" cy="39.816734" r="25.246685" />
+    </clipPath>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath21">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle22" cx="168.4507" cy="39.816734" r="25.246685" />
+    </clipPath>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath33">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle34" cx="245.44344" cy="39.816734" r="25.246685" transform="rotate(-94.38013)" />
+    </clipPath>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath35">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle36" cx="245.44344" cy="39.816734" r="25.246685" transform="rotate(-94.38013)" />
+    </clipPath>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath37">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle38" cx="245.44344" cy="39.816734" r="25.246685" transform="rotate(-40.212474)" />
+    </clipPath>
+    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath39">
+      <circle style="fill:none;stroke:#000000;stroke-width:0.999998;stroke-linejoin:round" id="circle40" cx="245.44344" cy="39.816734" r="25.246685" transform="rotate(38.29458)" />
+    </clipPath>
+  </defs>
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(-11.322388,-2.681275)">
+    <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-linejoin:round" id="path1" cx="53.30267" cy="39.816734" r="25.246685" />
+    <rect style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round" id="rect1" width="6.5197501" height="52.158001" x="88.404167" y="13.737734" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,23.599862 H 83.078128" id="path2" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,28.766412 H 53.30267" id="path5" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,33.932962 H 83.078128" id="path6" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,39.099512 H 83.078128" id="path7" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,44.266062 H 61.782648" id="path8" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,49.432612 H 83.078128" id="path9" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,54.599162 H 83.078128" id="path10" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,59.765712 H 83.078128" id="path11" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="M 20.625352,18.433312 H 83.078128" id="path12" />
+    <circle style="fill:#ff5555;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="path13" cx="58.148323" cy="28.766413" r="2.0196891" />
+    <circle style="fill:#ff5555;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="circle13" cx="66.638885" cy="44.266064" r="2.0196891" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect14" width="6.5197501" height="5.0767059" x="88.404167" y="41.727711" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect15" width="6.5197501" height="5.0767059" x="88.404167" y="26.22806" />
+    <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583" x="19.809669" y="-11.477611" id="text15" transform="rotate(90)"><tspan sodipodi:role="line" id="tspan15" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583" x="19.809669" y="-11.477611">source</tspan></text>
+    <text xml:space="preserve" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583" x="14.670786" y="-98.206253" id="text16" transform="rotate(90)"><tspan sodipodi:role="line" id="tspan16" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583" x="14.670786" y="-98.206253">detector</tspan></text>
+    <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-linejoin:round" id="circle16" cx="156.79759" cy="39.816734" r="25.246685" />
+    <rect style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round" id="rect16" width="6.5197501" height="52.158001" x="187.76773" y="13.737734" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect17" width="6.5197501" height="5.0767059" x="187.76773" y="41.727711" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect18" width="6.5197501" height="5.0767059" x="187.76773" y="26.22806" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect19" width="53.544342" height="5.0767059" x="141.67853" y="41.727711" clip-path="url(#clipPath19)" transform="translate(-11.653113)" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect20" width="50.493385" height="5.0767059" x="143.20401" y="26.22806" clip-path="url(#clipPath21)" transform="translate(-11.653113)" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="m 111.87126,39.816714 h 11.43337" id="path22" />
+    <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-linejoin:round" id="circle23" cx="245.44344" cy="39.816734" r="25.246685" />
+    <rect style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round" id="rect23" width="6.5197501" height="52.158001" x="276.41357" y="13.737734" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect24" width="6.5197501" height="5.0767059" x="276.41357" y="41.727711" />
+    <rect style="fill:#000000;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="rect25" width="6.5197501" height="5.0767059" x="276.41357" y="26.22806" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect26" width="53.544342" height="5.0767059" x="141.67853" y="41.727711" clip-path="url(#clipPath19)" transform="translate(76.992727)" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect27" width="50.493385" height="5.0767059" x="143.20401" y="26.22806" clip-path="url(#clipPath21)" transform="translate(76.992727)" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect30" width="63.235687" height="5.0767059" x="136.61105" y="175.30273" clip-path="url(#clipPath39)" transform="rotate(-38.29458)" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect32" width="63.235687" height="5.0767059" x="-13.48431" y="-254.94958" clip-path="url(#clipPath33)" transform="rotate(94.38013,-0.26458333,-0.24509209)" />
+    <circle style="fill:#ff5555;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="circle29" cx="250.28909" cy="28.766413" r="2.0196891" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect31" width="63.235687" height="5.0767059" x="179.51915" y="-135.78848" clip-path="url(#clipPath37)" transform="rotate(40.212474)" />
+    <rect style="opacity:0.5;fill:#000000;stroke:#000000;stroke-width:0.499998;stroke-linejoin:round;stroke-dasharray:none" id="rect33" width="63.235687" height="5.0767059" x="-14.239748" y="-264.8121" clip-path="url(#clipPath35)" transform="rotate(94.38013,-0.52916666,-0.49018418)" />
+    <circle style="fill:#ff5555;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none" id="circle30" cx="258.77966" cy="44.266064" r="2.0196891" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#ArrowWideRounded)" d="m 201.0555,39.816714 h 11.43337" id="path40" />
+    <text xml:space="preserve" style="font-size:10.5833px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';stroke-width:0.264583" x="218.0751" y="10.026085" id="text40"><tspan sodipodi:role="line" id="tspan40" style="font-size:10.5833px;stroke-width:0.264583" x="218.0751" y="10.026085">more angles</tspan></text>
+    <text xml:space="preserve" style="font-size:10.5833px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Normal';stroke-width:0.264583" x="135.04897" y="10.026085" id="text41"><tspan sodipodi:role="line" id="tspan41" style="font-size:10.5833px;stroke-width:0.264583" x="135.04897" y="10.026085">one angle</tspan></text>
+  </g>
+</svg>

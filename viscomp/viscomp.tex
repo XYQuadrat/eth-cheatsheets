@@ -59,9 +59,6 @@
 \usepackage{enumitem}
 \setitemize{itemsep=0.5pt, leftmargin=0.5cm}
 \setenumerate{itemsep=0.75pt, leftmargin=0.5cm}
-\let\svitem\item
-\newenvironment{citemize}[1][\relax]{\renewcommand\item[1][black]{\color{##1}\svitem}
-  \ifx\relax#1\itemize\else\itemize[#1]\fi}{\enditemize}
 
 % To include sketches & PDFs
 \usepackage{graphicx}
@@ -82,8 +79,8 @@
 \author{Julian Steinmann}
 \date{\vspace{-10pt}Winter 2023}
 
-\newcommand*\good{\item[goodgreen]}
-\newcommand*\bad{\item[badred]}
+\newcommand*\good{\item[\textcolor{goodgreen}{\( \boldsymbol{+} \)}]}
+\newcommand*\bad{\item[\textcolor{badred}{\( \boldsymbol{-} \)}]}
 
 \begin{document}
 
@@ -107,11 +104,11 @@ Digital images have many challenges: transmission interference, compression arti
 \begin{subbox}{Charge Coupled Device (CCD)}
     An array of photosites capture photons and hold a charge proportional to the light intensity.
     We measure the charge with an analog-digital converter (ADC) line by line.
-    \begin{citemize}
+    \begin{itemize}
         \bad Blooming: finite bucket capacity, oversaturation causes bright vertical line
         \bad Bleeding/smearing: happens only with electronic shutters, worse for shorter shutter times
         \bad Dark current: thermally generated charges yield noise despite darkness, worsens with age
-    \end{citemize}
+    \end{itemize}
 \end{subbox}
 
 \begin{subbox}{CMOS}
@@ -373,8 +370,26 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
     \item Coordinate system rotated \( \implies \) RT rotated
     \item RT of 2D convolution is a 1D conv. of RT'ed functions with respect to \( \rho \) (\( R(f*_\text{2D} g) = R(f) *_\text{1D} R(g) \), rhs. with fixed \( \theta  \))
 \end{itemize}
-\textbf{Back projection} - given RT, find \( u(x,y) \). Example: \\ %TODO 
-\textbf{Fourier / Central Slice Theorem} - % TODO
+\textbf{Back projection} Given RT, find \( u(x,y) \). Example:
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{radon-back-projection.png}
+\end{figure}
+
+% TODO: Decide if I want to keep this
+% \textbf{Fourier / Central Slice Theorem}  \(FT(RT(F)) = FT(g) = G \)
+% \( G(q, 0) = F(q \cos 0, q \sin 0) \)
+\subsubsection{Radon Transform Procedure} (do for many projections angles)
+\begin{itemize}
+    \item Measure projection (attenuation) data
+    \item 1D Fourier Transform of projection data
+    \item 2D inverse FT and sum with previous image (backpropagate)
+\end{itemize}
+\begin{itemize}
+    \bad requires many precise attenuation measurements
+    \bad sensitive to noise
+    \bad unstable \& hard to implement accurately
+    \bad blurring in the final image
+\end{itemize}
 
 \section{Computer Graphics}
 \subsection{Graphics Pipeline}
@@ -555,12 +570,12 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 (reminder: \( \binom{n}{i} = \sfrac{n!}{i!(n-i)!} \)) The \( B^n_i \)'s are the Bernstein polynomials.
 It can be constructed visually with the deCasteljau algorithm. 
 % TODO illustration
-\begin{citemize}
+\begin{itemize}
     \good arbitrary \# of control points
     \bad global support of basis func.
     \bad insertion of control point \( \to  \) higher degree
     \bad high degree results in oscillations
-\end{citemize}
+\end{itemize}
 
 \subsubsection{B-splines}
 \( x(t) = \sum_{i=0}^k d_i N_i^n (t) \), basis function is recursively defined by convolution of box func.: 
@@ -632,11 +647,11 @@ Then compute barycentric coeff. of intersection point and check whether \( s_{1}
 \smallskip
 \subsubsection{Brute force} Intersect every ray with every primitive
 \subsubsection{Uniform grids} Determine sensible grid resolution, compute AABB's, incrementally rasterize ray, compute intersection with objects in each cell, stop when intersection found, if multiple take closest.
-\begin{citemize}
+\begin{itemize}
     \good easy to code
     \good building data structure is fast
     \bad does not adapt to non-uniform scenes (\( \to  \) hierarchical grids)
-\end{citemize}
+\end{itemize}
 \subsubsection{Space partitioning trees} Octree, kd-tree, bsp-tree
 
 \end{document}
