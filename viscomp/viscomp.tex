@@ -62,7 +62,6 @@
 
 % To include sketches & PDFs
 \usepackage{graphicx}
-\usepackage{wrapfig}
 
 % For hyperlinks
 \usepackage{hyperref}
@@ -287,9 +286,9 @@ JPEG2000 achieves better results by using the Haar transform globally, not just 
 \textbf{Brightness Constancy}
 \begin{align*}
     I(x,y,t) &= I(x+ \delta x, y + \delta y, t + \delta t) \\
-	     &\approx I(x,y,t) + I_x \delta x + I_y \delta y + I_t \delta t \\
+	     &\approx I(x,y,t) + I_x \delta x + I_y \delta y + I_t \delta t \tag{Taylor approx., good if small motion}\\
     \implies &I_x \delta x + I_y \delta y + I_t \delta t \approx 0 \\
-    \implies &I_x \underbrace{\frac{\delta x}{\delta t}}_u + I_y \underbrace{\frac{\delta y}{\delta t}}_v I_t \approx 0
+    \implies &I_x \underbrace{\frac{\delta x}{\delta t}}_u + I_y \underbrace{\frac{\delta y}{\delta t}}_v + I_t \approx 0
 \end{align*}
 \subsubsection{Aperture problem} 2 unknowns for every pixel \( (u,v) \) but only one equation \( \implies \infty\)  solutions, opt. flow constraint defines a line in \( (u,v) \) space, can compute normal flow. We therefore need an additional constraint for computation
 \subsubsection{Horn \& Schunck} Assumption: values \( u(x,y), v(x,y) \) are smooth and change slowly with \( x,y \implies \) Minimize \( E = E_s + \lambda E_c, \lambda > 0 \) where 
@@ -299,12 +298,12 @@ JPEG2000 achieves better results by using the Haar transform globally, not just 
     \end{flalign*}
 Has errors at boundaries / information spreads from corner-type patterns
 \subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
-\subsubsection{Lucas-Kanade} Assume all neighbouring pixels in a patch \( W \) observer the same motion \( \left[ u,v \right]^\top \) (+ small movement, brightness constancy). Minimize \[ E = \sum_{(x,y)\in W} (I_x(x,y)u + I_y(x,y)v + I_t(x,y))^2 \] Solve least squares:
+\subsubsection{Lucas-Kanade} Assume all neighbouring pixels in a patch \( W \) observer the same motion \( \left[ u,v \right]^\top \) (+ small movement, brightness constancy). Minimize \[ E = \sum_{(x,y)\in W} (I_x(x,y)u + I_y(x,y)v + I_t(x,y))^2 \] Solve least squares (sums are over patch \( W \)):
     \[
 	\left[
 	\begin{smallmatrix} 
-	    \sum_W I^2_x & \sum_W I_x I_y \\
-	    \sum_W I_x I_y & \sum I^2_y \\
+	    \sum I^2_x & \sum I_x I_y \\
+	    \sum I_x I_y & \sum I^2_y \\
 	\end{smallmatrix}
 	\right]
 	\left(
@@ -315,8 +314,8 @@ Has errors at boundaries / information spreads from corner-type patterns
 	= -
 	\left(
 	\begin{smallmatrix}
-	    \sum_W I_x I_t \\
-	    \sum_W I_y I_t
+	    \sum I_x I_t \\
+	    \sum I_y I_t
 	\end{smallmatrix}
 	\right)
     \] 
@@ -331,6 +330,7 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
     \end{enumerate}
     Fails if intensity structure poor or large displacement.
 \subsubsection{Coarse-to-fine pyramids} Create multiple levels by gradual subsampling of the image. Start with coarsest level, estimate OF. Gradually use aggregated OF estimate as initial estimate of the OF in the next finer level and estimate again with Lucas-Kanade. Iterate until finest level. This still fails if large lighting change happens.
+\subsubsection{Applications} Frame extra-/interpolation, video compression, object tracking, video stabilization (aim for OF \( \approx 0 \))
 
 \subsection{Video Compression}
 \subsubsection{Bloch's law} If stimulus duration \( \le \qty{100}{\milli\second}\), we can exchange duration for brightness and vice-versa, e.g. if brightness of stimulus is halved, double the duration \( \rightarrow \) can still be detected. This enforces \( > \qty{10}{\hertz} \) for videos
@@ -342,15 +342,10 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
     \end{itemize}
     This is ineffective if there are many scene changes and/or high motion
 
-\begin{wrapfigure}{r}{2cm} 
-    \centering 
-    \includegraphics[width=2cm]{three-step-search.png}
-\end{wrapfigure}
-
-\subsubsection{Motion-compensated prediction} use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
+\subsubsection{Motion-compensated prediction} use if temp. red. fails Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
 \begin{itemize}
-    \item can be sped up with 3-step search
+    \item can be sped up with 3-step search (sample every 4th pixel, then every 2nd, then every)
     \item can increase precision by using half-pixel motions (interpolation needed)
 \end{itemize}
 After performing motion prediction, we encode the error between the actual frame and the motion constructed one (e.g. with JPG).
@@ -369,7 +364,11 @@ Basic concept of image reconstruction:
     \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.png}
 \end{figure}
 
-Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} = \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos \theta - y \sin \theta ) \mathop{dx} \mathop{dy} \). We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
+Continous case: The radon transform of a line is 
+\begin{align*}
+    R(\rho , \theta) &= \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} \\&= \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos \theta - y \sin \theta ) \mathop{dx} \mathop{dy}
+\end{align*}
+We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 
 \begin{itemize}
     \item Linear
@@ -412,9 +411,9 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
 \subsubsection{Fragment} Generalization of a pixel that stores info such as depth or texture coords in addition to color
 
 \subsection{Light \& Colors}
-\subsubsection{Spectral power distribution (SPD)} 
 
 \begin{figure}[h]
+    \centering
     \includegraphics[width=0.6\linewidth]{ciergb.png}
 \end{figure}
 
