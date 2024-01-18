@@ -213,14 +213,22 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 
 \begin{mainbox}{The Fourier Transform}	
     The Fourier Transform (FT) represents a signal \( f \) in terms of amplitudes and phases of its constituent sinusoids.\\
-    1D: \[
-	F(u) = \int_\mathbb{R} f(x) \cdot e^{-i2\pi ux} \mathop{dx}
-    .\] 
-    2D: \[
-	F(u,v) = \iint_{\mathbb{R}^2} f(x,y) \cdot e^{-i2\pi(ux + vy)} \mathop{dx} \mathop{dy}
-    .\] 
+    1D:
+    \begin{align*}
+	F(u) &= \int_\mathbb{R} f(x) \cdot e^{-i2\pi ux} \mathop{dx} \\
+	f(x) &= \int_\mathbb{R} F(u) e^{i 2\pi ux} \mathop{du} \tag{inverse}
+    \end{align*}
+    2D: 
+    \begin{align*}
+	F(u,v) &= \iint_{\mathbb{R}^2} f(x,y) \cdot e^{-i2\pi(ux + vy)} \mathop{dx} \mathop{dy} \\
+	F(u,v) &= \frac{1}{N} \sum^{N-1}_{x=0} \sum^{N-1}_{y=0} f(x,y) \cdot e^{-i2\pi (\frac{ux+vy}{N})} \mathop{dx}\mathop{dy} \\
+	f(x,y) &= \iint_{\mathbb{R}^2} F(u,v) e^{i 2\pi (ux+vy)} \mathop{du}\mathop{dv} \tag{inverse}
+    \end{align*} 
     \( e^{-i2\pi (ux+vy)} = \cos (2\pi (ux+vy)) + i \cdot \sin(2\pi (ux + vy)) \)
 \end{mainbox}
+Relevant trigonometric properties:
+\[\cos(x) = \frac{e^{ix} + e^{-ix}}{2},\; \sin(x) = \frac{e^{ix}-e^{-ix}}{2} \]
+Dirac-Delta: \( F(\delta(x-x_{0}))(u) = e^{-i 2\pi ux_{0}} \)
 
 \subsubsection{Properties of the FT}
 \begin{center}
@@ -245,7 +253,6 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 \begin{center}
     \includegraphics[width=\linewidth]{fourier-transforms.png}
 \end{center}
-% TODO: Rest of the FFT part
 
 \subsection{PCA (also: KL transform)}
 Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimensional space \( B \) with a compressor \( f: A \to B \) s.t. \( \text{size}(f(x)) \ll \text{size}(x) \). Minimize reconstruction error \( E = \Vert x - f^{-1}(f(x)) \Vert \) and maximize the variance of our encoding. Given \( N \) data samples \( x_i \in \mathbb{R}^d \):
@@ -327,7 +334,7 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 
 \subsection{Video Compression}
 \subsubsection{Bloch's law} If stimulus duration \( \le \qty{100}{\milli\second}\), we can exchange duration for brightness and vice-versa, e.g. if brightness of stimulus is halved, double the duration \( \rightarrow \) can still be detected. This enforces \( > \qty{10}{\hertz} \) for videos
-\subsubsection{Temporal redundancy} - exploit temp. red. by predicting current frame based on previously coded frames. There are 3 types of frames:
+\subsubsection{Temporal redundancy} exploit temp. red. by predicting current frame based on previously coded frames. There are 3 types of frames:
     \begin{itemize}
 	\item \textit{I-Frame} - intra-coded frame, coded indep. of others (use e.g. JPG for spatial red.)
 	\item \textit{P-Frame} - predictively coded frame based on prev. coded I- and P-frames
@@ -335,12 +342,12 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
     \end{itemize}
     This is ineffective if there are many scene changes and/or high motion
 
-\begin{wrapfigure}{r}{1.5cm} 
+\begin{wrapfigure}{r}{2cm} 
     \centering 
-    \includegraphics[width=1.5cm]{three-step-search.png}
+    \includegraphics[width=2cm]{three-step-search.png}
 \end{wrapfigure}
 
-\subsubsection{Motion-compensated prediction} - use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
+\subsubsection{Motion-compensated prediction} use if temp. red. fails. Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
 \begin{itemize}
     \item can be sped up with 3-step search
@@ -348,7 +355,7 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 \end{itemize}
 After performing motion prediction, we encode the error between the actual frame and the motion constructed one (e.g. with JPG).
 This assumes a translation model which brekas down for complex motion and produces blocking artifacts. However, the performance is good, the structure is simple and periodic, the motion vector field is easy to represent and half-pixels reduce noise \& prediction error, thus better compression.
-\subsubsection{MPEG Group of Pictures (GOP)} - starts with I-frame, ends with B-frame (``open'') or P-frame (``closed'')
+\subsubsection{MPEG Group of Pictures (GOP)} Starts with I-frame, ends with B-frame (``open'') or P-frame (``closed'')
 
 \subsection{Conv. Neural Networks}
 Given a kernel with size \( F \), an image with size \( N \), padding \( P \) and a stride \( S \), the output dimensions of applying the filter to the image is \( \frac{N+2P-F}{S} + 1 \). For stride \( 1 \) and padding \( P = \sfrac{F-1}{2} \), the input dimension is thus preserved.
@@ -375,9 +382,6 @@ Continous case: The radon transform of a line is \( R(\rho , \theta) = \int u(\r
     \includegraphics[width=\linewidth]{radon-back-projection.png}
 \end{figure}
 
-% TODO: Decide if I want to keep this
-% \textbf{Fourier / Central Slice Theorem}  \(FT(RT(F)) = FT(g) = G \)
-% \( G(q, 0) = F(q \cos 0, q \sin 0) \)
 \subsubsection{Radon Transform Procedure} (do for many projections angles)
 \begin{itemize}
     \item Measure projection (attenuation) data
@@ -471,11 +475,15 @@ Allow representing translation by matrix multiplication, done by projection onto
 
 \subsubsection{Change of coord. system} Visually:
 
-\begin{figure}[h]
-    \center
-    \includegraphics[width=2.5cm]{coord-system-change.png}
-\end{figure}
-\[ p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp \]
+\begin{tabular}{m{3cm}r}
+    \includegraphics[width=3cm]{coord-system-change.png}
+&
+$
+ p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp
+$
+\\
+\end{tabular}
+
 Transforming a normal \( n \): \( n' = (M^{-1})^\top n \)
 
 \subsubsection{Quaternions} Alternative approach for rotation. \\
@@ -509,7 +517,11 @@ Flux per unit area leaving a surface [\( \unit{W/m^2} \)]
 Outgoing flux per solid angle [\( \unit{W/sr} \)]
 \subsubsection{Radiance/Luminance} \( L(x, \vec{w}) = \sfrac{d^2 \Phi (A)}{\cos \theta d A(x) d \vec{w}} \) \\
 Flux per solid angle per perpendicular area = effective intensity per unit area
-% TODO decipher georgette stuff
+\subsubsection{Lambert's Cosine Law} Irradiance at surface is proportional to cosine of angle between light direction and surface normal: \( E = \frac{\Phi}{A} \cos \theta  \)
+\begin{figure}[h]
+    \center
+    \includegraphics[width=0.4\linewidth]{lamberts-law.png}
+\end{figure}
 
 \subsubsection{Lighting} Modeling physical interactions between materials and light sources
 \subsubsection{Shading} Process of determining the color of a pixel
@@ -541,6 +553,7 @@ Problems with scan line interpolations are perspective distortion, orientation d
 Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
 Problem: The normal may not be defined or not representative.
 
+\newpage
 \subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} e^{-\alpha_1 \Delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} (1-\alpha_1 \Delta t) \). If it's the last object, set \( \Delta t = 1 \). \\
 Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-to-front rendering
 
@@ -561,7 +574,10 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 \subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead
 \subsubsection{Perspective Projection} Linear variations in world coordinates can yield non-linear variation in screen coords \( \to  \) optimal resampling filter is spatially variant
 \subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersampling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
-%TODO small illustration
+
+\subsubsection{Bidirectional Reflectance Distribution Function}
+If \( x \) is position on surface, \( \vec{\omega}_i \) the direction of incoming light, \( \vec{\omega}_r \) the direction of outgoing light, then \( f_r(x, \vec{\omega}_i, \vec{\omega}_r) \) describes amount of outgoing light:
+\( = \frac{dL_r(x, \vec{\omega}_r)}{L_i(x, \vec{w}_i \cos \theta _i \mathop{d\vec{w}_i})} \)
 
 \subsection{Curves \& Splines}
 \subsubsection{Bézier curves}
@@ -569,7 +585,6 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 \( B^n_i(t) = \binom{n}{i} t^i (1-t)^{n-i}, \text{ if } i < 0 \lor i >0 \implies B^n_i (t) = 0 \) \\
 (reminder: \( \binom{n}{i} = \sfrac{n!}{i!(n-i)!} \)) The \( B^n_i \)'s are the Bernstein polynomials.
 It can be constructed visually with the deCasteljau algorithm. 
-% TODO illustration
 \begin{itemize}
     \good arbitrary \# of control points
     \bad global support of basis func.
@@ -580,8 +595,6 @@ It can be constructed visually with the deCasteljau algorithm.
 \subsubsection{B-splines}
 \( x(t) = \sum_{i=0}^k d_i N_i^n (t) \), basis function is recursively defined by convolution of box func.: 
 \( B^0(t) = 1 \text{ if } t \in [-1, 0] \implies B^1(t) = \int_\mathbb{R} B^0(s) B^0(t-s) \mathop{ds} \text{ und } B^n(t) = B^{n-1}(t) * B^0(t)\)
-
-% TODO check which splies we had
 
 \subsubsection{Subdivision Surfaces} Generalization of spline curves/ surfaces, converge to smooth limit surface, successive refinement.
 \textit{Primal}: Faces are split into sub-faces,
@@ -604,7 +617,11 @@ It can be constructed visually with the deCasteljau algorithm.
 
 \subsection{Scan Conversion}
 \subsubsection{Bresenham line} Always choose closest pixel at each intersection. 
-% TODO illustration
+\begin{figure}[h]
+    \center
+    \includegraphics[width=0.75\linewidth]{bresenham-line.png}
+\end{figure}
+
 After having computed the first \( d \) we can get the following \( d_\text{new} \) by adding \( a \) if we chose east (so \( d < 0 \)) or adding \( a + b \) if we chose north-east \( d > 0 \), which makes it very fast.
 
 \subsubsection{Scan Conversion of Polygons} 
@@ -613,7 +630,6 @@ After having computed the first \( d \) we can get the following \( d_\text{new}
     \item Sort intersection points by ascending x-coordinates
     \item Fill all spans between consecutive intersections if parity is odd
 \end{enumerate}
-% TODO: small illustration
 
 \subsection{Visibility \& Shadows}
 \subsubsection{Painter's Algorithm} Solves visibility problem by rendering objects from furthest to nearest. Has issues with cyclic overlaps \& intersections
@@ -622,8 +638,7 @@ Limited resolution can cause flickering, so place near clipping plane far from c
 
 \subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
 \subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
-\subsubsection{Shadow Maps} Compute depths from light source, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) and \( b \), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
-%TODO: small illustration
+\subsubsection{Shadow Maps} Compute depths from light source, compute depths from camera. For each pixel on camera plane, compute point in world coords., then project point onto light plane and compare \( a \) (distance from light to near point of object) and \( b \) (distance from light to far point of object), \( a + \text{bias} < b \implies \) in shadow. Bias needed to avoid self-shadowing, point can lie outside FoV of shadow map (\( \to \) use cubical shadow map) and aliasing due to undersampled shadow map (\( \to  \) filter result of depth test, not depths)
 
 \subsubsection{Shadow Volumnes} Explicitly represent shape of space in shadow as volume. Shoot ray from camera, incr./decr. each time a volume is entered/left \( \implies > 0 \implies \) in shadow. (Optimization: Use silhouette edges only.) Introduces lots of new geometry, expensive, objects must be watertight for silhouette optimization
 
