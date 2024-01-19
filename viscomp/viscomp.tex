@@ -136,13 +136,13 @@ label pixel in or out by comparing with a threshold \( T \in \mathbb{R} \) (\( \
 use special background color if segmentation is desired 
 
 \subsubsection{Mahalanobis distance} 
-more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix\\ \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate from \( n \) data points: \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
+more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
 
 \subsubsection{ROC curve} 
 Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_{TN} + C_{FP}}{V_{TP} + C_{FN}} \) with \( V \) being value and \( C \) being cost.
 
 \subsubsection{Pixel neighbourhoods}
-To improve segmentation: consider local pixels. Either 4-neighb. (horizont./vert. adjacent) or 8-neighb. (+ diagonals)
+To improve segmentation: consider local pixels. Either 4-neighb. (horizontally/vertically adjacent) or 8-neighb. (+ diagonals)
 
 \subsubsection{Region growing}
 Start from seed point, add neighbouring pixels with shared property (e.g. Mahalanobis dist.), then iterate
@@ -204,7 +204,7 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 	\item Draw a line in \( (m,c) \)-space for each edge pixel and increment bins by 1 along line
 	\item Detect peaks, e.g. by thresholding after non-maximum suppresion
     \end{enumerate}
-    Infinite slopes are a problem, so reparametrize line with \( (\Theta , p): \; x \cdot \sin (\Theta )- y \cdot \cos (\Theta ) + p = 0 \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
+    Infinite slopes are a problem, so reparametrize line with \( (\theta , p): \; x \cos (\theta ) + y \cdot \sin (\theta ) = p \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
 \subsubsection{Harris corner detection} Scan picture with a given window size and compute the second moment matrix \[ M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \] Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( c(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
 \subsubsection{Scale Invariant Feature Transform (SIFT)} Useful to find corresponding feature points in two images. Approach: Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring gradient mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, so we can compare gradient histograms to find matching points. \[
 	\text{DoG}(x,y) = \frac{1}{k} e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g. } k=\sqrt{2} 
@@ -296,7 +296,7 @@ JPEG2000 achieves better results by using the Haar transform globally, not just 
 \subsubsection{Horn \& Schunck} Assumption: values \( u(x,y), v(x,y) \) are smooth and change slowly with \( x,y \implies \) Minimize \( E = E_s + \lambda E_c, \lambda > 0 \) where 
     \begin{flalign*}
 	E_c &= \iint (I_x u + I_y v + I_t)^2 \mathop{dx} \mathop{dy} && \text{(brightness const.)} \\ 
-	E_s &= \iint (u^2_x u^2_y) + (v^2_x + v^2_y) \mathop{dx} \mathop{dy} && \text{(smoothness)}
+	E_s &= \iint (u^2_x + u^2_y) + (v^2_x + v^2_y) \mathop{dx} \mathop{dy} && \text{(smoothness)}
     \end{flalign*}
 Has errors at boundaries, information spreads from corner-type patterns
 \subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
@@ -572,7 +572,7 @@ Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-t
 \subsubsection{Environment Maps} Mirror environment with imaginary sphere / cube for easier computation of reflective objects
 \subsubsection{Bump Maps} Perturb normals to fake fine detail, store normal displacement in grayscale value. A \textbf{Normal map} directly stores perturbed normals as \( (r,g,b) \) color where \( n' = (2r - 1, 2g - 1, 2b -1)^\top \). Limitations: No bumps on silhouette, no self-occlusions, no self-shadowing. In contrast, \textbf{displacement mapping} actually modifies geometry, but more complex \& expensive
 \subsubsection{Procedural Textures} Generate textures from noise, e.g. Perlin or Gabor noise by creating a gaussian pyramid of noise and summing all layers in a weighted way
-\subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead
+\subsubsection{Mip-Mapping} Store down-sampled (blurred to avoid aliasing) versions of texture, use low-res versions for far away objects and interpolate inbetween. This avoids asliasing and improves compute efficiency but incurs a storage overhead (\( \frac{1}{3} \) of the original texture storage)
 \subsubsection{Perspective Projection} Linear variations in world coordinates can yield non-linear variation in screen coords \( \to  \) optimal resampling filter is spatially variant
 \subsubsection{Geometry aliasing} Happens at polygon edges. Solution: Introduce multiple samples per pixel (supersampling). Different patterns possible: Uniform, jittering, stochastic, poisson, ...
 
