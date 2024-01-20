@@ -48,6 +48,7 @@
 \usepackage{xfrac}
 \usepackage{siunitx}
 \usepackage{bm}
+
 \allowdisplaybreaks
 
 % Tables
@@ -139,26 +140,26 @@ use special background color if segmentation is desired
 more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
 
 \subsubsection{ROC curve} 
-Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_{TN} + C_{FP}}{V_{TP} + C_{FN}} \) with \( V \) being value and \( C \) being cost.
+Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
 
 \subsubsection{Pixel neighbourhoods}
 To improve segmentation: consider local pixels. Either 4-neighb. (horizontally/vertically adjacent) or 8-neighb. (+ diagonals)
 
 \subsubsection{Region growing}
-Start from seed point, add neighbouring pixels with shared property (e.g. Mahalanobis dist.), then iterate
+Start from seed point, add neighbouring pixels with shared property (e.g. small Mahalanobis distance), then iterate
 
 \subsubsection{Background subtraction}
-Simple: \( I_\alpha = \left| I - I_{bg} \right| < T \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
+Simple: \( I_\alpha = \left| I - I_{bg} \right| \), better: \( I_\alpha = \sqrt{(I-I_{bg})^\top \Sigma^{-1} (I-I_{bg})}  \)
 
 \subsubsection{Morphological operators} 
 Logical transformations: \textit{erode} (delete FG pixels with 8-conn. BG pixels), \textit{dilate} (add FG pixel to every 8-connected FG pixel), combination useful for smoothing / removing noise
 
 \subsection{Image Filtering}
 \begin{itemize}
-    \item \textbf{linear} - if \( L(\alpha I_{1} + \beta I_{2}) = \alpha L(I_{1}) + \beta L(I_{2}) \) holds
-    \item \textbf{separable} - if we can write a kernel as a product of two (usually simpler) filters. Gaussian is separable
-    \item \textbf{shift invariant} - kernel does the same for all pixels
-    \item \textbf{filter at edges} - clip to black, wrap around, copy edge, reflect across edge, vary filter near edge
+    \item \textbf{linear} -- if \( L(\alpha I_{1} + \beta I_{2}) = \alpha L(I_{1}) + \beta L(I_{2}) \) holds
+    \item \textbf{separable} -- if we can write a kernel as a product of two (usually simpler) filters \( \to  \) computationally faster
+    \item \textbf{shift invariant} -- kernel does the same for all pixels
+    \item \textbf{filter at edges} -- clip to black, wrap around, copy edge, reflect across edge, vary filter near edge
 \end{itemize}
 \begin{mainbox}{Correlation}
     Compare how similar \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x+i,y+j) \) patch is to correlation mask (template matching).
@@ -166,7 +167,7 @@ Logical transformations: \textit{erode} (delete FG pixels with 8-conn. BG pixels
 
 \begin{mainbox}{Convolution}
     \( I'(x,y) = \sum_{(i,j) \in N(x,y)} K(i,j) \cdot I(x-i, y-j) \)\\
-    For the continous case: \( g(x) = f(x) * k(x) = \int_\mathbb{R} f(a) k(x-a) \mathop{da}  \)\\
+    For the continous case:\\\( g(x) = f(x) * k(x) = \int_\mathbb{R} f(a) k(x-a) \mathop{da}  \)\\
     Convolution is linear, associative, shift-invariant and commutative if the dimensions are identical.
 \end{mainbox}
 
@@ -194,8 +195,8 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 \subsubsection{Canny edge detector} Has thin interrupted edges that are extended more completely than with simple thresholding
     \begin{enumerate}
 	\item Smooth image with Gaussian
-	\item Compute grad. mag. and orientation (Sobel, Prewitt, ...)
-	\item Non-maxima suppresion: quantize edge normal to one of four dirs, if mag. \( <\) either neighbour then suppress, else keep
+	\item Compute grad. mag. and orientation (Sobel, Prewitt)
+	\item Non-maxima suppresion: quantize edge normal to one of four dirs, if magnitude \( <\) either neighbour then suppress, else keep
 	\item Double thresholding: \( T_{high}, T_{low} \), keep if \( \ge T_{high} \) or \( \ge T_{low} \) and 8-connected through \( \ge T_{low} \) to a \( \ge T_{high} \) pixel
     \end{enumerate}
 \subsubsection{Hough transform} Fits straight lines to edge pixels (\( y = mx + c \))
@@ -205,7 +206,7 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 	\item Detect peaks, e.g. by thresholding after non-maximum suppresion
     \end{enumerate}
     Infinite slopes are a problem, so reparametrize line with \( (\theta , p): \; x \cos (\theta ) + y \cdot \sin (\theta ) = p \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
-\subsubsection{Harris corner detection} Scan picture with a given window size and compute the second moment matrix \[ M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \] Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( c(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
+\subsubsection{Harris corner detection} Scan picture with a given window size and compute the second moment matrix \[ M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \] Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( C(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
 \subsubsection{Scale Invariant Feature Transform (SIFT)} Useful to find corresponding feature points in two images. Approach: Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring gradient mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, so we can compare gradient histograms to find matching points. \[
 	\text{DoG}(x,y) = \frac{1}{k} e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g. } k=\sqrt{2} 
 \] 
@@ -262,8 +263,8 @@ Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimen
     \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum x'_i  \)
     \item Compute covariance matrix: \( \Sigma = \frac{1}{N-1}\cdot \sum (x''_i)\cdot (x''_i)^\top \)
     \item Compute eigendecomp. of \( \Sigma \) by solving \( \Sigma e = \lambda e \) with e.g. SVG, i.e. \( \Sigma = U \Lambda U^\top \)
-    \item Define \( U_k \) as the first \( k \) eigenvalues of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \), dirs with largest variance (= eigenvalues)
-    \item \( \text{PCA}(x_i) = U^\top_k (x_i - \mu) = U^\top_k \cdot x''_i \)
+    \item Define \( U_k \) as the first \( k \) eigenvectors of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \), dirs with largest variance (= eigenvalues)
+    \item \( \text{PCA}(x_i) = U^\top_k (x_i' - \mu) = U^\top_k \cdot x''_i \)
 \end{enumerate}
 To decompress, use \( \text{PCA}^{-1}(y_i) = U_k\cdot y_i + \mu  \).
 \begin{itemize}
@@ -338,16 +339,16 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 \subsubsection{Bloch's law} If stimulus duration \( \le \qty{100}{\milli\second}\), we can exchange duration for brightness and vice-versa, e.g. if brightness of stimulus is halved, double the duration \( \rightarrow \) can still be detected. This enforces \( > \qty{10}{\hertz} \) for videos
 \subsubsection{Temporal redundancy} exploit temp. red. by predicting current frame based on previously coded frames. There are 3 types of frames:
     \begin{itemize}
-	\item \textit{I-Frame} - intra-coded frame, coded indep. of others (use e.g. JPG for spatial red.)
-	\item \textit{P-Frame} - predictively coded frame based on prev. coded I- and P-frames
-	\item \textit{B-Frame} - bi-directionally predicted frame, coded based on both prev. and future frames
+	\item \textit{I-Frame} -- intra-coded frame, coded independently of others (use e.g. JPG for spatial red.)
+	\item \textit{P-Frame} -- predictively coded frame based on previously coded I- and P-frames
+	\item \textit{B-Frame} -- bi-directionally predicted frame, coded based on both previous and future frames
     \end{itemize}
     This is ineffective if there are many scene changes and/or high motion
 
 \subsubsection{Motion-compensated prediction} use if temp. red. fails Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
 \begin{itemize}
-    \item can be sped up with 3-step search (sample every 4th pixel, then every 2nd, then every)
+    \item can be sped up with 3-step search (sample every 4th pixel, then every 2nd, then every single pixel)
     \item can increase precision by using half-pixel motions (interpolation needed)
 \end{itemize}
 After performing motion prediction, we encode the error between the actual frame and the motion constructed one (e.g. with JPG).
@@ -355,7 +356,7 @@ This assumes a translation model which brekas down for complex motion and produc
 \subsubsection{MPEG Group of Pictures (GOP)} Starts with I-frame, ends with B-frame (``open'') or P-frame (``closed'')
 
 \subsection{Conv. Neural Networks}
-Given a kernel with size \( F \), an image with size \( N \), padding \( P \) and a stride \( S \), the output dimensions of applying the filter to the image is \( \frac{N+2P-F}{S} + 1 \). For stride \( 1 \) and padding \( P = \sfrac{F-1}{2} \), the input dimension is thus preserved.
+Given a kernel with size \( F \), an image with size \( N \), padding \( P \) and a stride \( S \), the output dimensions of applying the filter to the image is \( \frac{N+2P-F}{S} + 1 \). For stride \( 1 \) and padding \( P = \frac{F-1}{2} \), the input dimension is thus preserved.
 
 \subsection{Radon Transform}
 Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
@@ -368,7 +369,7 @@ Basic concept of image reconstruction:
 
 Continous case: The radon transform of a line is 
 \begin{align*}
-    R(\rho , \theta) &= \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} \\&= \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos \theta - y \sin \theta ) \mathop{dx} \mathop{dy}
+    R(\rho , \theta) &= \int u(\rho \cos (\theta ) - s \sin (\theta ), \rho \sin (\theta ) + s \cos (\theta )) \mathop{ds} \\&= \iint_{\mathbb{R}^2} u(x,y) \delta (p - x \cos (\theta) - y \sin (\theta) ) \mathop{dx} \mathop{dy}
 \end{align*}
 We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 
@@ -383,12 +384,12 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
     \includegraphics[width=\linewidth]{radon-back-projection.png}
 \end{figure}
 
-\subsubsection{Radon Transform Procedure} (do for many projections angles)
-\begin{itemize}
+\subsubsection{Radon Transform Procedure} (do for many projection angles)
+\begin{enumerate}
     \item Measure projection (attenuation) data
     \item 1D Fourier Transform of projection data
     \item 2D inverse FT and sum with previous image (backpropagate)
-\end{itemize}
+\end{enumerate}
 \begin{itemize}
     \bad requires many precise attenuation measurements
     \bad sensitive to noise
@@ -399,14 +400,14 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 \section{Computer Graphics}
 \subsection{Graphics Pipeline}
 \begin{enumerate}
-    \item Modeling Transform - from oject to world space
-    \item Viewing Transform - from world to camera space, want z-axis = dist. to object
-    \item Primitive Processing - output primitives from transformed vertices
-    \item 3D Clipping - remove unneeded primitives with view frustum, occlusion and back face culling
+    \item Modeling Transform -- from object to world space
+    \item Viewing Transform -- from world to camera space, want z-axis = distance to object
+    \item Primitive Processing -- output primitives from transformed vertices
+    \item 3D Clipping -- remove unneeded primitives with view frustum, occlusion and back face culling
     \item Projection to Screen Space
-    \item Scan Conversion - discretize continous primities, interpolate attributes from vertices to pixel granularities (e.g. normals, UV)
-    \item Lighting, Shading, Texturing - compute color based on lighting shading and texture map
-    \item Occlusion Handling - handle occlusions, e.g. with z-Buffer
+    \item Scan Conversion -- discretize continous primities, interpolate attributes from vertices to pixel granularities (e.g. normals, UV)
+    \item Lighting, Shading, Texturing -- compute color based on lighting shading and texture map
+    \item Occlusion Handling -- handle occlusions, e.g. with z-Buffer
     \item Display result
 \end{enumerate}
 
@@ -424,8 +425,8 @@ We want to find the optical density \( u(x,y) \) given \( R(\rho , \theta ) \).
 \subsubsection{CIE xyY} \( x,y \) - chromaticity/color, \( Y \) brightness\\
 XYZ to xyY: \( x = \frac{X}{X+Y+Z}, y = \frac{Y}{X+Y+Z}, Y = Y \) \\
 xyY to XYZ: \( X = \frac{xY}{y}, Y = Y, Z = \frac{(1-x-y)Y}{y} \) 
-\subsubsection{RGB} Useful for monitors and displays.
-\subsubsection{HSV} Hue, Saturation, Value. Dimensions correspond to natural notions of ``characteristics'' of color. Useful for color picking.
+\subsubsection{RGB} Useful for monitors and displays
+\subsubsection{HSV} Hue, Saturation, Value. Dimensions correspond to natural notions of ``characteristics'' of color. Useful for color picking
 \subsubsection{YIQ} Y - luminance, I - in-phase (orange-blue), Q - quadrature (purple-green), based on psycho-physical properties of eye, good for skin colors, used for television
 \[
     \left[\begin{smallmatrix} Y \\ I \\ Q \end{smallmatrix}\right] = \left[\begin{smallmatrix} 0.229 & 0.587 & 0.114 \\ 0.596 & -0.275 & -0.321 \\ 0.212 & -0.528 & 0.311 \end{smallmatrix}\right] \left[\begin{smallmatrix} R \\ G \\ B \end{smallmatrix}\right]
@@ -506,7 +507,7 @@ Properties:
 \end{enumerate}
 
 \subsubsection{Orientation of coord. system}
-Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger is direction.
+Thumb: x-axis, index finger: y-axis, middle finger: z-axis. To get direction of cross product, use thumb \& index finger as multiplicands and middle finger is direction
 
 \subsection{Lighting}
 \subsubsection{Luminous Flux} \( \Phi(A) = \int P(\lambda)V(\lambda) \mathop{d\lambda} \) \\
@@ -532,13 +533,13 @@ Flux per solid angle per perpendicular area = effective intensity per unit area
     I = \underbrace{I_a k_a}_{\text{ambient}} + f_{att} I_p [\underbrace{k_d(N\cdot L)}_{\text{diffuse}} + \underbrace{k_s(R\cdot V)^n}_{\text{specular}}]
 \] 
 \( R = N \cdot \cos (\theta) + S = 2N(N\cdot L) - L \).
-Material parameters: \( k_a, k_d, k_s, n \),
-light parameters: \( I_a, I_p \),
-geometry parameters: \( N, L, V \). Increasing \( n \) leads to smaller highlights in terms of surface area. 
+Material parameters: \( k_a, k_d, k_s, n \);
+light parameters: \( I_a, I_p \);
+geometry parameters: \( N, L, V, R \); attenuation due to spatial radiation: \( f_{att} \). Big \( n \) leads to small highlights in terms of surface area
 
 \subsection{Shading Models}
-\subsubsection{Flat shading} One color per primitive
-\subsubsection{Gouraud shading}
+\subsubsection{Flat shading} One color per primitive, in screen space
+\subsubsection{Gouraud shading} Linear interpolation of vertex intensities, in screen space
 \begin{enumerate}
     \item Calculate face normals
     \item Calculate vertex normals by averaging (weighted by angle)
@@ -547,7 +548,7 @@ geometry parameters: \( N, L, V \). Increasing \( n \) leads to smaller highligh
 \end{enumerate}
 Problems with scan line interpolations are perspective distortion, orientation dependence and shared vertices. Quality depends on primitive size
 
-\subsubsection{Phong shading} Barycentric interpolation of normals
+\subsubsection{Phong shading} Barycentric interpolation of vertex normals, in object space
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{phong-shading.png}
 \end{figure}
@@ -583,7 +584,7 @@ If \( x \) is position on surface, \( \vec{\omega}_i \) the direction of incomin
 \subsection{Curves \& Splines}
 \subsubsection{Bézier curves}
 \( x(t) = b_0 B^n_0(t) + \ldots + b_n B^n_n (t) \) \\
-\( B^n_i(t) = \binom{n}{i} t^i (1-t)^{n-i}, \text{ if } i < 0 \lor i >0 \implies B^n_i (t) = 0 \) \\
+\( B^n_i(t) = \binom{n}{i} t^i (1-t)^{n-i}, \text{ if } i < 0 \lor i >0: B^n_i (t) = 0 \) \\
 (reminder: \( \binom{n}{i} = \sfrac{n!}{i!(n-i)!} \)) The \( B^n_i \)'s are the Bernstein polynomials.
 It can be constructed visually with the deCasteljau algorithm. 
 \begin{itemize}
@@ -635,7 +636,7 @@ After having computed the first \( d \) we can get the following \( d_\text{new}
 \subsection{Visibility \& Shadows}
 \subsubsection{Painter's Algorithm} Solves visibility problem by rendering objects from furthest to nearest. Has issues with cyclic overlaps \& intersections
 \subsubsection{Z-buffering} Store depth of nearest object for each pixel. Initialize all values to \( \infty \), then iterate over polygons and update z-buffer.
-Limited resolution can cause flickering, so place near clipping plane far from camera.
+Limited resolution can cause flickering, so place near clipping plane far from camera
 
 \subsubsection{Planar Shadows} Draw projection of object onto ground. No self-shadows, no shadows on other object, curved surfaces
 \subsubsection{Projective Texture Shadows} Separate obstacles and receivers, generate b/w image of the obstacle from light \( \to  \) use img as proj. texture. Need to specify obstacles \& receivers, no self-shadows
@@ -648,7 +649,7 @@ For each pixel, send a ray into the scene. On object hit, send multiple rays (di
 
 \subsubsection{Ray-Surface Intersections} Ray equation: \( r(t) = o + td \)
 Sphere intersection: Solve for \( t: \lVert o + td - c \rVert ^2 - r^2 = 0 \) \\
-Triangle: first intersect with triangles plane: \( t = -\frac{(o+p_{1})n}{dn} \), where \( n = (p_{2}-p_{1})\times(p_{3}-p_{1}) \).
+Triangle: first intersect with triangles plane: \( t = -\frac{(o+p_{1})n}{d\cdot n} \), where \( n = (p_{2}-p_{1})\times(p_{3}-p_{1}) \).
 Then compute barycentric coeff. of intersection point and check whether \( s_{1}+s_{2}+s_{3} = 1 \land 0 \le s_i \le 1 \implies \) if yes, inside triangle
 
 \subsubsection{Ray Tracing Extensions}
