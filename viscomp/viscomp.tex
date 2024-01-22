@@ -140,7 +140,7 @@ use special background color if segmentation is desired
 more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
 
 \subsubsection{ROC curve} 
-Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{FP}}{\text{FP} + \text{TN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
+Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{TP}}{\text{TP} + \text{FN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
 
 \subsubsection{Pixel neighbourhoods}
 To improve segmentation: consider local pixels. Either 4-neighb. (horizontally/vertically adjacent) or 8-neighb. (+ diagonals)
@@ -191,8 +191,9 @@ The Gaussian kernel is rot. symmetric, single lobe, FT is again Gaussian, separa
 
 \subsection{Edge detection}
 An edge is a sudden change in brightness. The location is the max. of the first derivative.
+\subsubsection{Approximating the gradient} Approximate \( \frac{\partial I}{\partial x}(x,y) = \lim_{\Delta x \to 0} \frac{I(x + \Delta x, y) - I(x,y)}{\Delta x} \) by assuming \( \Delta x = 1 \). Then \( \approx I(x+1, y) - I(x,y) = ([1,[-1]] * I)(x,y) \). Same steps for \( \frac{\partial I}{\partial y} \)
 \subsubsection{Laplacian zero-crossings} Find 0's in \( I'' \) by applying Laplacian kernel to \( I \). This yields very noisy but thin and uninterrupted edges. Very sensitive, so blur first (Laplacian of Gaussian) or suppress edges with low gradient magnitude
-\subsubsection{Canny edge detector} Has thin interrupted edges that are extended more completely than with simple thresholding
+\subsubsection{Canny edge detector} Has thin interrupted edges that are extended more than with simple thresholding
     \begin{enumerate}
 	\item Smooth image with Gaussian
 	\item Compute grad. mag. and orientation (Sobel, Prewitt)
@@ -205,10 +206,10 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 	\item Draw a line in \( (m,c) \)-space for each edge pixel and increment bins by 1 along line
 	\item Detect peaks, e.g. by thresholding after non-maximum suppresion
     \end{enumerate}
-    Infinite slopes are a problem, so reparametrize line with \( (\theta , p): \; x \cos (\theta ) + y \cdot \sin (\theta ) = p \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
+    Infinite slopes are a problem, so reparametrize line with \( (\theta , p): \; x \cos (\theta ) + y \cdot \sin (\theta ) = \rho  \). For detecting circles with known radius use \( (x-a)^2+(y-b)^2 = r^2 \)
 \subsubsection{Harris corner detection} Scan picture with a given window size and compute the second moment matrix \[ M = \left[\begin{smallmatrix}\sum I_x(x,y)^2 & \sum I_x(x,y)\cdot I_y(x,y) \\ \sum I_x(x,y)\cdot I_y(x,y) & \sum I_y(x,y)^2 \end{smallmatrix}\right] \] Then compute \( C(x,y) = \det(M) - k\cdot (\text{trace}(M))^2 = \lambda_1 \cdot \lambda_2 - k(\lambda_1 + \lambda_2)^2 \) and mark as corner if \( C(x,y) > T \). Do non-maximum suppression to avoid duplicate detections and for better localization, add gaussian weighting to all terms in \( M \): \( G(x-x_0, y-y_0, \sigma) \). Invariant to shift, rotation and brightness offset but not scaling
-\subsubsection{Scale Invariant Feature Transform (SIFT)} Useful to find corresponding feature points in two images. Approach: Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring gradient mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, so we can compare gradient histograms to find matching points. \[
-	\text{DoG}(x,y) = \frac{1}{k} e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g. } k=\sqrt{2} 
+\subsubsection{Scale Invariant Feature Transform (SIFT)} Find corresponding feature points in two images. Look for strong responses of Difference of Gaussian (DoG) over scale space and position, consider local maxima in both spaces to find blobs. Compute histogram of gradient directions (ignoring grad. mag. because of lighting etc.) at selected scale and position and correct rotation by choosing principal direction. Now both pictures are at the same scale \& orientation, we can compare gradient histograms to find matching points \[
+	\text{DoG}(x,y) = \sfrac{1}{k} \cdot  e^{\frac{x^2+y^2}{(k\sigma)^2}} - e^{-\frac{x^2+y^2}{\sigma ^2}}, \quad \text{e.g. } k=\sqrt{2} 
 \] 
 
 \subsection{Fourier Transform}
@@ -256,11 +257,13 @@ Dirac-Delta: \( F(\delta(x-x_{0}))(u) = e^{-i 2\pi ux_{0}} \)
     \includegraphics[width=\linewidth]{fourier-transforms.png}
 \end{center}
 
+\subsubsection{Restoration / Deconvolution} Given image \( g = f * h \) where \( f \) is the original and \( h \) is a filter, it holds that \( G = F \cdot G \) and we can use the inverse of the filter \( H^{-1} \) to get \( F = G \cdot H^{-1} \) and apply inverse FT to restore \( f \). If noise \( n \) is present (\( g = f * h + n \)), we use a pseudoinverse with limited maximal value \( \tilde{H} = \frac{H}{|H|^2+\epsilon } \), where \( \epsilon  \) is a small number. Done because the noise might dominate in some frequencies and the restoration would be incorrect
+
 \subsection{PCA (also: KL transform)}
 Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimensional space \( B \) with a compressor \( f: A \to B \) s.t. \( \text{size}(f(x)) \ll \text{size}(x) \). Minimize reconstruction error \( E = \Vert x - f^{-1}(f(x)) \Vert \) and maximize the variance of our encoding. Given \( N \) data samples \( x_i \in \mathbb{R}^d \):
 \begin{enumerate}
     \item Normalize to remove brightness variations: \( x'_i = \sfrac{x_i}{\Vert x_i\Vert} \)
-    \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum x'_i  \)
+    \item Center data by subtracting mean: \( x''_i = x'_i - \mu, \quad \mu = \frac{1}{N}\sum_{i=1}^N x'_i  \)
     \item Compute covariance matrix: \( \Sigma = \frac{1}{N-1}\cdot \sum (x''_i)\cdot (x''_i)^\top \)
     \item Compute eigendecomp. of \( \Sigma \) by solving \( \Sigma e = \lambda e \) with e.g. SVG, i.e. \( \Sigma = U \Lambda U^\top \)
     \item Define \( U_k \) as the first \( k \) eigenvectors of \( \Sigma = \left[u_{1}, \ldots, u_k\right] \), dirs with largest variance (= eigenvalues)
