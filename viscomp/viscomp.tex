@@ -64,6 +64,7 @@
 
 % To include sketches & PDFs
 \usepackage{graphicx}
+\usepackage{float}
 
 % For hyperlinks
 \usepackage{hyperref}
@@ -289,6 +290,7 @@ High compression (10-100x) and 24 bit color depth is possible, but at the same t
 JPEG2000 achieves better results by using the Haar transform globally, not just \( 8 \times 8 \), on a successively downsampled image.
 
 \subsection{Optical Flow}
+\subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
 \textbf{Brightness Constancy}
 \begin{align*}
     I(x,y,t) &= I(x+ \delta x, y + \delta y, t + \delta t) \\
@@ -303,7 +305,6 @@ JPEG2000 achieves better results by using the Haar transform globally, not just 
 	E_s &= \iint (u^2_x + u^2_y) + (v^2_x + v^2_y) \mathop{dx} \mathop{dy} && \text{(smoothness)}
     \end{flalign*}
 Has errors at boundaries, information spreads from corner-type patterns
-\subsubsection{Applications} Frame extrapolation, frame interpolation, video compression (exploit temp. red.), structure from motion, object tracking, video stabilization (aim at OF \( \approx 0 \))
 \subsubsection{Lucas-Kanade} Assume all neighbouring pixels in a patch \( W \) observer the same motion \( \left[ u,v \right]^\top \) (+ small movement, brightness constancy). Compute \( I_x, I_y, I_t \) and minimize \[ E = \sum_{(x,y)\in W} (I_x(x,y)u + I_y(x,y)v + I_t(x,y))^2 \] Solve least squares (sums are over patch \( W \)):
     \[
 	\left[
@@ -336,7 +337,6 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
     \end{enumerate}
     Fails if intensity structure poor or large displacement.
 \subsubsection{Coarse-to-fine pyramids} Create multiple levels by gradual subsampling of the image. Start with coarsest level, estimate OF. Gradually use aggregated OF estimate as initial estimate of the OF in the next finer level and estimate again with Lucas-Kanade. Iterate until finest level. This still fails if large lighting change happens.
-\subsubsection{Applications} Frame extra-/interpolation, video compression, object tracking, video stabilization (aim for OF \( \approx 0 \))
 
 \subsection{Video Compression}
 \subsubsection{Bloch's law} If stimulus duration \( \le \qty{100}{\milli\second}\), we can exchange duration for brightness and vice-versa, e.g. if brightness of stimulus is halved, double the duration \( \rightarrow \) can still be detected. This enforces \( > \qty{10}{\hertz} \) for videos
@@ -346,7 +346,7 @@ Fails if all gradients are in the same direction, e.g. for edges or smooth regio
 	\item \textit{P-Frame} -- predictively coded frame based on previously coded I- and P-frames
 	\item \textit{B-Frame} -- bi-directionally predicted frame, coded based on both previous and future frames
     \end{itemize}
-    This is ineffective if there are many scene changes and/or high motion
+This is ineffective if there are many scene changes and/or high motion
 
 \subsubsection{Motion-compensated prediction} use if temp. red. fails Generally very difficult, pratical: \textit{block-matching motion estimation}. Partition each frame into blocks and describe motion by finding best matching block in reference frame
 
@@ -552,14 +552,13 @@ geometry parameters: \( N, L, V, R \); attenuation due to spatial radiation: \( 
 Problems with scan line interpolations are perspective distortion, orientation dependence and shared vertices. Quality depends on primitive size
 
 \subsubsection{Phong shading} Barycentric interpolation of vertex normals, in object space
-\begin{figure}[h]
+\begin{figure}[H]
     \includegraphics[width=\linewidth]{phong-shading.png}
 \end{figure}
 
 Properties: \( x = a \implies n_x = n_a, \quad \lambda_a+\lambda_b +\lambda_c = 1, \\ \lambda_a a+ \lambda_b b + \lambda_c c = x \)
 Problem: The normal may not be defined or not representative.
 
-\newpage
 \subsubsection{Transparency} \( I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} e^{-\alpha_1 \Delta t} \implies \) linearization \( \implies I_\lambda = I_{\lambda_1} \alpha_1 \Delta t + I_{\lambda_2} (1-\alpha_1 \Delta t) \). If it's the last object, set \( \Delta t = 1 \). \\
 Problem: Rendering order, we need sorted traversal of polygons \( \to  \) back-to-front rendering
 
