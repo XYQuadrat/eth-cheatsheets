@@ -93,7 +93,7 @@
 	This document is licensed under CC BY-SA 4.0. It may be distributed or modified, as long as the author and the license remain intact.
 
 	\begin{center}
-	    The \LaTeX source code is available at \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{\color{brandblue}github.com/XYQuadrat/eth-cheatsheets}.
+	    The \LaTeX\ source code is available at \\ \href{https://github.com/XYQuadrat/eth-cheatsheets}{\color{brandblue}github.com/XYQuadrat/eth-cheatsheets}.
 	\end{center}
 \end{abstract}
 
@@ -138,10 +138,10 @@ label pixel in or out by comparing with a threshold \( T \in \mathbb{R} \) (\( \
 use special background color if segmentation is desired 
 
 \subsubsection{Mahalanobis distance} 
-more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(x_i - \bar{x})^\top \)
+more sophisticated segmentation formula (accounts for variance): \( \sqrt{(x - \mu)^\top \Sigma^{-1}(x - \mu)} > T \), \( T \) is threshold. \( \Sigma  \) is the covariance matrix with \( \Sigma_{ij} = \mathbb{E}\left[(X_i - \mu_i)(X_j - \mu_j) \right] \), estimate it from \( n \) data points (at least 3 needed): \( \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \mu)(x_i - \mu)^\top \)
 
 \subsubsection{ROC curve} 
-Describes performance of binary classifier. X-axis is \( \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \sfrac{\text{TP}}{\text{TP} + \text{FN}} \). We can choose operating point with gradient \( \beta = \frac{N}{P} \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
+Describes performance of binary classifier. X-axis is \( \text{FPR} = \sfrac{\text{FP}}{\text{FP}+\text{TN}} \), the y-axis is \( \text{TPR} = \sfrac{\text{TP}}{\text{TP} + \text{FN}} \). We can choose a good operating point with gradient \( \beta = \frac{N}{P} \cdot \frac{V_\text{TN} + C_\text{FP}}{V_\text{TP} + C_\text{FN}} \) with \( V \) being value and \( C \) being cost.
 
 \subsubsection{Pixel neighbourhoods}
 To improve segmentation: consider local pixels. Either 4-neighb. (horizontally/vertically adjacent) or 8-neighb. (+ diagonals)
@@ -158,7 +158,7 @@ Logical transformations: \textit{erode} (delete FG pixels with 8-conn. BG pixels
 \subsection{Image Filtering}
 \begin{itemize}
     \item \textbf{linear} -- if \( L(\alpha I_{1} + \beta I_{2}) = \alpha L(I_{1}) + \beta L(I_{2}) \) holds
-    \item \textbf{separable} -- if we can write a kernel as a product of two (usually simpler) filters \( \to  \) computationally faster
+    \item \textbf{separable} -- kernel can be written as a product of two independent filters \( \to  \) computationally faster
     \item \textbf{shift invariant} -- kernel does the same for all pixels
     \item \textbf{filter at edges} -- clip to black, wrap around, copy edge, reflect across edge, vary filter near edge
 \end{itemize}
@@ -199,7 +199,8 @@ An edge is a sudden change in brightness. The location is the max. of the first 
 	\item Smooth image with Gaussian
 	\item Compute grad. mag. and orientation (Sobel, Prewitt)
 	\item Non-maxima suppresion: quantize edge normal to one of four dirs, if magnitude \( <\) either neighbour then suppress, else keep
-	\item Double thresholding: \( T_{high}, T_{low} \), keep if \( \ge T_{high} \) or \( \ge T_{low} \) and 8-connected through \( \ge T_{low} \) to a \( \ge T_{high} \) pixel
+	\item Double thresholding: given \( T_{high}, T_{low} \), strong pixel if \( \ge T_{high} \) and weak pixel if \( \ge T_{low} \) 
+	\item Reject weak pixels not 8-connected through weak pixels to a strong pixel
     \end{enumerate}
 \subsubsection{Hough transform} Fits straight lines to edge pixels (\( y = mx + c \))
     \begin{enumerate}
@@ -365,7 +366,7 @@ Given a kernel with size \( F \), an image with size \( N \), padding \( P \) an
 Given an object with unknown density \( f(x,y) \), find \( f \) by sending rays from all dirs through the object and measure absorption on the other side. We assume parallel beams for a given angle and no spreading of a beam.
 
 Basic concept of image reconstruction:
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[width=0.75\linewidth]{radon-image-reconstruction.png}
 \end{figure}
@@ -460,7 +461,7 @@ Allow representing translation by matrix multiplication, done by projection onto
     Shear (x) & \( \left[\begin{smallmatrix} 1 & 0 & \text{sh}_x & 0 \\ 0 & 1 & \text{sh}_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & \\
 \end{tabularx}
 \egroup
-If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 0 \\ 0 & -1 & 0 \\ 2 & 2 & 1 \end{smallmatrix}\right] \), we first scale/rotate, then translate (follows from matrix multiplication laws).
+If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 & 1 \end{smallmatrix}\right] \), we first scale/rotate, then translate (follows from matrix multiplication laws).
 
 \subsubsection{Commutativity}
 \( M_1 M_{2} = M_{2} M_{1} \) holds for
