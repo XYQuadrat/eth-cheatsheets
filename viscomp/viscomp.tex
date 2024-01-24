@@ -263,7 +263,7 @@ Dirac-Delta: \( F(\delta(x-x_{0}))(u) = e^{-i 2\pi ux_{0}} \)
     \includegraphics[width=\linewidth]{fourier-transforms.png}
 \end{center}
 
-\subsubsection{Restoration / Deconvolution} Given image \( g = f * h \) where \( f \) is the original and \( h \) is a filter, it holds that \( G = F \cdot G \) and we can use the inverse of the filter \( H^{-1} \) to get \( F = G \cdot H^{-1} \) and apply inverse FT to restore \( f \). If noise \( n \) is present (\( g = f * h + n \)), we use a pseudoinverse with limited maximal value \( \tilde{H} = \frac{H}{|H|^2+\epsilon } \), where \( \epsilon  \) is a small number. Done because the noise might dominate in some frequencies and the restoration would be incorrect
+\subsubsection{Restoration / Deconvolution} Given image \( g = f * h \) where \( f \) is the original and \( h \) is a filter, it holds that \( G = F \cdot H \) and we can use the inverse of the filter \( H^{-1} \) to get \( F = G \cdot H^{-1} \) and apply inverse FT to restore \( f \). If noise \( n \) is present (\( g = f * h + n \)), we use a pseudoinverse with limited maximal value \( \tilde{H} = \frac{H}{|H|^2+\epsilon } \), where \( \epsilon  \) is a small number. Done because the noise might dominate in some frequencies and the restoration would be incorrect
 
 \subsection{PCA (also: KL transform)}
 Given data \( x \in A \), e.g. an image, we want to compress it to a lower-dimensional space \( B \) with a compressor \( f: A \to B \) s.t. \( \text{size}(f(x)) \ll \text{size}(x) \). Minimize reconstruction error \( E = \Vert x - f^{-1}(f(x)) \Vert \) and maximize the variance of our encoding. Given \( N \) data samples \( x_i \in \mathbb{R}^d \):
