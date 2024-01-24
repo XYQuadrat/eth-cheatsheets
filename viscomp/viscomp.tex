@@ -48,6 +48,9 @@
 \usepackage{xfrac}
 \usepackage{siunitx}
 \usepackage{bm}
+\usepackage{pifont}
+\newcommand{\cmark}{\text{\ding{51}}}
+\newcommand{\xmark}{\text{\ding{55}}}
 
 \allowdisplaybreaks
 
@@ -188,6 +191,7 @@ Logical transformations: \textit{erode} (delete FG pixels with 8-conn. BG pixels
     Gaussian (\( G_\sigma \))  & \( \frac{1}{2\pi \sigma^2} e^{-\frac{x^2+y^2}{2\sigma^2}} \) \\
 \end{tabularx}
 \egroup
+
 The Gaussian kernel is rot. symmetric, single lobe, FT is again Gaussian, separable.
 
 \subsection{Edge detection}
@@ -221,13 +225,13 @@ An edge is a sudden change in brightness. The location is the max. of the first 
     1D:
     \begin{align*}
 	F(u) &= \int_\mathbb{R} f(x) \cdot e^{-i2\pi ux} \mathop{dx} \\
-	f(x) &= \int_\mathbb{R} F(u) e^{i 2\pi ux} \mathop{du} \tag{inverse}
+	f(x) &= \int_\mathbb{R} F(u) \cdot e^{i 2\pi ux} \mathop{du} \tag{inverse}
     \end{align*}
     2D: 
     \begin{align*}
 	F(u,v) &= \iint_{\mathbb{R}^2} f(x,y) \cdot e^{-i2\pi(ux + vy)} \mathop{dx} \mathop{dy} \\
 	F(u,v) &= \frac{1}{N} \sum^{N-1}_{x=0} \sum^{N-1}_{y=0} f(x,y) \cdot e^{-i2\pi (\frac{ux+vy}{N})} \mathop{dx}\mathop{dy} \\
-	f(x,y) &= \iint_{\mathbb{R}^2} F(u,v) e^{i 2\pi (ux+vy)} \mathop{du}\mathop{dv} \tag{inverse}
+	f(x,y) &= \iint_{\mathbb{R}^2} F(u,v) \cdot e^{i 2\pi (ux+vy)} \mathop{du}\mathop{dv} \tag{inverse}
     \end{align*} 
     \( e^{-i2\pi (ux+vy)} = \cos (2\pi (ux+vy)) + i \cdot \sin(2\pi (ux + vy)) \)
 \end{mainbox}
@@ -446,7 +450,8 @@ Set \( (R,G,B) \) to \( (1,1,1) \). Map it to the given white point, e.g. \( (0.
 
 \subsection{Transformations}
 \subsubsection{Homogeneous coordinates}
-Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\top \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right] \)
+Allow representing translation by matrix multiplication, done by projection onto hyperplane: \( p = \left[\begin{smallmatrix}x & y & z & w\end{smallmatrix}\right]^\top \to \left[\begin{smallmatrix}\frac{x}{w} & \frac{y}{w} & \frac{z}{w} & 1\end{smallmatrix}\right] \).
+A point has infinitely many homogeneous coordinates.
 
 \subsubsection{3D Transformations} Examples: \\ 
 \bgroup
@@ -458,10 +463,12 @@ Allow representing translation by matrix multiplication, done by projection onto
     Rot. (y) & \( \left[\begin{smallmatrix} \cos \theta  & 0 & \sin \theta  & 0 \\ 0 & 1 & 0 & 0 \\ -\sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
     Rot. (z) & \( \left[\begin{smallmatrix} \cos \theta  & -\sin \theta & 0 & 0 \\ \sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) &
     Shear (2D) & \( \left[\begin{smallmatrix} 1 & a & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{smallmatrix}\right]  \) \\
-    Shear (x) & \( \left[\begin{smallmatrix} 1 & 0 & \text{sh}_x & 0 \\ 0 & 1 & \text{sh}_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & \\
+    Shear (xy) & \( \left[\begin{smallmatrix} 1 & 0 & \text{sh}_x & 0 \\ 0 & 1 & \text{sh}_y & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right]  \) & \\
 \end{tabularx}
 \egroup
 If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 & 1 \end{smallmatrix}\right] \), we first scale/rotate, then translate (follows from matrix multiplication laws).
+
+\subsubsection{Rigid transform} A transform \( Ax + b \) is rigid if \( A^{-1} = A^\top \) and also proper rigid if \( \det(a) = 1 \).
 
 \subsubsection{Commutativity}
 \( M_1 M_{2} = M_{2} M_{1} \) holds for
@@ -491,10 +498,9 @@ $
 \\
 \end{tabular}
 
-Transforming a normal \( n \): \( n' = (M^{-1})^\top n \)
+Transforming a normal \( n \): \( n' = (M^{-1})^\top n \) when \( p' = Mp \)
 
-\subsubsection{Quaternions} Alternative approach for rotation. \\
-Properties:
+\subsubsection{Quaternions} Alternative approach for rotation. Efficient, easy interpolation and there is no gimbal lock. Properties:
 \begin{align*}
 	i^2=j^2=k^2 = -1, \quad ijk = -1, \quad ij=k, \quad ji=-k \\ \quad jk=i, \quad kj = -i, \quad ki = j, \quad ik = -j \\
 	\lVert q \rVert = \sqrt{a^2+b^2+c^2+d^2},\\ \text{where } q = a + \left[\begin{smallmatrix} b & c & d \end{smallmatrix}\right] \left[\begin{smallmatrix} i \\ j \\ k \end{smallmatrix}\right] = a + v \text{ ,v not vector!} \\
@@ -673,5 +679,33 @@ Then compute barycentric coeff. of intersection point and check whether \( s_{1}
     \bad does not adapt to non-uniform scenes (\( \to  \) hierarchical grids)
 \end{itemize}
 \subsubsection{Space partitioning trees} Octree, kd-tree, bsp-tree
+
+\section{Past Questions}
+\subsection{True/False + Justification} 
+\begin{itemize}
+    \item[\cmark] The DC Fourier coefficient \( F(0,0) \) corresponds to the average intensity value of the image.\\
+    This is true, because the DC component is the result of integrating the function over its entire domain without any multiplication by sinusoidal functions. Thus for an image it sums up all pixel values and divides them by the number of pixels \( \to  \) average intensity.
+    \item[\cmark] Fourier Transforms can be used to perform template matching efficiently.\\
+    This is true, because template matching involves computing correlations. We can do this using the Fourier Transform (Convolution theorem) and with e.g. the FFT algorithm this provides a speed up over bruteforcing in the spatial domain.
+    \item[\xmark] In a discrete 1D signal composed of \( N \) samples equally distributed between \( 0 \) and \( 1 \), the maximum frequency is \( \frac{N}{2} \).\\
+    This is false, because we have no information about the sampling frequency. Depending on the time span these samples were collected over, the maximum frequency changes.
+\end{itemize}
+
+\subsection{True/False without justification}
+
+\begin{itemize}
+    \item[\cmark] All 3D rotation matrices \( R \) have the property \( R^{-1} = R^\top \).
+    \item[\cmark] Bézier curves are special cases of B-spline curves.
+    \item[\cmark] In subdivision surfaces, the mesh surface converges to smooth limit surface.
+    \item[\cmark] The color buffer is updated only when the depth test is passed.
+    \item[\cmark] Radiance is constant along a ray (in a vacuum).
+    \item[\cmark] A pinhole camera measures radiance.
+    \item[\cmark] \( f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i) \) is true for any valid BRDF function.
+    \item[\cmark] Given a material with a BRDF function that satisfies \( \int_\Omega f_r(\omega_i, \omega_o) \mathop{d\omega_i} = 1 \), then it means that all the incoming energy from the light is reflected.
+    \item[\cmark] Due to the perspective projection, barycentric coordinates of values on a triangle of diffrent depths are not an affine function of screen space positions.
+    \item[\xmark] Sample points that are drawn uniformly from screen space remain uniform on the texture space
+    \item[\xmark] Loop subdivision scheme works for any polygonal meshes.
+    \item[\xmark] Interpenetration of triangles could not be handled correctly if one were to draw them on a per-sample basis.
+\end{itemize}
 
 \end{document}
