@@ -493,7 +493,7 @@ If we have e.g. \(  \left[\begin{smallmatrix} -1 & 0 & 2 \\ 0 & -1 & 2 \\ 0 & 0 
     \includegraphics[width=3cm]{coord-system-change.png}
 &
 $
- p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \implies p' = TRp
+    p' = \left[\begin{smallmatrix} | & | & | & | \\ r_1 & r_2 & r_2 & t \\ | & | & | & | \\ 0 & 0 & 0 & 1 \end{smallmatrix}\right] \left[\begin{smallmatrix} p_x \\ p_y \\ p_z \\ 1 \end{smallmatrix}\right] = TRp
 $
 \\
 \end{tabular}
@@ -702,10 +702,12 @@ Then compute barycentric coeff. of intersection point and check whether \( s_{1}
     \item[\cmark] A pinhole camera measures radiance.
     \item[\cmark] \( f_r(\omega_i, \omega_o) = f_r(\omega_o, \omega_i) \) is true for any valid BRDF function.
     \item[\cmark] Given a material with a BRDF function that satisfies \( \int_\Omega f_r(\omega_i, \omega_o) \mathop{d\omega_i} = 1 \), then it means that all the incoming energy from the light is reflected.
+    \item[\cmark] For a perfect mirror material, its \( f_r \omega _i, \omega _o) \) is non-zero if and only if \( \omega _i \) is the reflection vector of \( \omega _o \) against the surface normal at the point of interest.
     \item[\cmark] Due to the perspective projection, barycentric coordinates of values on a triangle of diffrent depths are not an affine function of screen space positions.
     \item[\xmark] Sample points that are drawn uniformly from screen space remain uniform on the texture space
     \item[\xmark] Loop subdivision scheme works for any polygonal meshes.
     \item[\xmark] Interpenetration of triangles could not be handled correctly if one were to draw them on a per-sample basis.
+    \item[\xmark] If one were to sample points uniformly from screen space, they always remain uniform on the texture space.
 \end{itemize}
 
 \end{document}
