@@ -331,6 +331,7 @@ Has errors at boundaries, information spreads from corner-type patterns
 	\end{smallmatrix}
 	\right)
     \] 
+In this equation, the notation \( \sum I_x I_y = \sum_i \sum_j I_x(i,j) \cdot I_y(i,j) \) is used.
 Fails if all gradients are in the same direction, e.g. for edges or smooth regions. However, it works well for corners and textured areas.
 \subsubsection{Iterative refinement} Obtain more exact estimate of optical flow:
     \begin{enumerate}
@@ -709,5 +710,104 @@ Then compute barycentric coeff. of intersection point and check whether \( s_{1}
     \item[\xmark] Interpenetration of triangles could not be handled correctly if one were to draw them on a per-sample basis.
     \item[\xmark] If one were to sample points uniformly from screen space, they always remain uniform on the texture space.
 \end{itemize}
+
+\subsection{Other questions}
+\subsubsection{OpenGL transparency}
+Two objects, A and B, are rendered in OpenGL. A is placed in front of B, and is not fully opaque. However, B is not visible through A. Give two explanations for this apparent bug.
+\subsubsection{Answer}
+\begin{itemize}
+    \item blending not enabled
+    \item objects drawn in the wrong order
+\end{itemize}
+
+\subsubsection{PCA storage space}
+Given \( n \) images of size \( x \times y \), we want to store the dataset given a budget of \( Z \) units of space. What is the maximum number \( K \) of principal components allowed?
+\subsubsection{Answer}
+We need to store:
+\begin{itemize}
+    \item the dataset mean \( \mu: x \times y \)
+    \item the truncated eigenmatrix \( U_K: (x \times y) \times K \)
+    \item the compressed images \( \{y_i\}: n \times K \)
+\end{itemize}
+\subsubsection{Fourier Transform derivation}
+Derive the FT of \( x(t-t_{0}) \) in terms of the Fourier transform of \( x(t) \).
+\subsubsection{Answer}
+\begin{align*}
+    \mathcal{F}\{x(t-t_{0})\} &= \int_{-\infty}^\infty x(t-t_{0}) e^{-2\pi i f(t)} \mathop{dt} \\
+			      &= \int_{-\infty}^\infty x(s) e^{-2 \pi i f(s + t_{0})} \mathop{ds} \tag*{\( s\coloneqq t-t_{0} \)} \\
+			      &= \int_{-\infty}^\infty x(t) e^{-2 \pi if(t+t_{0})} \mathop{dt} \tag*{rename \( t\coloneqq s \)} \\
+			      &= e^{-2\pi if(t_0)} \int_{-\infty}^\infty x(t) e^{-2\pi i f(t)} \mathop{dt} \\
+			      &= e^{-2\pi if(t_{0})} \mathcal{F}\{x(t)\}
+\end{align*}
+
+\subsubsection{Prevent all aliasing}
+In the continous case, which filtering kernel would you apply to an arbitrary sigal to make sure the discretization of the filtered signal does not result in any aliasing at all? Why is this filter not commonly used in practical applications?
+
+\subsubsection{Answer}
+A sinc filter. It would be hard to implement since it has an infinite impulse response.
+
+\subsubsection{Shading}
+Let \( \Delta p_{0}p_{1}p_{2} \) be a triangle with vertices \( p_{0},p_{1},p_{2} \) as indicated in the figure. \( p_{0},p_{1},p_{2} \) have the RGB-color values
+\[
+    I_0 = \left[\begin{smallmatrix}240 \\ 48 \\ 60\end{smallmatrix}\right], I_{1} = \left[\begin{smallmatrix}252 \\ 48 \\ 54\end{smallmatrix}\right], I_{2} = \left[\begin{smallmatrix}240 \\ 48 \\ 51\end{smallmatrix}\right]
+\] 
+Compute the RGB-color value \( I_s \) of the point \( p_s \) using Gouraud Shading. The scanline \( s \) is at \( y = 2 \). You can use the points \( p_{0,1} = \left[\begin{smallmatrix}0.5 \\ 2 \end{smallmatrix}\right] \) and \( p_{0,2} = \left[\begin{smallmatrix} \frac{5}{3} \\ 2 \end{smallmatrix}\right] \) as the intersection points of \( s \) with the triangle sides \( p_0 p_1 \) and \( p_0 p_2 \). Make sure you get a valid RGB-color value for \( I_s \) by rounding to the nearest integer.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{old-exercise-shading.png} 
+\end{figure}
+
+\subsubsection{Answer}
+First, find the RGB values at $p_{0,1}$ ($I_{0,1}$) and $p_{0,2}$ ($I_{0,2}$).
+
+To find these, interpolate the RGB values as follows:
+$$ I_{a,b} = I_{b}*t + I_{a}*(1-t) \quad t \in [0,1] $$
+
+For two points ($a$ and $b$) $t$ is defined as
+$$ t = \frac{ y_{a}-y_{a,b} }{ y_{a}-y_{b}} $$
+
+Now plug in: $$
+I_{0,1} = I_{1}t_{1} + I_{0}(1-t_{1}) = \left[\begin{smallmatrix}
+246  \\
+48 \\
+57
+\end{smallmatrix}\right] \\ \qquad t_{1} = \frac{3-2}{3-1} 
+$$
+
+$$  
+I_{0,2} = \left[\begin{smallmatrix}
+240  \\
+48 \\
+51
+\end{smallmatrix}\right] * \frac{1}{3} + \left[\begin{smallmatrix}
+240  \\
+48 \\
+60
+\end{smallmatrix}\right] * \frac{2}{3} = \left[\begin{smallmatrix}
+240  \\
+48 \\
+57
+\end{smallmatrix}\right] \qquad t_{2} = \frac{3-2}{3-0}
+$$
+
+to solve $I_{s}$ there is a straight line, use a different $t_{s}$: 
+
+$$ t_{s} = \frac{x_{0,1}-x_{s}}{x_{0,1}-x_{0,2}} = \frac{0.5-1}{0.5-\frac{5}{3}} = \frac{3}{7} $$
+
+$$
+I_{s} = \left[\begin{smallmatrix}
+   240  \\
+   48 \\
+   57
+   \end{smallmatrix}\right] * \frac{3}{7} + \left[\begin{smallmatrix}
+   246  \\
+   48 \\
+   57
+   \end{smallmatrix}\right] * \frac{4}{7} = \bf{ \left[\begin{smallmatrix}
+   243  \\
+   48 \\
+   57
+\end{smallmatrix}\right] } $$
 
 \end{document}
