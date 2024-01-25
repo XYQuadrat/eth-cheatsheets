@@ -1,5 +1,7 @@
 # eth-cheatsheets
 
+![Screenshots of the cheatsheets](eth-cheatsheets-cover.png)
+
 A collection of LaTeX cheatsheets for the Computer Science program at ETH Zurich. 
 
 Currently, the following cheatsheets are hosted here:
