@@ -1,6 +1,6 @@
 # eth-cheatsheets
 
-A collection of LaTeX cheatsheets for the Computer Science program at ETH Zurich. **This repository has nothing to do with the cryptocurrency ETH.**
+A collection of LaTeX cheatsheets for the Computer Science program at ETH Zurich. 
 
 Currently, the following cheatsheets are hosted here:
 
@@ -8,7 +8,8 @@ Currently, the following cheatsheets are hosted here:
 - Analysis 2 (whole course)
 - Algorithms & Datastructures - an overview of all important graph terminology
 - Algorithms & Probability - an overview of runtimes of the covered algorithms
-- Wahrscheinlichkeit & Statistik (in german)
+- Wahrscheinlichkeit & Statistik (whole course, in german)
+- Visual Computing (whole course)
 
 You can find compiled `.pdf`s based on the latest source files in the Release section.
 
